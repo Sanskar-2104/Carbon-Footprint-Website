@@ -8,7 +8,7 @@ const Sidebar = ({ setActiveSection }) => {
   const handleClick = (section) => {
     setActive(section);
     if (setActiveSection) {
-      setActiveSection(section);  // Ensure function is defined before calling
+      setActiveSection(section);  
     }
   };
 
