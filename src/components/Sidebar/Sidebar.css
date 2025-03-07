@@ -1,0 +1,39 @@
+.sidebar {
+    width: 250px;
+    background-color: #3D4C3F;
+    padding: 10px;
+    color: white;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;  
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li svg {
+    min-width: 24px;
+    color: #A4B494; /* Light green for icons */
+}
+
+.sidebar li:hover {
+    background-color: #4A5A4A;
+}
+
+.sidebar li.active {
+    background-color: #28281F;
+    font-weight: bold;
+}

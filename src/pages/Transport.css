@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .transport-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon {
+    color: #5b7d57;
+  }
+  
+  .options label {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .fuel-box {
+    background: #c1c1a9;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .calculate-btn {
+    background: #c1c1a9;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
