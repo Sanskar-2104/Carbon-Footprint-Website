@@ -1,0 +1,155 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.shopping-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  color: #3f704d;
+}
+
+h2 {
+  font-size: 22px;
+  color: #333;
+}
+
+hr {
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+
+.question {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  margin: 15px 0 5px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.calculate-btn {
+  margin-top: 15px;
+  background-color: #556b2f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.calculate-btn:hover {
+  background-color: #405d27;
+} */
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  color: #3f704d;
+}
+
+h2 {
+  font-size: 22px;
+  color: #333;
+}
+
+hr {
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+
+.question {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  margin: 15px 0 5px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.calculate-btn {
+  margin-top: 15px;
+  background-color: #CAD2C5;
+  color: #000;
+  border: none;
+  padding: 10px 15px;  /* Keeps the same height */
+  border-radius: 25px;  /* Slightly more rounded */
+  font-size: 16px;
+  cursor: pointer;
+  width: 300px;  /* Reduced width */
+  text-align: center;
+}
+
+.calculate-btn:hover {
+  background-color: #405d27;
+  color: #fff;
+}
+
+
+.follow-up {
+  margin-top: 15px;
+}
+
+.fuel-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.fuel-input span {
+  font-weight: bold;
+}
+
+.fuel-input input {
+  width: 100px;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}

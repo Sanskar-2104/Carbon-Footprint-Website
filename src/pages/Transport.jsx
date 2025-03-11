@@ -1,38 +1,71 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import { Car } from "lucide-react";
+// import "./Transport.css";
+
+// const Transport = () => {
+//   const [fuel, setFuel] = useState("");
+
+//   return (
+//     <div className="transport-content">
+//       <div className="transport-header">
+//         <Car size={40} className="icon" />
+//         <h2>Transport</h2>
+//       </div>
+//       <hr />
+
+//       <p className="question">What is your mode of transport?</p>
+//       <div className="options">
+//         <label className="option">
+//           <input type="radio" name="mode" value="Car" defaultChecked /> Car
+//         </label>
+//         <label className="option">
+//           <input type="radio" name="mode" value="Bike" /> Bike
+//         </label>
+//         <label className="option">
+//           <input type="radio" name="mode" value="Bicycle" /> Bicycle
+//         </label>
+//       </div>
+
+//       <p className="question">How much amount of fuel you used today?</p>
+//       <div className="fuel-input-container">
+//         <span className="rs-text">Rs</span>
+//         <input
+//           type="number"
+//           value={fuel}
+//           onChange={(e) => setFuel(e.target.value)}
+//           className="fuel-input"
+//           placeholder="Enter amount"
+//         />
+//       </div>
+
+//       <button className="calculate-btn">Calculate & Add</button>
+//     </div>
+//   );
+// };
+
+// export default Transport;
+
+
+import React from "react";
 import { Car } from "lucide-react";
-import "./Transport.css";
+import QuizSection from "./QuizSection";
 
 const Transport = () => {
-  const [fuel, setFuel] = useState(300);
-  const [mode, setMode] = useState("Car");
-
   return (
-    <div className="container">
-      <div className="transport-box">
-        <Car size={40} className="icon" />
-        <h2>Transport</h2>
-        <p>What is your mode of transport?</p>
-        <div className="options">
-          <label>
-            <input type="radio" name="mode" value="Car" checked={mode === "Car"} onChange={() => setMode("Car")} />
-            Car
-          </label>
-          <label>
-            <input type="radio" name="mode" value="Bike" checked={mode === "Bike"} onChange={() => setMode("Bike")} />
-            Bike
-          </label>
-          <label>
-            <input type="radio" name="mode" value="Bicycle" checked={mode === "Bicycle"} onChange={() => setMode("Bicycle")} />
-            Bicycle
-          </label>
-        </div>
-
-        <p>How much amount of fuel you used today?</p>
-        <div className="fuel-box">Rs <span>{fuel}</span></div>
-
-        <button className="calculate-btn">Calculate & Add</button>
-      </div>
-    </div>
+    <QuizSection
+      icon={Car}
+      title="Transport"
+      question="What is your mode of transport?"
+      options={[
+        { label: "Car", value: "car" },
+        { label: "Bike", value: "bike" },
+        { label: "Bicycle", value: "bicycle" },
+      ]}
+      followUp={{
+        showFor: "car", // Show only if "Car" is selected
+        question: "How much amount of fuel you used today?",
+      }}
+    />
   );
 };
 

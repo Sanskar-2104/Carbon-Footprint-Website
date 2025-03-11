@@ -1,11 +1,23 @@
 import React from "react";
+import { Zap } from "lucide-react";
+import QuizSection from "./QuizSection";
 
 const Electricity = () => {
   return (
-    <div className="page-container">
-      <h2>⚡ Electricity</h2>
-      <p>This is the Electricity section.</p>
-    </div>
+    <QuizSection
+      icon={Zap}
+      title="Electricity Usage"
+      question="How much electricity did you use today?"
+      options={[
+        { label: "Low (0-5 kWh)", value: "low" },
+        { label: "Medium (5-15 kWh)", value: "medium" },
+        { label: "High (15+ kWh)", value: "high" },
+      ]}
+      followUp={{
+        showFor: "high", // Show follow-up question only if "High" usage is selected
+        question: "What is your electricity bill this month? (Rs)",
+      }}
+    />
   );
 };
 
