@@ -62,21 +62,86 @@
 // export default Shopping;
 
 
-import React from "react";
+// import React from "react";
+// import { ShoppingBag } from "lucide-react";
+// import QuizSection from "./QuizSection";
+
+// const Shopping = () => {
+//   return (
+//     <QuizSection
+//       icon={ShoppingBag}
+//       title="Shopping"
+//       question="How much money did you spend on shopping today?"
+//       options={[
+//         { label: "Less than $20", value: "low" },
+//         { label: "$20 - $100", value: "medium" },
+//         { label: "More than $100", value: "high" },
+//       ]}
+//     />
+//   );
+// };
+
+// export default Shopping;
+
+
+import React, { useState } from "react";
 import { ShoppingBag } from "lucide-react";
 import QuizSection from "./QuizSection";
 
-const Shopping = () => {
+const Shopping = ({ setActiveSection }) => {
+  // Define questions for the Shopping section
+  const questions = [
+    {
+      question: "How much money did you spend on shopping today?",
+      options: [
+        { label: "Less than $20", value: "low" },
+        { label: "$20 - $100", value: "medium" },
+        { label: "More than $100", value: "high" },
+      ],
+    },
+    {
+      question: "What type of products did you buy?",
+      options: [
+        { label: "Clothing", value: "clothing" },
+        { label: "Electronics", value: "electronics" },
+        { label: "Groceries", value: "groceries" },
+      ],
+    },
+    {
+      question: "Did you buy eco-friendly products?",
+      options: [
+        { label: "Yes", value: "yes" },
+        { label: "No", value: "no" },
+      ],
+    },
+  ];
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setActiveSection("Transport"); // Move to next section
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      setActiveSection("Home"); // Go back to Home
+    }
+  };
+
   return (
     <QuizSection
       icon={ShoppingBag}
       title="Shopping"
-      question="How much money did you spend on shopping today?"
-      options={[
-        { label: "Less than $20", value: "low" },
-        { label: "$20 - $100", value: "medium" },
-        { label: "More than $100", value: "high" },
-      ]}
+      question={questions[currentQuestionIndex].question}
+      options={questions[currentQuestionIndex].options}
+      onNext={handleNext}
+      onPrevious={handlePrevious}
     />
   );
 };

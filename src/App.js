@@ -47,7 +47,7 @@ function App() {
               element={
                 <>
                   <Sidebar setActiveSection={setActiveSection} />
-                  <ContentBox activeSection={activeSection} />
+                  <ContentBox activeSection={activeSection} setActiveSection={setActiveSection} />
                 </>
               }
             />

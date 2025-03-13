@@ -121,11 +121,13 @@ hr {
   cursor: pointer;
   width: 300px;  /* Reduced width */
   text-align: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .calculate-btn:hover {
   background-color: #405d27;
   color: #fff;
+  transform: scale(1.04);
 }
 
 
@@ -152,4 +154,19 @@ hr {
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
+}
+
+.notification {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.notification:contains("⚠️") {
+  color: red;
+}
+
+.notification:contains("✅") {
+  color: green;
 }
