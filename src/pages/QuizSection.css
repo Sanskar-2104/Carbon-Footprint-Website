@@ -115,11 +115,11 @@ hr {
   background-color: #CAD2C5;
   color: #000;
   border: none;
-  padding: 10px 15px;  /* Keeps the same height */
-  border-radius: 25px;  /* Slightly more rounded */
+  padding: 10px 15px;
+  border-radius: 25px;
   font-size: 16px;
   cursor: pointer;
-  width: 300px;  /* Reduced width */
+  width: 300px;
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
@@ -129,7 +129,6 @@ hr {
   color: #fff;
   transform: scale(1.04);
 }
-
 
 .follow-up {
   margin-top: 15px;
@@ -169,4 +168,46 @@ hr {
 
 .notification:contains("✅") {
   color: green;
+}
+
+.quiz-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.prev-btn, .next-btn {
+  margin-top: 15px;
+  background-color: #CAD2C5;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 150px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.prev-btn:hover, .next-btn:hover {
+  background-color: #405d27;
+  color: #fff;
+  transform: scale(1.04);
+}
+
+.prev-btn {
+  background-color: #A3B18A; /* Softer green tone */
+}
+
+.prev-btn:hover {
+  background-color: #6A994E; /* Slightly deeper green */
+}
+
+.next-btn {
+  background-color: #A3B18A; /* Richer green */
+}
+
+.next-btn:hover {
+  background-color: #6A994E; /* Darker green */
 }
