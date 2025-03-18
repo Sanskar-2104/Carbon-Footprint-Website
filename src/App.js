@@ -30,6 +30,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ContentBox from "./components/ContentBox/ContentBox";
 import Home from "./pages/Home/Home"; // Import Home Page
+import LoginSignup from "./pages/Auth/LoginSignup";
 import "./App.css";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
                 </>
               }
             />
+            <Route path="/auth" element={<LoginSignup />} />
           </Routes>
         </div>
       </div>
