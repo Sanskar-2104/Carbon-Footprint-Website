@@ -1,9 +1,8 @@
-// import express from 'express';
-const express = require('express');
-const connectDB = require('./config/ConnectDB.js');
-const cors = require('cors');
-require('dotenv').config({ path: '.env.local' }); 
-const path = require('path');
+import express from 'express';
+import connectDB from './config/ConnectDB.js';
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 const PORT = process.env.PORT;
 
 
