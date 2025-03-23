@@ -4,7 +4,12 @@ const FootPrintSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required:true
+        required: false
+        
+    },
+    sessionId: {
+        type: String,
+        required: false,
     },
     date: {
         type: Date,
@@ -12,23 +17,28 @@ const FootPrintSchema = new mongoose.Schema({
     },
     transport: {
         type: Number,
-        min: 0
+        min: 0,
+        default:0
     },
     energy: {
         type: Number,
-        min: 0
+        min: 0,
+        default:0
     },
     food: {
         type: Number,
-        min: 0
+        min: 0,
+        default:0
     },
     shopping: {
         type: Number,
-        min: 0
+        min: 0,
+        default:0
     }, 
     total: {
         type: Number,
-        min: 0
+        min: 0,
+        default:0
     },
     createdAt: {
         type: Date,
@@ -36,6 +46,9 @@ const FootPrintSchema = new mongoose.Schema({
     }
 
 
-}, { indexes: [{ userId: 1 }, { date: 1 }] });
+});
 
-export default FootPrintSchema;
+FootPrintSchema.index({ userId: 1 });
+FootPrintSchema.index({ date: 1 });
+
+export default mongoose.model("Footprint", FootPrintSchema);
