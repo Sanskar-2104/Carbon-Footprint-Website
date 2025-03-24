@@ -1,5 +1,8 @@
 import express from 'express';
 import connectDB from './config/ConnectDB.js';
+import authRoute from './routes/authRoute.js';
+import footprintRoute from './routes/footprintRoute.js'
+import gamificationRoute from './routes/gamificationRoute.js'
 import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
@@ -16,6 +19,9 @@ app.use(express.json());
 app.use(cors());
 
 
+app.use("/auth", authRoute);
+app.use("/footprint", footprintRoute);
+app.use("/gamification", gamificationRoute);
 
     
 // test route 
