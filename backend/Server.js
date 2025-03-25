@@ -19,9 +19,9 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use("/auth", authRoute);
-app.use("/footprint", footprintRoute);
-app.use("/gamification", gamificationRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/footprint", footprintRoute);
+app.use("/api/gamification", gamificationRoute);
 
     
 // test route 
