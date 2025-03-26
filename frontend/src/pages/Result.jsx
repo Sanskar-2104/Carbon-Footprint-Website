@@ -14,6 +14,9 @@ const Result = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
+      if (!res.ok) {
+        throw new Error("Server error: " + data.error || "Unknown error");
+      }
       const data = await res.json();
       setResponse(data);
     } catch (error) {
@@ -33,7 +36,7 @@ const Result = () => {
       {response && (
         <div>
           <h2>Carbon Footprint:</h2>
-          <p>{response.total} kg CO₂</p>
+          <p>{response.footprint.total} kg CO₂</p>
         </div>
       )}
     </div>
