@@ -9,7 +9,7 @@ const Result = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/calculate", {
+      const res = await fetch("http://localhost:5000/api/footprint/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -33,7 +33,7 @@ const Result = () => {
       {response && (
         <div>
           <h2>Carbon Footprint:</h2>
-          <p>{response.carbonFootprint} kg CO₂</p>
+          <p>{response.total} kg CO₂</p>
         </div>
       )}
     </div>
