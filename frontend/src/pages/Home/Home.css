@@ -1,141 +1,79 @@
-/* Home Page Styles */
-.home-container {
-    background: linear-gradient(135deg, #1e1e2e, #2a2a3a);
-    color: #ffffff;
-    font-family: "Poppins", sans-serif;
-    padding: 20px;
-    width: 100%;
-  }
-  
-  /* Hero Section */
-  .hero {
-    text-align: center;
-    padding: 100px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
-  .hero h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-  }
-  .hero-buttons .btn {
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 1rem;
-    margin: 10px;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
-  }
-  .btn.primary {
-    background: #ff7f50;
-    color: #fff;
-  }
-  .btn.secondary {
-    background: transparent;
-    border: 2px solid #ff7f50;
-    color: #ff7f50;
-  }
-  .btn:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Info Section */
-  .info-section {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  .info-section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .stat-card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-    text-align: center;
-    width: 250px;
-  }
-  .stat-card:hover {
-    transform: scale(1.05);
-  }
-  
-  /* How It Works */
-  .how-it-works {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  .how-it-works .steps {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .step {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    width: 200px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.1rem;
-  }
-  
-  /* FAQ Section */
-  .faq {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  .faq h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  .faq-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px auto;
-    width: 80%;
-    max-width: 600px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  /* Footer */
-  footer {
-    background: #181820;
-    padding: 20px;
-    text-align: center;
-    color: #ddd;
-    margin-top: 40px;
-  }
-  .footer-links a {
-    color: #ff7f50;
-    text-decoration: none;
-    margin: 0 10px;
-  }
-  .footer-links a:hover {
-    text-decoration: underline;
-  }
-  .tip {
-    margin-top: 10px;
-    font-style: italic;
-  }
+/* Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  /* Remove justify-content: space-between */
+  text-align: left;
+  padding: 0 10%;
+  overflow: hidden;
+  background: black;
+}
+
+/* Video Background */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  z-index: 0; /* Ensure video is behind the content */
+}
+
+/* Dark Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+/* Hero Content (Now positioned on the left of the Earth video) */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 40%;
+}
+
+/* Hero Title */
+.hero-title {
+  font-size: 3rem;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Hero Text */
+.hero-text {
+  font-size: 1.2rem;
+  color: #d0d0d0;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* Hero Button */
+.hero-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #4a1e7a;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.3s ease-in-out;
+  border: none;
+}
+
+/* Hover Effect */
+.hero-btn:hover {
+  background: #5c2494;
+}

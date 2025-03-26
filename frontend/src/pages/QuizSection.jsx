@@ -129,11 +129,11 @@ const QuizSection = ({ icon: Icon, title, question, options, followUp, onNext, o
         ))}
       </div>
 
-      {followUp && selectedOption === followUp.showFor && (
+      {followUp && Array.isArray(followUp.showFor) && followUp.showFor.includes(selectedOption) && (
         <div className="follow-up">
           <p className="question">{followUp.question}</p>
           <div className="fuel-input">
-            <span>Rs</span>
+            <span></span>
             <input
               type="number"
               value={followUpValue}
@@ -143,7 +143,6 @@ const QuizSection = ({ icon: Icon, title, question, options, followUp, onNext, o
           </div>
         </div>
       )}
-
       <div className="quiz-buttons">
         {onPrevious && <button onClick={onPrevious} className="prev-btn">Previous</button>}
         <button onClick={handleCalculate} className="calculate-btn">
@@ -156,3 +155,6 @@ const QuizSection = ({ icon: Icon, title, question, options, followUp, onNext, o
 };
 
 export default QuizSection;
+
+
+

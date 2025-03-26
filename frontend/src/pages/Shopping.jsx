@@ -84,22 +84,184 @@
 // export default Shopping;
 
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import { ShoppingBag } from "lucide-react";
+// import QuizSection from "./QuizSection";
+
+// const Shopping = ({ setActiveSection }) => {
+//   // Define questions for the Shopping section
+//   const questions = [
+//     {
+//       question: "How much money did you spend on shopping today?",
+//       options: [
+//         { label: "Less than $20", value: "low" },
+//         { label: "$20 - $100", value: "medium" },
+//         { label: "More than $100", value: "high" },
+//       ],
+//     },
+//     {
+//       question: "What type of products did you buy?",
+//       options: [
+//         { label: "Clothing", value: "clothing" },
+//         { label: "Electronics", value: "electronics" },
+//         { label: "Groceries", value: "groceries" },
+//       ],
+//     },
+//     {
+//       question: "Did you buy eco-friendly products?",
+//       options: [
+//         { label: "Yes", value: "yes" },
+//         { label: "No", value: "no" },
+//       ],
+//       followUp: {
+//         showFor: ["no"], // Show follow-up only if "No" is selected
+//         question: "Would you consider buying eco-friendly products in the future?",
+//       },
+//     },
+//   ];
+
+//   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+//   const handleNext = () => {
+//     if (currentQuestionIndex < questions.length - 1) {
+//       setCurrentQuestionIndex(currentQuestionIndex + 1);
+//     } else {
+//       setActiveSection("Transport"); // Move to next section
+//     }
+//   };
+
+//   const handlePrevious = () => {
+//     if (currentQuestionIndex > 0) {
+//       setCurrentQuestionIndex(currentQuestionIndex - 1);
+//     } else {
+//       setActiveSection("Home"); // Go back to Home
+//     }
+//   };
+
+//   return (
+//     <QuizSection
+//       icon={ShoppingBag}
+//       title="Shopping"
+//       question={questions[currentQuestionIndex].question}
+//       options={questions[currentQuestionIndex].options}
+//       followUp={questions[currentQuestionIndex].followUp} // Pass follow-up question dynamically
+//       onNext={handleNext}
+//       onPrevious={handlePrevious}
+//     />
+//   );
+// };
+
+// export default Shopping;
+
+
+// import React, { useState } from "react";
+// import { ShoppingBag } from "lucide-react";
+// import QuizSection from "./QuizSection";
+// import { useUserInput } from "../context/UserInputContext"; // Import Context Hook
+
+// const Shopping = ({ setActiveSection }) => {
+//   const { updateUserData } = useUserInput(); // Get function to update data
+
+//   const questions = [
+//     {
+//       question: "How much money did you spend on shopping today?",
+//       options: [
+//         { label: "Less than $20", value: "low" },
+//         { label: "$20 - $100", value: "medium" },
+//         { label: "More than $100", value: "high" },
+//       ],
+//     },
+//     {
+//       question: "What type of products did you buy?",
+//       options: [
+//         { label: "Clothing", value: "clothing" },
+//         { label: "Electronics", value: "electronics" },
+//         { label: "Groceries", value: "groceries" },
+//       ],
+//     },
+//     {
+//       question: "Did you buy eco-friendly products?",
+//       options: [
+//         { label: "Yes", value: "yes" },
+//         { label: "No", value: "no" },
+//       ],
+//       followUp: {
+//         showFor: ["no"],
+//         question: "Would you consider buying eco-friendly products in the future?",
+//       },
+//     },
+//   ];
+
+//   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+//   const [answers, setAnswers] = useState({});
+
+//   const handleAnswerSelect = (question, answer) => {
+//     setAnswers((prev) => ({
+//       ...prev,
+//       [question]: answer,
+//     }));
+//   };
+
+//   const handleNext = () => {
+//     if (currentQuestionIndex < questions.length - 1) {
+//       setCurrentQuestionIndex(currentQuestionIndex + 1);
+//     } else {
+//       updateUserData("shopping", answers); // Save data to context
+//       setActiveSection("Transport");
+//     }
+//   };
+
+//   const handlePrevious = () => {
+//     if (currentQuestionIndex > 0) {
+//       setCurrentQuestionIndex(currentQuestionIndex - 1);
+//     } else {
+//       setActiveSection("Home");
+//     }
+//   };
+
+//   return (
+//     <QuizSection
+//       icon={ShoppingBag}
+//       title="Shopping"
+//       question={questions[currentQuestionIndex].question}
+//       options={questions[currentQuestionIndex].options}
+//       followUp={questions[currentQuestionIndex].followUp}
+//       onSelectAnswer={handleAnswerSelect}
+//       onNext={handleNext}
+//       onPrevious={handlePrevious}
+//     />
+//   );
+// };
+
+// export default Shopping;
+
+
+import React, { useState, useEffect } from "react";
 import { ShoppingBag } from "lucide-react";
 import QuizSection from "./QuizSection";
+import { useUserInput } from "../context/UserInputContext"; // Import context
 
 const Shopping = ({ setActiveSection }) => {
-  // Define questions for the Shopping section
+  const { userData, updateUserData } = useUserInput(); // Access context functions
+
+  const [shoppingData, setShoppingData] = useState({
+    shoppingAmount: "",
+    shoppingType: "",
+    ecoFriendly: "",
+  });
+
   const questions = [
     {
+      key: "shoppingAmount",
       question: "How much money did you spend on shopping today?",
       options: [
-        { label: "Less than $20", value: "low" },
-        { label: "$20 - $100", value: "medium" },
+        { label: "$10", value: "low" },
+        { label: "$20", value: "medium" },
         { label: "More than $100", value: "high" },
       ],
     },
     {
+      key: "shoppingType",
       question: "What type of products did you buy?",
       options: [
         { label: "Clothing", value: "clothing" },
@@ -108,6 +270,7 @@ const Shopping = ({ setActiveSection }) => {
       ],
     },
     {
+      key: "ecoFriendly",
       question: "Did you buy eco-friendly products?",
       options: [
         { label: "Yes", value: "yes" },
@@ -118,11 +281,26 @@ const Shopping = ({ setActiveSection }) => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
+  // Load existing shopping data from context
+  useEffect(() => {
+    if (userData.shopping) {
+      setShoppingData(userData.shopping);
+    }
+  }, [userData.shopping]);
+
+  const handleAnswerSelect = (value) => {
+    const key = questions[currentQuestionIndex].key;
+    const updatedData = { ...shoppingData, [key]: value };
+
+    setShoppingData(updatedData);
+    updateUserData("shopping", updatedData); // Save data to context immediately
+  };
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      setActiveSection("Transport"); // Move to next section
+      setActiveSection("Transport"); // Move to the next section
     }
   };
 
@@ -140,6 +318,8 @@ const Shopping = ({ setActiveSection }) => {
       title="Shopping"
       question={questions[currentQuestionIndex].question}
       options={questions[currentQuestionIndex].options}
+      selectedAnswer={shoppingData[questions[currentQuestionIndex].key]} // Show selected option
+      onSelectAnswer={handleAnswerSelect} // Save answer
       onNext={handleNext}
       onPrevious={handlePrevious}
     />

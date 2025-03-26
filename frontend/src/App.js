@@ -32,11 +32,15 @@ import ContentBox from "./components/ContentBox/ContentBox";
 import Home from "./pages/Home/Home"; // Import Home Page
 import LoginSignup from "./pages/Auth/LoginSignup";
 import "./App.css";
+import { UserInputProvider } from "./context/UserInputContext";
 
 function App() {
   const [activeSection, setActiveSection] = useState("Shopping"); // Manage active section here
 
   return (
+    <UserInputProvider>
+
+
     <Router>
       <div className="app-container">
         <Navbar />
@@ -57,7 +61,12 @@ function App() {
         </div>
       </div>
     </Router>
+    </UserInputProvider>
   );
 }
 
 export default App;
+
+
+
+

@@ -72,61 +72,62 @@
 
 import React from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import { motion } from "framer-motion";
+// import { Leaf, Gift, BarChart3, Users, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { Leaf, Gift, BarChart3, Users, HelpCircle } from "lucide-react";
+
 
 const Home = () => {
   return (
-    <div className="home-container">
-      {/* Hero Section */}
-      <section className="hero">
-        <motion.h1 initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-          Track, Reduce & Earn Rewards for Your Carbon Footprint!
+    <section className="hero">
+      {/* Background Video */}
+      <video autoPlay loop muted playsInline className="hero-video">
+        <source src="/assets/earth3.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Dark Overlay */}
+      <div className="overlay"></div>
+
+      {/* Hero Content (Now on the left side) */}
+      <motion.div
+        className="hero-content"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
+        <motion.h1
+          className="hero-title"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 1, ease: "easeInOut" }}
+        >
+          Track Your Carbon Footprint & Make a Difference
         </motion.h1>
-        <p>Join thousands in making a difference while earning rewards for sustainable choices.</p>
-        <div className="hero-buttons">
-          <Link to="/calculate" className="btn primary">Start Your Journey</Link>
-          <a href="#why-it-matters" className="btn secondary">Learn More</a>
-        </div>
-      </section>
 
-      {/* Why It Matters */}
-      <section id="why-it-matters" className="info-section">
-        <h2>Why It Matters</h2>
-        <div className="stats">
-          <div className="stat-card"><BarChart3 size={50} /> An average person emits <strong>4.8 tons</strong> of CO₂ yearly!</div>
-          <div className="stat-card"><Leaf size={50} /> Reducing your footprint by <strong>20%</strong> can save Y trees annually!</div>
-        </div>
-      </section>
+        <motion.p
+          className="hero-text"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 1, ease: "easeInOut" }}
+        >
+          Calculate your daily impact on the environment and take steps towards a cleaner, greener future.
+        </motion.p>
 
-      {/* How It Works */}
-      <section className="how-it-works">
-        <h2>How It Works</h2>
-        <div className="steps">
-          <div className="step"><Leaf size={40} /> Answer a Quick Quiz</div>
-          <div className="step"><Gift size={40} /> Earn Points</div>
-          <div className="step"><Users size={40} /> Redeem Rewards</div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div className="faq-item"><HelpCircle size={30} /> <strong>How do I earn points?</strong> Reduce emissions and complete eco-friendly tasks.</div>
-        <div className="faq-item"><HelpCircle size={30} /> <strong>What can I redeem points for?</strong> Discounts, gifts, and eco-friendly products.</div>
-      </section>
-
-      {/* Footer */}
-      <footer>
-        <div className="footer-links">
-          <Link to="/about">About</Link>
-          <Link to="/faq">FAQs</Link>
-          <Link to="/contact">Contact</Link>
-        </div>
-        <p className="tip">Sustainability Tip: Switch to LED bulbs & save energy!</p>
-      </footer>
-    </div>
+        <motion.a
+          href="#"
+          className="hero-btn"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, duration: 0.8, ease: "easeInOut" }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Get Started
+        </motion.a>
+      </motion.div>
+    </section>
   );
 };
 

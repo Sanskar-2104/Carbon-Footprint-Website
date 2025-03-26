@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useUserInput } from "../context/UserInputContext";
 
 const Result = () => {
-  // Assume we fetch saved answers (replace this with actual logic)
-  const shopping = localStorage.getItem("shopping") || "low";
-  const transport = localStorage.getItem("transport") || "walking";
+  const { userData } = useUserInput();
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(null);
 
-  // Sample calculation (you can improve this)
-  const calculateFootprint = () => {
-    let score = 0;
-
-    if (shopping === "high") score += 10;
-    if (shopping === "medium") score += 5;
-    if (transport === "car") score += 15;
-    if (transport === "public") score += 7;
-
-    return score;
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/calculate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+      const data = await res.json();
+      setResponse(data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="result-container">
-      <h2>📊 Your Carbon Footprint Score</h2>
-      <p>Your estimated carbon footprint is: {calculateFootprint()} kg CO₂</p>
-      <p>Try to reduce your emissions by using eco-friendly choices!</p>
+    <div>
+      <h1>Result Page</h1>
+      <pre>{JSON.stringify(userData, null, 2)}</pre>
+      <button onClick={handleSubmit} disabled={loading}>
+        {loading ? "Calculating..." : "Calculate Footprint"}
+      </button>
+      {response && (
+        <div>
+          <h2>Carbon Footprint:</h2>
+          <p>{response.carbonFootprint} kg CO₂</p>
+        </div>
+      )}
     </div>
   );
 };
