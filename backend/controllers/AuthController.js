@@ -95,9 +95,19 @@ const verifyEmail = async (req, res) => {
                 message: error.message
             });
         }
+        user.verified = true;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Email verified successfully"
+        });
 
     } catch (error) {
-        
+        return res.status(500).json({
+            error: "Invalid Token",
+            message: error.message
+        })
     }
 };
 
