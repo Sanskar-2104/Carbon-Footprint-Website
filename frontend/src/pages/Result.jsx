@@ -36,7 +36,14 @@ const Result = () => {
       {response && (
         <div>
           <h2>Carbon Footprint:</h2>
-          <p>{response.footprint.total} kg CO₂</p>
+          <p>🌍 {response.footprint.total} kg CO₂</p>
+          <h3>Breakdown:</h3>
+          <ul>
+            <li>🚗 Transport: {response.footprint.transportEmissions} kg CO₂</li>
+            <li>⚡ Electricity: {response.footprint.electricityEmissions} kg CO₂</li>
+            <li>🍽 Food: {response.footprint.foodEmissions} kg CO₂</li>
+            <li>🛍 Shopping: {response.footprint.shoppingEmissions} kg CO₂</li>
+          </ul>
         </div>
       )}
     </div>

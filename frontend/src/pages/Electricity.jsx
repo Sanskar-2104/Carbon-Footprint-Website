@@ -69,7 +69,7 @@ const Electricity = ({ setActiveSection }) => {
   return (
     <div>
       <h2>Electricity</h2>
-      <label>Electricity Bill ($):</label>
+      <label>Electricity Unit :</label>
       <input type="number" onChange={(e) => setElectricityBill(e.target.value)} />
 
       <button onClick={handleNext}>Next</button>

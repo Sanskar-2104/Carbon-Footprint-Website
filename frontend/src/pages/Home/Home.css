@@ -1,3 +1,14 @@
+.home-container {
+  /* background: linear-gradient(135deg, #1e1e2e, #2a2a3a); */
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  /* padding: 20px; */
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+
 /* Hero Section */
 .hero {
   position: relative;
@@ -7,7 +18,7 @@
   align-items: center;
   /* Remove justify-content: space-between */
   text-align: left;
-  padding: 0 10%;
+  padding: 0 5%;
   overflow: hidden;
   background: black;
 }
@@ -37,7 +48,7 @@
 
 /* Hero Content (Now positioned on the left of the Earth video) */
 .hero-content {
-  position: relative;
+  position: absolute;
   z-index: 2;
   max-width: 40%;
 }
@@ -60,6 +71,7 @@
 
 /* Hero Button */
 .hero-btn {
+  position: relative;
   display: inline-block;
   margin-top: 20px;
   padding: 12px 24px;
@@ -71,9 +83,358 @@
   text-decoration: none;
   transition: background 0.3s ease-in-out;
   border: none;
+  overflow: hidden;
 }
 
-/* Hover Effect */
+.hero-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 300%;
+  border-radius: 30px;
+  z-index: -1;
+  animation: glowingBorder 6s linear infinite;
+}
+
+@keyframes glowingBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .hero-btn:hover {
   background: #5c2494;
+}
+
+
+/* Features Section */
+/* ======= Bento Container ======= */
+.bento-container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(circle, #020a05 0%, #010603 100%);
+}
+
+/* ======= Title ======= */
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #5eff80;
+  text-shadow: 0px 0px 20px rgba(94, 255, 128, 0.8);
+  transition: transform 0.3s ease-in-out;
+}
+
+.title:hover {
+  transform: scale(1.1);
+  text-shadow: 0px 0px 30px rgba(94, 255, 128, 1);
+}
+
+/* ======= Grid Layout ======= */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* ======= Graph Box (Large) ======= */
+.graph-box {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(94, 255, 128, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  backdrop-filter: blur(20px);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.graph-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 15px 40px rgba(94, 255, 128, 0.5);
+}
+
+/* ======= Feature Boxes (Glassmorphism with Animations) ======= */
+.feature-box {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 6px 20px rgba(94, 255, 128, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  backdrop-filter: blur(15px);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+/* ======= Glow & Hover Effect ======= */
+.feature-box:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 12px 30px rgba(94, 255, 128, 0.5);
+}
+
+/* ======= Neon Border Animation ======= */
+@keyframes neonBorder {
+  0% { box-shadow: 0px 0px 10px rgba(94, 255, 128, 0.3); }
+  50% { box-shadow: 0px 0px 25px rgba(94, 255, 128, 0.7); }
+  100% { box-shadow: 0px 0px 10px rgba(94, 255, 128, 0.3); }
+}
+
+.feature-box:hover {
+  animation: neonBorder 2s infinite alternate;
+}
+
+/* ======= Icons Inside Feature Boxes ======= */
+.feature-box svg {
+  width: 60px;
+  height: 60px;
+  color: #5eff80;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature-box:hover svg {
+  transform: scale(1.2);
+}
+
+/* ======= Headings Inside Feature Boxes ======= */
+.feature-box h3 {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ======= Description Text ======= */
+.feature-box p {
+  font-size: 15px;
+  color: #ccc;
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+/* ======= Fade-In Animation on Page Load ======= */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.bento-container {
+  animation: fadeInUp 1s ease-in-out;
+}
+
+
+.gamification {
+  text-align: center;
+  padding: 80px 5%;
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.gamification h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+/* Layout */
+.gamification-container {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+/* Leaderboard */
+.leaderboard {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.leaderboard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.leaderboard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  background: #334155;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.leaderboard-item:hover {
+  background: #475569;
+}
+
+.top-rank {
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  color: #000;
+}
+
+/* Achievements */
+.achievements {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.achievements h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.achievement-card {
+  background: #334155;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.achievement-card:hover {
+  background: #475569;
+}
+
+.achievement-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #38bdf8;
+}
+
+.achievement-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.achievement-card p {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Join Now Button */
+.join-now-btn {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #facc15 0.01%, #f59e0b 100%);
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.join-now-btn:hover {
+  background: #f59e0b;
+  transform: scale(1.05);
+}
+
+
+.carbon-impact {
+  text-align: center;
+  padding: 50px;
+  background-color: #121212;
+  color: white;
+}
+
+.impact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* Before & After Image Section */
+.impact-animation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.impact-image {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.toggle-btn:hover {
+  background-color: #388E3C;
+}
+
+/* CO₂ Savings Chart */
+.impact-chart {
+  width: 500px;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }

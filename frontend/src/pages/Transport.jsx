@@ -107,7 +107,7 @@ const Transport = ({ setActiveSection }) => {
         <option value="bus">Bus</option>
       </select>
 
-      <label>Fuel Amount (Liters):</label>
+      <label>Distance travelled :</label>
       <input type="number" onChange={(e) => handleAnswerSelect("fuelAmount", e.target.value)} />
 
       <button onClick={handleNext}>Next</button>
