@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Footprint from '../models/Footprint.js';
 import GuestCache from '../services/GuestCache.js';
+import { sendVerificationMail } from '../config/nodemailer.js';
+
 
 const register = async (req, res) => {
     const { name, email, password, ip } = req.body;
@@ -44,23 +46,60 @@ const register = async (req, res) => {
         }
 
         // Code to send verification mail on register step
-
-        // const verificationToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
-        // const verificationLink = `${process.env.CLIENT_URL}/verify/${verificationToken}`;
-        // const emailMessage = `<p>Click <a href="${verificationLink}">here</a> to verify your email.</p>`;
-        // await sendEmail(user.email, "Verify Your Email", emailMessage);
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        user.verificationToken = token;
+        await user.save();
+        await sendVerificationMail(email, token);
         
         res.status(201).json({ message: "User registered succesfully." });
     }
     catch (err) {
-        res.json({ success: false, message: err.message });
+        res.status(500).json({ success: false, message: err.message });
     }
 };
 
-const login = async (req, res) => { };
+const login = async (req, res) => { 
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        };
 
-const verifyEmail = async (req, res) => { };
+        if(!user.verified){
+            return res.status(400).json({ message: "Please verify your email first" });
+        }
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        res.json({ token, user });
+
+        res.json({ success: true, message: `Login successful Token : ${token}` });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+};
+
+const verifyEmail = async (req, res) => { 
+    try {
+        const { token } = req.params;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById({ 
+            _id: decoded.id
+        });
+        if (!user) { 
+            return res.status(404).json({
+                error: "Invalid token",
+                message: error.message
+            });
+        }
+
+    } catch (error) {
+        
+    }
+};
 
 const resetPassword = async (req, res) => { };
 

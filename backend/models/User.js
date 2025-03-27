@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import crypto from "crypto";
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,11 +24,15 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,  
         default: false  
     },
+    verificationToken: {
+        type: String
+    },
     points: {
         type: Number,
         default:0
     },
     badges: [String]
 }, { timestamps: true });
+
 
 export default mongoose.model("User", UserSchema);
