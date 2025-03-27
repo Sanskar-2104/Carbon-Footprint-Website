@@ -26,3 +26,17 @@ export const sendVerificationMail = async (email, token) => {
     await transporter.sendMail(mailOptions);
 };
 
+export const sendResetPasswordMail = async (email, token) => { 
+    const resetLink = `http://localhost:5000/api/auth/reset-password/${token}`;
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Reset your Password",
+        html: `<p>Click the link below to reset your password:</p>
+        <a href="${resetLink}">${resetLink}</a>`
+    };
+
+    await transporter.sendMail(mailOptions);
+}
+

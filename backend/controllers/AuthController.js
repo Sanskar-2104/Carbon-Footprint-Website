@@ -3,7 +3,9 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Footprint from '../models/Footprint.js';
 import GuestCache from '../services/GuestCache.js';
-import { sendVerificationMail } from '../config/nodemailer.js';
+import { sendVerificationMail, sendResetPasswordMail } from '../config/nodemailer.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 
 
 const register = async (req, res) => {
@@ -96,6 +98,7 @@ const verifyEmail = async (req, res) => {
             });
         }
         user.verified = true;
+        user.verificationToken = null;
         await user.save();
 
         res.status(200).json({
@@ -111,7 +114,51 @@ const verifyEmail = async (req, res) => {
     }
 };
 
-const resetPassword = async (req, res) => { };
+const forgotPassword = async (req, res) => { 
+    const { email } = req.body;
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) return res.status(404).json({ error: "User not found", message: error.message });
 
 
-export default { register , login, verifyEmail, resetPassword };
+        const resetToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        user.resetPasswordToken = resetToken;
+
+        await user.save();
+
+        await sendResetPasswordMail(email, resetToken);
+
+        res.json({success: true, message: "Reset password link sent to mail successfully" });
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+const resetPassword = async (req, res) => { 
+    const { token } = req.params;
+    const { password } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findOne({ email: decoded.email });
+        if (!user) {
+            return res.status(404).json({ error: "User not found", message: error.message });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        user.password = hashedPassword;
+        user.resetPasswordToken = null;
+        await user.save();
+
+        res.json({ success: true, message: "Password reset successfully" });
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+
+export default { register , login, verifyEmail, resetPassword, forgotPassword };

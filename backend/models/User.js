@@ -27,6 +27,9 @@ const UserSchema = new mongoose.Schema({
     verificationToken: {
         type: String
     },
+    resetPasswordToken: {
+        type: String
+    },
     points: {
         type: Number,
         default:0
