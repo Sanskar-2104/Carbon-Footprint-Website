@@ -241,6 +241,27 @@ const AuthPage = () => {
   };
 
   // Handle Login
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch("http://localhost:5000/api/auth/login", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(loginData),
+  //     });
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       alert("Login successful!");
+  //       // Save token to local storage if needed
+  //       localStorage.setItem("token", data.token);
+  //     } else {
+  //       alert(data.message || "Login failed.");
+  //     }
+  //   } catch (error) {
+  //     alert("Error logging in. Try again.");
+  //   }
+  // };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -250,10 +271,16 @@ const AuthPage = () => {
         body: JSON.stringify(loginData),
       });
       const data = await response.json();
+      
       if (response.ok) {
         alert("Login successful!");
-        // Save token to local storage if needed
         localStorage.setItem("token", data.token);
+  
+        // Retrieve stored URL or default to home
+        const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";
+        localStorage.removeItem("redirectAfterLogin"); // Clear after use
+        
+        window.location.href = redirectUrl; // Redirect to the stored URL
       } else {
         alert(data.message || "Login failed.");
       }
@@ -261,7 +288,8 @@ const AuthPage = () => {
       alert("Error logging in. Try again.");
     }
   };
-
+  
+  
   return (
     <div className="auth-body">
       <div className={`auth-container ${isRightPanelActive ? "right-panel-active" : ""}`} id="container">
