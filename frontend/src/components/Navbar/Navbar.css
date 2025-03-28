@@ -59,3 +59,102 @@
     background-color: #1a1a1a;
     transform: scale(1.05); 
 }
+
+.profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Fix width so hover doesn't affect layout */
+    height: 40px;
+  }
+  
+  .profile-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevents icon from going outside */
+    width: 100%;
+    height: 100%;
+  }
+  
+  .profile-icon {
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, color 0.3s;
+  }
+  
+  .profile-icon:hover {
+    transform: scale(1.2);
+    color: #193425;
+  }
+  
+  /* Dropdown fixes */
+  .dropdown-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    pointer-events: none;
+    box-sizing: border-box;
+    
+  }
+  
+  .profile-container .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .dropdown-item {
+    color: white;
+    padding: 12px 15px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    box-sizing: border-box;
+  }
+  
+  .dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+
+  .dropdown-menu .dropdown-item {
+    margin: 0;
+    border-radius: 5px;
+    width: 100%; /* Prevent overflow */
+  }
+  
+  /* Logout button */
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logout-icon {
+    color: #ff4d4d;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .logout-btn:hover .logout-icon {
+    color: white;
+  }
+  
