@@ -1,4 +1,30 @@
-# Getting Started with Create React App
+# Carbon Footprint Calculator
+
+## Problem Statement
+
+### Background
+With increasing global concerns about climate change, individuals and organizations are becoming more aware of their carbon footprint. Everyday activities such as transportation, food consumption, energy usage, and shopping habits contribute significantly to greenhouse gas emissions. However, most people are unaware of how their choices impact the environment.
+
+### Problem
+There is a lack of accessible tools that provide users with a personalized assessment of their carbon emissions based on real-world data. Many existing calculators either lack accuracy, are too complex, or fail to provide actionable insights.
+
+### Solution
+This project aims to develop a **Carbon Footprint Calculator** that evaluates an individual's environmental impact based on their daily habits. Users will answer a set of structured questions related to:
+- **Food Consumption** (meat, dairy, food waste)
+- **Transportation** (flights, car usage, public transport)
+- **Home Energy Usage** (renewable vs. fossil fuels, appliance consumption)
+- **Shopping & Waste Management** (electronics disposal, clothing purchases)
+
+Based on their responses, the tool will assign **carbon emission values (kg CO₂e/year)** and provide recommendations for reducing their footprint.
+
+### Key Features
+- **Interactive questionnaire** to assess user activities
+- **Emission factor calculations** based on research-backed data
+- **Personalized feedback and improvement suggestions**
+- **Data visualization** to help users understand their impact
+
+### Goal
+The objective of this project is to encourage individuals to make informed choices by understanding their carbon footprint and taking actionable steps toward sustainability.# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
