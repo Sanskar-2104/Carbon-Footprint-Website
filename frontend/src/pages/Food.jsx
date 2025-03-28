@@ -32,7 +32,7 @@ import { useUserInput } from "../context/UserInputContext";
 const Food = ({ setActiveSection }) => {
   const { updateUserData } = useUserInput();
 
-  const [foodChoice, setFoodChoice] = useState("");
+  const [foodChoice, setFoodChoice] = useState("vegetarian");
 
   const handleNext = () => {
     updateUserData("food", { food: foodChoice }); // Store as an object with key
@@ -44,9 +44,9 @@ const Food = ({ setActiveSection }) => {
     <div>
       <h2>Food</h2>
       <label>What type of food do you consume most?</label>
-      <select onChange={(e) => setFoodChoice(e.target.value)}>
+      <select value={foodChoice} onChange={(e) => setFoodChoice(e.target.value)}>
         <option value="vegetarian">Vegetarian</option>
-        <option value="non-vegetarian">Non-Vegetarian</option>
+        <option value="non_vegetarian">Non-Vegetarian</option>
         <option value="vegan">Vegan</option>
       </select>
 

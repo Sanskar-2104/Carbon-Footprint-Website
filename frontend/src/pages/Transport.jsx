@@ -81,8 +81,8 @@ const Transport = ({ setActiveSection }) => {
   const { updateUserData } = useUserInput();
 
   const [transportData, setTransportData] = useState({
-    vehicleType: "",
-    fuelAmount: "",
+    vehicleType: "car",
+    distanceTravelled: "",
   });
 
   const handleAnswerSelect = (key, value) => {
@@ -101,14 +101,14 @@ const Transport = ({ setActiveSection }) => {
     <div>
       <h2>Transport</h2>
       <label>Vehicle Type:</label>
-      <select onChange={(e) => handleAnswerSelect("vehicleType", e.target.value)}>
-        <option value="car">Car</option>
+      <select value={transportData.vehicleType} onChange={(e) => handleAnswerSelect("vehicleType", e.target.value)}>
+        <option value="car" defaultChecked>Car</option>
         <option value="bike">Bike</option>
         <option value="bus">Bus</option>
       </select>
 
       <label>Distance travelled :</label>
-      <input type="number" onChange={(e) => handleAnswerSelect("fuelAmount", e.target.value)} />
+      <input type="number" onChange={(e) => handleAnswerSelect("distanceTravelled", e.target.value)} />
 
       <button onClick={handleNext}>Next</button>
       <button onClick={() => setActiveSection("Shopping")}>Previous</button>
