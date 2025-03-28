@@ -24,7 +24,7 @@
 //     return { transportEmissions, energyEmissions, foodEmissions, shoppingEmissions, total };
 // }
 
-const calculateEmissions = ({ vehicleType, fuelAmount, electricityBill, foodType, shoppingAmount, shoppingType, ecoFriendly }) => {
+const calculateEmissions = ({ vehicleType, distanceTravelled , electricityBill, foodType, shoppingAmount, shoppingType, ecoFriendly }) => {
     const EMISSION_FACTORS = {
         transport: {
             car: 0.18,  // kg CO2 per km
@@ -38,9 +38,9 @@ const calculateEmissions = ({ vehicleType, fuelAmount, electricityBill, foodType
             electricity: 0.5 // kg CO2 per unit (kWh) of electricity
         },
         food: {
-            vegan: 1.0, // kg CO2 per day
-            vegetarian: 1.5, 
-            non_vegetarian: 3.0
+            vegan: 4.11, // kg CO2 per day
+            vegetarian: 4.66, 
+            non_vegetarian: 6.85
         },
         shopping: {
             low: 2,   // kg CO2 per day
@@ -50,7 +50,7 @@ const calculateEmissions = ({ vehicleType, fuelAmount, electricityBill, foodType
     };
 
     // Transport emissions
-    const transportEmissions = (fuelAmount || 0) * (EMISSION_FACTORS.transport[vehicleType] || 0);
+    const transportEmissions = (distanceTravelled || 0) * (EMISSION_FACTORS.transport[vehicleType] || 0);
 
     // Energy emissions (electricity bill-based)
     const electricityEmissions = (electricityBill || 0) * EMISSION_FACTORS.energy.electricity;

@@ -35,7 +35,7 @@ const register = async (req, res) => {
         if (GuestCache[ip]) {
             const guestData = GuestCache[ip];
             const footprint = new Footprint({
-                userId: newUser._id,
+                userId: user._id,
                 transport: guestData.transportEmissions,
                 energy: guestData.energyEmissions,
                 food: guestData.foodEmissions,
@@ -76,9 +76,9 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.json({ token, user });
+        
 
-        res.json({ success: true, message: `Login successful Token : ${token}` });
+        return res.json({ success: true, token , user, message: `Login successful Token : ${token}` });
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
@@ -93,8 +93,8 @@ const verifyEmail = async (req, res) => {
         });
         if (!user) { 
             return res.status(404).json({
-                error: "Invalid token",
-                message: error.message
+                success: false,
+                message: "Invalid token"
             });
         }
         user.verified = true;
@@ -119,7 +119,8 @@ const forgotPassword = async (req, res) => {
     try {
         const user = await User.findOne({ email });
 
-        if (!user) return res.status(404).json({ error: "User not found", message: error.message });
+        if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
 
 
         const resetToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
