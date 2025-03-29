@@ -242,13 +242,7 @@ import QuizSection from "./QuizSection";
 import { useUserInput } from "../context/UserInputContext"; // Import context
 
 const Shopping = ({ setActiveSection }) => {
-  const { userData, updateUserData } = useUserInput(); // Access context functions
-
-  const [shoppingData, setShoppingData] = useState({
-    shoppingAmount: "",
-    shoppingType: "",
-    ecoFriendly: "",
-  });
+  const { userData, updateUserData } = useUserInput();
 
   const questions = [
     {
@@ -273,8 +267,8 @@ const Shopping = ({ setActiveSection }) => {
       key: "ecoFriendly",
       question: "Did you buy eco-friendly products?",
       options: [
-        { label: "Yes", value: "yes" },
-        { label: "No", value: "no" },
+        { label: "Yes", value: "true" },
+        { label: "No", value: "false" },
       ],
     },
   ];
@@ -284,23 +278,15 @@ const Shopping = ({ setActiveSection }) => {
   // Load existing shopping data from context
   useEffect(() => {
     if (userData.shopping) {
-      setShoppingData(userData.shopping);
+      updateUserData("shopping", userData.shopping);
     }
-  }, [userData.shopping]);
-
-  const handleAnswerSelect = (value) => {
-    const key = questions[currentQuestionIndex].key;
-    const updatedData = { ...shoppingData, [key]: value };
-
-    setShoppingData(updatedData);
-    updateUserData("shopping", updatedData); // Save data to context immediately
-  };
+  }, [userData.shopping, updateUserData]);
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      setActiveSection("Transport"); // Move to the next section
+      setActiveSection("Transport"); // Move to next section
     }
   };
 
@@ -318,8 +304,8 @@ const Shopping = ({ setActiveSection }) => {
       title="Shopping"
       question={questions[currentQuestionIndex].question}
       options={questions[currentQuestionIndex].options}
-      selectedAnswer={shoppingData[questions[currentQuestionIndex].key]} // Show selected option
-      onSelectAnswer={handleAnswerSelect} // Save answer
+      category="shopping" // Pass correct category
+      field={questions[currentQuestionIndex].key} // Pass correct field
       onNext={handleNext}
       onPrevious={handlePrevious}
     />

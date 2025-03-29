@@ -53,28 +53,103 @@
 
 
 
+// import React, { useState } from "react";
+// import { useUserInput } from "../context/UserInputContext";
+
+// const Electricity = ({ setActiveSection }) => {
+//   const { updateUserData } = useUserInput();
+
+//   const [electricityBill, setElectricityBill] = useState("");
+
+//   const handleNext = () => {
+//     updateUserData("energy", { electricityBill });
+//     setActiveSection("Food");
+//   };
+
+//   return (
+//     <div>
+//       <h2>Electricity</h2>
+//       <label>Electricity Unit :</label>
+//       <input type="number" onChange={(e) => setElectricityBill(e.target.value)} />
+
+//       <button onClick={handleNext}>Next</button>
+//       <button onClick={() => setActiveSection("Transport")}>Previous</button>
+//     </div>
+//   );
+// };
+
+// export default Electricity;
+
+
+
+
+
 import React, { useState } from "react";
 import { useUserInput } from "../context/UserInputContext";
+import { Bolt } from "lucide-react"; // Icon for electricity
+import QuizSection from "./QuizSection";
 
 const Electricity = ({ setActiveSection }) => {
-  const { updateUserData } = useUserInput();
+  const electricityQuestions = [
+    {
+      key: "energyType",
+      question: "What type of energy do you use most at home?",
+      options: [
+        { label: "Fossil fuels (gas, coal, non-renewable electricity)", value: "fossil" },
+        { label: "A mix of renewable and non-renewable energy", value: "mixed" },
+        { label: "Mostly renewable energy (solar, wind)", value: "renewable" },
+      ],
+    },
+    {
+      key: "applianceUsage",
+      question: "How often do you use appliances like washing machines, heaters, or ovens?",
+      options: [
+        { label: "Every day", value: "daily" },
+        { label: "A few times a week", value: "fewTimes" },
+        { label: "Once a week or less", value: "rarely" },
+      ],
+    },
+    {
+      key: "electricityBill",
+      question: "Enter your monthly electricity usage (in units):",
+      inputField: true, // Takes numeric input
+    },
+  ];
 
-  const [electricityBill, setElectricityBill] = useState("");
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const { userData } = useUserInput();
 
   const handleNext = () => {
-    updateUserData("energy", { electricityBill });
-    setActiveSection("Food");
+    if (currentQuestionIndex < electricityQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setActiveSection("Food"); // Move to next section
+    }
   };
 
-  return (
-    <div>
-      <h2>Electricity</h2>
-      <label>Electricity Unit :</label>
-      <input type="number" onChange={(e) => setElectricityBill(e.target.value)} />
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      setActiveSection("Transport"); // Move back to Transport
+    }
+  };
 
-      <button onClick={handleNext}>Next</button>
-      <button onClick={() => setActiveSection("Transport")}>Previous</button>
-    </div>
+  // Get current question
+  const currentQuestion = electricityQuestions[currentQuestionIndex];
+
+  return (
+    <QuizSection
+      icon={Bolt}
+      title="Electricity"
+      question={currentQuestion.question}
+      options={currentQuestion.options || []} // Handle cases where there are no options
+      category="energy"
+      field={currentQuestion.key}
+      followUp={currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null}
+      onNext={handleNext}
+      onPrevious={handlePrevious}
+    />
   );
 };
 

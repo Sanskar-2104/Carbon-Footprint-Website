@@ -7,7 +7,7 @@ export const UserInputProvider = ({ children }) => {
     transport: { vehicleType: "", distanceTravelled: "" },
     energy: { electricityBill: "" },
     food: { food: "" },
-    shopping: { shoppingAmount: "20", shoppingType: "clothing", ecoFriendly: "yes" }, // Ensure shopping exists
+    shopping: { shoppingAmount: "", shoppingType: "", ecoFriendly: "" }, // Ensure shopping exists
   });
 
   const updateUserData = (category, data) => {

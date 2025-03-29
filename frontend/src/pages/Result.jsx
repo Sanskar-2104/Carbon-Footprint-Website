@@ -222,6 +222,7 @@ const Result = () => {
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
       <h1>Result Page</h1>
+      <pre>{JSON.stringify(userData, null, 2)}</pre>
       <button 
         onClick={handleSubmit} 
         disabled={loading} 
