@@ -128,7 +128,7 @@ const Navbar = () => {
       <ul className="nav-links">
         <Link to="/"><li>Home</li></Link>
         <Link to="/calculate"><li className="active">Calculate</li></Link>
-        <li>Points</li>
+        <Link to="/redeem"><li>Redeem</li></Link>
 
         {isLoggedIn ? (
           <div className="profile-container" ref={dropdownRef}>

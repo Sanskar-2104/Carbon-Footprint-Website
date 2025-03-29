@@ -31,6 +31,8 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import ContentBox from "./components/ContentBox/ContentBox";
 import Home from "./pages/Home/Home"; // Import Home Page
 import LoginSignup from "./pages/Auth/LoginSignup";
+import Profile from "./pages/Profile/Profile";
+import Redeem from "./pages/Redeem/Redeem";
 import "./App.css";
 import { UserInputProvider } from "./context/UserInputContext";
 
@@ -57,6 +59,8 @@ function App() {
               }
             />
             <Route path="/auth" element={<LoginSignup />} />
+            <Route path="/redeem" element={<Redeem />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </div>
