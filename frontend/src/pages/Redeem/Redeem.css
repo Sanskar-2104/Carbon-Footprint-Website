@@ -1,60 +1,79 @@
 /* Supriya */
-body {
+.redeem-container {
     margin: 0;
-    font-family: Arial, sans-serif;
     background-color: #e5e5e5;
-    text-align: center;      
-  }
-  
-  
-  .redeem-container{
+    text-align: center;
     width: 100%;
   }
+  
+  /*.full-width {
+    width: 100%;
+  }*/
+  
   .points-bar {
     background-color: #1f2d1b;
     color: #f1c40f;
-    padding: 10px;
-    font-size: 18px;
+    padding: 15px;
+    font-size: 20px;
   }
   
   .redeem-section {
     background-color: #1f2d1b;
     color: white;
-    padding: 30px 0;
+    padding: 50px 0;
+  }
+  
+  .increased-height {
+    padding: 60px 0; /* Increased height */
   }
   
   .cards-container {
     display: flex;
     justify-content: center;
-    gap: 30px;
     flex-wrap: wrap;
-    padding: 30px 10px;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 10px;
+    width: 100%;
   }
   
   .card {
     background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 140px;
+    width: 180px; /* Increased width */
+    height: 220px; /* Increased height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
   
-  .image-placeholder {
+  .larger-placeholder {
     background-color: #555;
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
+    width: 120px; /* Increased size */
+    height: 120px; /* Increased size */
+    border-radius: 8px;
+  }
+  
+  .redeem-button {
+    background-color: #f1c40f;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
     border-radius: 5px;
   }
   
-  .points {
-    margin-top: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #f1c40f;
+  .redeem-button:hover {
+    background-color: #d4ac0d;
   }
   
+  /* Responsive Design */
   @media (max-width: 600px) {
     .cards-container {
       flex-direction: column;
