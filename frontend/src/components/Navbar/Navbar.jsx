@@ -87,15 +87,90 @@
 
 
 
+// import React, { useState, useEffect, useRef } from "react";
+// import { Link } from "react-router-dom";
+// import { User, LogOut } from "lucide-react"; // Import icons
+// import "./Navbar.css";
+
+// const Navbar = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [showDropdown, setShowDropdown] = useState(false);
+//   const dropdownRef = useRef(null);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     setIsLoggedIn(!!token);
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     setIsLoggedIn(false);
+//     window.location.href = "/"; // Redirect to home after logout
+//   };
+
+//   // Close dropdown when clicking outside
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+//         setShowDropdown(false);
+//       }
+//     };
+
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, []);
+
+//   return (
+//     <nav className="navbar">
+//       <div className="logo">SustainaTrack</div>
+//       <ul className="nav-links">
+//         <Link to="/"><li>Home</li></Link>
+//         <Link to="/calculate"><li className="active">Calculate</li></Link>
+//         <Link to="/redeem"><li>Redeem</li></Link>
+
+//         {isLoggedIn ? (
+//           <div className="profile-container" ref={dropdownRef}>
+//             <User
+//               className="profile-icon"
+//               size={28}
+//               onClick={() => setShowDropdown(!showDropdown)}
+//             />
+//             {showDropdown && (
+//               <div className="dropdown-menu">
+//                 <Link to="/profile" className="dropdown-item">Profile</Link>
+//                 <button className="dropdown-item logout-btn" onClick={handleLogout}>
+//                   <LogOut size={18} className="logout-icon" /> Logout
+//                 </button>
+//               </div>
+//             )}
+//           </div>
+//         ) : (
+//           <Link to="/auth">
+//             <button className="login-btn">Login/Sign up</button>
+//           </Link>
+//         )}
+//       </ul>
+//     </nav>
+//   );
+// };
+
+// export default Navbar;
+
+
+
+
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { User, LogOut } from "lucide-react"; // Import icons
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { User, LogOut } from "lucide-react"; 
 import "./Navbar.css";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const location = useLocation(); // Get current location
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -108,7 +183,6 @@ const Navbar = () => {
     window.location.href = "/"; // Redirect to home after logout
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -126,9 +200,15 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo">SustainaTrack</div>
       <ul className="nav-links">
-        <Link to="/"><li>Home</li></Link>
-        <Link to="/calculate"><li className="active">Calculate</li></Link>
-        <Link to="/redeem"><li>Redeem</li></Link>
+        <Link to="/">
+          <li className={location.pathname === "/" ? "active" : ""}>Home</li>
+        </Link>
+        <Link to="/calculate">
+          <li className={location.pathname === "/calculate" ? "active" : ""}>Calculate</li>
+        </Link>
+        <Link to="/redeem">
+          <li className={location.pathname === "/redeem" ? "active" : ""}>Redeem</li>
+        </Link>
 
         {isLoggedIn ? (
           <div className="profile-container" ref={dropdownRef}>
