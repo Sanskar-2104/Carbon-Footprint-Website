@@ -434,7 +434,7 @@ const Result = () => {
       {response && (
         <div>
           <h2>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
-          <FootprintProgress percentage={(response?.footprint?.total / 1000) * 100} />
+          <FootprintProgress percentage={(response?.footprint?.total / 260) * 100} />
 
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "20px" }}>
             <PieChart width={350} height={350}>

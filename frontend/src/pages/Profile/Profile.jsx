@@ -4,7 +4,7 @@ import "./Profile.css";
 
 const Profile = () => {
   return (
-    <div className="sidebar">
+    <div className="profile-sidebar">
       <div className="profile-section">
         <div className="avatar">
           <User size={40} />
