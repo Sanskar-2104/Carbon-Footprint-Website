@@ -277,10 +277,14 @@ const Shopping = ({ setActiveSection }) => {
 
   // Load existing shopping data from context
   useEffect(() => {
-    if (userData.shopping) {
-      updateUserData("shopping", userData.shopping);
-    }
-  }, [userData.shopping, updateUserData]);
+    const handleEvent = () => console.log("Event triggered");
+    document.addEventListener("click", handleEvent);
+    
+    return () => {
+      document.removeEventListener("click", handleEvent);
+    };
+  }, []);
+  
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
