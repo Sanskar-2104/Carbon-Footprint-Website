@@ -74,16 +74,15 @@
 
 
 const calculateEmissions = ({ 
-    mode, carpool, driveFrequency, dailyDistance, 
+    mode, carpool,noOfPassenger, driveFrequency, dailyDistance, 
     energyType,  electricityBill, 
-    meatFrequency, meatLover, dairyFrequency, restaurantChoice, 
+    meatFrequency, meatLover, dairyFrequency,
     shoppingAmount,  ecoFriendly 
 }) => {
     
     const EMISSION_FACTORS = {
         transport: {
             car: 0.18,
-            personelCar: 0.10,
             public: 0.05, // Average of bus & train emissions
             bike: 0.02,
             walk: 0.0
@@ -108,7 +107,7 @@ const calculateEmissions = ({
     let transportEmissions = 0;
     if (mode === "car" && driveFrequency) {
         transportEmissions = (dailyDistance || 0) * (EMISSION_FACTORS.transport.car || 0);
-        if (carpool === "yes") transportEmissions *= 0.5; // 50% reduction for carpooling
+        if (carpool === "yes") transportEmissions /= noOfPassenger; // 50% reduction for carpooling
     } else if (mode === "public") {
         transportEmissions = (dailyDistance || 0) * EMISSION_FACTORS.transport.public;
     } else if (mode === "bike") {
@@ -123,7 +122,6 @@ const calculateEmissions = ({
     if (meatFrequency === "4+" && meatLover) {
         foodEmissions += meatLover * 1.2; // Additional emissions for extra meat intake
     }
-    foodEmissions += EMISSION_FACTORS.food[restaurantChoice] || 0;
     foodEmissions += EMISSION_FACTORS.dairy[dairyFrequency] || 0;
 
     // 🛍️ **Shopping Emissions**

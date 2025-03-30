@@ -45,7 +45,6 @@ const FootPrintSchema = new mongoose.Schema({
         default: Date.now
     }
 
-
 });
 
 FootPrintSchema.index({ userId: 1 });
