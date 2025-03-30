@@ -360,6 +360,30 @@ const Result = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
+  const updateRewardPoints = async (pointsEarned) => {
+    try {
+      const token = localStorage.getItem("token"); // Retrieve token
+      const headers = { "Content-Type": "application/json" };
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+  
+      const res = await fetch("http://localhost:5000/api/gamification/points", {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify({ pointsToAdd: pointsEarned }),
+      });
+  
+      if (!res.ok) {
+        throw new Error("Failed to update points: " + (await res.text()));
+      }
+  
+      console.log("Reward points updated successfully!");
+    } catch (error) {
+      console.error("Error updating reward points:", error);
+    }
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -380,6 +404,11 @@ const Result = () => {
       }
       const data = await res.json();
       setResponse(data);
+
+      if (token) {
+        updateRewardPoints(100 - ((data.footprint.total / 800) * 100));
+      }
+
     } catch (error) {
       console.error("Error:", error);
     } finally {
