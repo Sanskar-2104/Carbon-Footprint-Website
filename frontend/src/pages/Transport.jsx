@@ -121,6 +121,112 @@
 
 
 
+// import React, { useState } from "react";
+// import { useUserInput } from "../context/UserInputContext";
+// import { Car } from "lucide-react"; // Import icon
+// import QuizSection from "./QuizSection";
+
+// const Transport = ({ setActiveSection }) => {
+//   const transportQuestions = [
+//     {
+//       key: "mode",
+//       question: "What is your most common mode of transportation?",
+//       options: [
+//         { label: "Car (gasoline/diesel)", value: "car" },
+//         { label: "Public transport (bus/train)", value: "public" },
+//         { label: "Bike", value: "bike" },
+//         { label: "Walk/bicycle", value: "walk" },
+//       ],
+//     },
+//     {
+//       key: "carpool",
+//       question: "Do you carpool or use rideshare?",
+//       options: [
+//         { label: "Yes", value: "yes" },
+//         { label: "No", value: "no" },
+//       ],
+//       showFor: ["car"], // Show only if "car" is selected
+//     },
+//     {
+//       key: "driveFrequency",
+//       question: "How often do you drive your car?",
+//       options: [
+//         { label: "Every day for long distances", value: "longDaily" },
+//         { label: "Every day for short distances", value: "shortDaily" },
+//         { label: "A few times a week", value: "fewTimes" },
+//         { label: "Rarely or never", value: "rarely" },
+//       ],
+//       showFor: ["car"], // Show only if "car" is selected
+//     },
+//     {
+//       key: "dailyDistance",
+//       question: "How much do you travel daily in km?",
+//       inputField: true, // Mark as an input field
+//     },
+//   ];
+
+//   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+//   const { userData } = useUserInput();
+
+//   const handleNext = () => {
+//     let nextIndex = currentQuestionIndex + 1;
+//     while (
+//       nextIndex < transportQuestions.length &&
+//       transportQuestions[nextIndex].showFor &&
+//       !transportQuestions[nextIndex].showFor.includes(userData.transport?.mode)
+//     ) {
+//       nextIndex++; // Skip hidden questions
+//     }
+//     if (nextIndex < transportQuestions.length) {
+//       setCurrentQuestionIndex(nextIndex);
+//     } else {
+//       setActiveSection("Electricity"); // Move to next section
+//     }
+//   };
+
+//   const handlePrevious = () => {
+//     let prevIndex = currentQuestionIndex - 1;
+//     while (
+//       prevIndex >= 0 &&
+//       transportQuestions[prevIndex].showFor &&
+//       !transportQuestions[prevIndex].showFor.includes(userData.transport?.mode)
+//     ) {
+//       prevIndex--; // Skip hidden questions
+//     }
+//     if (prevIndex >= 0) {
+//       setCurrentQuestionIndex(prevIndex);
+//     } else {
+//       setActiveSection("Shopping"); // Move back to Shopping
+//     }
+//   };
+
+//   // Check if the current question should be shown based on previous answers
+//   const currentQuestion = transportQuestions[currentQuestionIndex];
+//   if (currentQuestion.showFor && !currentQuestion.showFor.includes(userData.transport?.mode)) {
+//     handleNext(); // Skip the question if it shouldn't be shown
+//     return null;
+//   }
+
+//   return (
+//     <QuizSection
+//       icon={Car}
+//       title="Transport"
+//       question={currentQuestion.question}
+//       options={currentQuestion.options || []} // Handle cases where there are no options
+//       category="transport"
+//       field={currentQuestion.key}
+//       followUp={currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null}
+//       onNext={handleNext}
+//       onPrevious={handlePrevious}
+//     />
+//   );
+// };
+
+// export default Transport;
+
+
+
+
 import React, { useState } from "react";
 import { useUserInput } from "../context/UserInputContext";
 import { Car } from "lucide-react"; // Import icon
@@ -148,6 +254,13 @@ const Transport = ({ setActiveSection }) => {
       showFor: ["car"], // Show only if "car" is selected
     },
     {
+      key: "carpoolCount",
+      question: "How many people do you share the ride with?",
+      inputField: true, // This will be an input box
+      showFor: ["yes"], // Show only if carpool is "yes"
+      dependsOn: "carpool", // Depends on carpool answer
+    },
+    {
       key: "driveFrequency",
       question: "How often do you drive your car?",
       options: [
@@ -173,7 +286,9 @@ const Transport = ({ setActiveSection }) => {
     while (
       nextIndex < transportQuestions.length &&
       transportQuestions[nextIndex].showFor &&
-      !transportQuestions[nextIndex].showFor.includes(userData.transport?.mode)
+      !transportQuestions[nextIndex].showFor.includes(
+        userData.transport?.[transportQuestions[nextIndex].dependsOn] || userData.transport?.mode
+      )
     ) {
       nextIndex++; // Skip hidden questions
     }
@@ -189,7 +304,9 @@ const Transport = ({ setActiveSection }) => {
     while (
       prevIndex >= 0 &&
       transportQuestions[prevIndex].showFor &&
-      !transportQuestions[prevIndex].showFor.includes(userData.transport?.mode)
+      !transportQuestions[prevIndex].showFor.includes(
+        userData.transport?.[transportQuestions[prevIndex].dependsOn] || userData.transport?.mode
+      )
     ) {
       prevIndex--; // Skip hidden questions
     }
@@ -202,7 +319,10 @@ const Transport = ({ setActiveSection }) => {
 
   // Check if the current question should be shown based on previous answers
   const currentQuestion = transportQuestions[currentQuestionIndex];
-  if (currentQuestion.showFor && !currentQuestion.showFor.includes(userData.transport?.mode)) {
+  if (
+    currentQuestion.showFor &&
+    !currentQuestion.showFor.includes(userData.transport?.[currentQuestion.dependsOn] || userData.transport?.mode)
+  ) {
     handleNext(); // Skip the question if it shouldn't be shown
     return null;
   }
@@ -215,7 +335,11 @@ const Transport = ({ setActiveSection }) => {
       options={currentQuestion.options || []} // Handle cases where there are no options
       category="transport"
       field={currentQuestion.key}
-      followUp={currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null}
+      followUp={
+        currentQuestion.inputField
+          ? { showFor: [true], question: currentQuestion.question }
+          : null
+      }
       onNext={handleNext}
       onPrevious={handlePrevious}
     />
