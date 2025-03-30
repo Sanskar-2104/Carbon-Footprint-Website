@@ -1,26 +1,32 @@
-// import React from "react";
-// import { MapPin } from "lucide-react"; // Using Lucide React
-// import "./Profile.css";
+import React from "react";
+import { MapPin, Linkedin, User, Signature } from "lucide-react";
+import "./Profile.css";
 
-// const Profile = () => {
-//   return (
-//     <div className="profile-container">
-//       {/* Profile Image */}
-//       <div className="profile-avatar"></div>
+const Profile = () => {
+  return (
+    <div className="sidebar">
+      <div className="profile-section">
+        <div className="avatar">
+          <User size={40} />
+        </div>
+        <h2>Amit Thakur</h2>
+        <div className="info-item">
+            <Signature size={18} />
+            <span>thakuras15</span>
+          </div>
+        <div className="info">
+          <div className="info-item">
+            <MapPin size={18} />
+            <span>Location</span>
+          </div>
+          <div className="info-item">
+            <Linkedin size={18} />
+            <span>LinkedIn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-//       {/* User Info */}
-//       <h2 className="profile-name">Aadhya Shah</h2>
-//       <p className="profile-username">@aadhya21</p>
-
-//       {/* Contact Info */}
-//       <div className="profile-info">
-//         <div className="profile-item">
-//           <MapPin className="profile-icon" />
-//           <span>Location</span>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Profile;
+export default Profile;

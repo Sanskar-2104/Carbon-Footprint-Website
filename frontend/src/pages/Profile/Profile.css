@@ -1,46 +1,48 @@
-/* Amit */
-/* .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #2d3e2f;
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-  }
-  
-  .profile-avatar {
-    width: 60px;
-    height: 60px;
-    background-color: gray;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .profile-name {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .profile-username {
-    font-size: 14px;
-    color: #ccc;
-  }
-  
-  .profile-info {
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  .profile-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #ccc;
-    margin-bottom: 10px;
-  }
-  
-  .profile-icon {
-    font-size: 18px;
-  } */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #2f3e2f;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-section {
+  text-align: center;
+}
+
+.avatar {
+  background-color: #4a5c4a;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.username {
+  font-size: 18px;
+  color: #c0c0c0;
+  text-align: center;
+}
+
+.info {
+  margin-top: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
