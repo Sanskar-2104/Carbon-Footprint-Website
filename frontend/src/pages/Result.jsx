@@ -354,6 +354,8 @@ import { useUserInput } from "../context/UserInputContext";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Car, Bolt, Utensils, ShoppingBag, Bus, Lightbulb, Leaf, RefreshCcw, Plug, ShoppingCart, Wind, Plane } from "lucide-react"; 
 import FootprintProgress from "./FootprintProgress";
+import Confetti from "react-confetti";
+import { motion } from "framer-motion";
 
 const Result = () => {
   const { userData } = useUserInput();
@@ -387,7 +389,6 @@ const Result = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-
       const token = localStorage.getItem("token"); // Retrieve token
         const headers = { "Content-Type": "application/json" };
         if (token) {
@@ -447,6 +448,9 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
   useEffect(() => {
     setSelectedTips(getRandomTips(tipsWithIcons));
   }, []);
+
+  const [showModal, setShowModal] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
@@ -514,6 +518,23 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
         <div>
           <h2>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
           <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} />
+
+          <button 
+            onClick={() => setShowModal(true)}
+            style={{
+              padding: "10px 20px",
+              fontSize: "16px",
+              borderRadius: "8px",
+              border: "none",
+              background: "#4E6151",
+              color: "#fff",
+              cursor: "pointer",
+              transition: "0.3s",
+              marginTop: "10px"
+            }}
+          >
+            Claim Your Points
+          </button>
 
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "20px" }}>
             <PieChart width={350} height={350}>
@@ -599,6 +620,70 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
               ))}
             </div>
           </div>
+          {/* Animated Modal */}
+          {showModal && (
+            <>
+              {/* Confetti Effect 🎊 */}
+              <Confetti width={windowSize.width} height={windowSize.height} numberOfPieces={300} />
+
+              {/* Background Overlay */}
+              <div style={{
+                position: "fixed", 
+                top: "0", left: "0", 
+                width: "100vw", height: "100vh", 
+                background: "rgba(0, 0, 0, 0.6)", 
+                display: "flex", justifyContent: "center", alignItems: "center",
+                backdropFilter: "blur(8px)"
+              }}>
+                {/* Animated Modal Box */}
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  style={{
+                    background: "linear-gradient(135deg, #ffffff, #e3f1ff)",
+                    padding: "20px",
+                    borderRadius: "15px",
+                    textAlign: "center",
+                    minWidth: "320px",
+                    boxShadow: "0px 8px 20px rgba(0,0,0,0.3)",
+                    position: "relative"
+                  }}
+                >
+                  <h2 style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    color: "#333",
+                    marginBottom: "10px"
+                  }}>🎉 Congratulations! 🎉</h2>
+
+                  <p style={{ fontSize: "18px", color: "#444" }}>
+                    You claimed <b>{100 - ((response?.footprint?.total / 800) * 100)}</b> reward points!
+                  </p>
+
+                  {/* Close Button */}
+                  <button 
+                    onClick={() => setShowModal(false)}
+                    style={{
+                      padding: "10px 20px",
+                      fontSize: "16px",
+                      borderRadius: "8px",
+                      border: "none",
+                      background: "#5E8C61",
+                      color: "#fff",
+                      cursor: "pointer",
+                      marginTop: "15px",
+                      transition: "0.3s ease",
+                    }}
+                    onMouseEnter={(e) => e.target.style.background = "#497D4E"}
+                    onMouseLeave={(e) => e.target.style.background = "#5E8C61"}
+                  >
+                    Close
+                  </button>
+                </motion.div>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
