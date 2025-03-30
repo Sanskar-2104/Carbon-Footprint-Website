@@ -1,1 +1,64 @@
 /* Supriya */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e5e5e5;
+    text-align: center;      
+  }
+  
+  
+  .redeem-container{
+    width: 100%;
+  }
+  .points-bar {
+    background-color: #1f2d1b;
+    color: #f1c40f;
+    padding: 10px;
+    font-size: 18px;
+  }
+  
+  .redeem-section {
+    background-color: #1f2d1b;
+    color: white;
+    padding: 30px 0;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 30px 10px;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 140px;
+  }
+  
+  .image-placeholder {
+    background-color: #555;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  
+  .points {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #f1c40f;
+  }
+  
+  @media (max-width: 600px) {
+    .cards-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
