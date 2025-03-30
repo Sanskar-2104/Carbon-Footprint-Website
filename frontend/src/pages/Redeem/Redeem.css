@@ -1,14 +1,9 @@
 /* Supriya */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #e5e5e5;
-    text-align: center;      
-  }
-  
-  
   .redeem-container{
+    margin: 0;
     width: 100%;
+    background-color: #e5e5e5;
+    text-align: center; 
   }
   .points-bar {
     background-color: #1f2d1b;
