@@ -69,15 +69,14 @@
 // export default Home;
 
 
-import React from "react";
-import "./Home.css";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Leaf, Gift, BarChart3, Users, HelpCircle } from "lucide-react";
-import { Medal, Trophy, BadgeCheck } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Leaf, Gift, BarChart3, Users, HelpCircle, ArrowDown, ArrowUp, Medal, Trophy, BadgeCheck } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import "./Home.css";
 
-const data = [
+// Sample data for charts
+const savingsData = [
   { month: "Jan", saved: 10 },
   { month: "Feb", saved: 30 },
   { month: "Mar", saved: 50 },
@@ -108,8 +107,28 @@ const achievements = [
 
 const Home = () => {
   const [showGreenWorld, setShowGreenWorld] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(null);
+
+  // Animation variants
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+  };
+
+  const slideIn = {
+    initial: { opacity: 0, x: -30 },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.8 } }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
-    <>
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero">
@@ -135,7 +154,7 @@ const Home = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1, ease: "easeInOut" }}
           >
-            Track Your Carbon Footprint & Make a Difference
+            Track Your <span className="text-gradient">Carbon Footprint</span> & Make a Difference
           </motion.h1>
 
           <motion.p
@@ -162,196 +181,267 @@ const Home = () => {
         </motion.div>
       </section>
 
-      
-
-      <section className="bento-container">
-      <motion.h2
-        className="title"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      >
-        Live Data Analytics
-      </motion.h2>
-
-      <div className="bento-grid">
-        {/* Graph Section - Large */}
-        <motion.div
-          className="graph-box"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
-        >
-          📊 Graph Here
-        </motion.div>
-
-        {/* Feature 1 */}
-        <motion.div className="feature-box" whileHover={{ scale: 1.05 }}>
-          <Leaf size={40} />
-          <h3>Eco-Friendly Insights</h3>
-          <p>Understand your carbon footprint.</p>
-        </motion.div>
-
-        {/* Feature 2 */}
-        <motion.div className="feature-box" whileHover={{ scale: 1.05 }}>
-          <BarChart3 size={40} />
-          <h3>Data-Driven Tracking</h3>
-          <p>Monitor your progress in real time.</p>
-        </motion.div>
-
-        {/* Feature 3 */}
-        <motion.div className="feature-box" whileHover={{ scale: 1.05 }}>
-          <Users size={40} />
-          <h3>Community Engagement</h3>
-          <p>Join a global impact community.</p>
-        </motion.div>
-
-        {/* Feature 4 */}
-        <motion.div className="feature-box" whileHover={{ scale: 1.05 }}>
-          <Gift size={40} />
-          <h3>Rewards & Challenges</h3>
-          <p>Earn rewards for sustainability.</p>
-        </motion.div>
-
-        {/* Feature 5 */}
-        <motion.div className="feature-box" whileHover={{ scale: 1.05 }}>
-          <HelpCircle size={40} />
-          <h3>Expert Guidance</h3>
-          <p>Get sustainability tips from experts.</p>
-        </motion.div>
-      </div>
-    </section>
-
-    {/* <section className="gamification">
-      <motion.h2 
-        initial={{ opacity: 0, y: -20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.6 }}
-      >
-        Compete with Friends, Unlock Green Rewards!
-      </motion.h2>
-
-      <div className="gamification-container">
-        {/* Leaderboard *
+      {/* Stats Overview Section */}
+      <section className="stats-section">
         <motion.div 
-          className="leaderboard"
-          initial={{ opacity: 0, x: -30 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          transition={{ duration: 0.8 }}
+          className="stats-container"
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <h3>Leaderboard</h3>
-          <ul>
-            {leaderboardData.map((player, index) => (
-              <motion.li 
-                key={index}
-                className={`leaderboard-item ${index < 3 ? "top-rank" : ""}`}
-                whileHover={{ scale: 1.05 }}
-              >
-                <span className="rank">#{player.rank}</span>
-                <span className="name">{player.name}</span>
-                <span className="points">{player.points} pts</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Achievements *
-        <motion.div 
-          className="achievements"
-          initial={{ opacity: 0, x: 30 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          transition={{ duration: 0.8 }}
-        >
-          <h3>Achievements</h3>
-          <div className="achievement-grid">
-            {achievements.map((achievement, index) => (
-              <motion.div 
-                key={index} 
-                className="achievement-card"
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="achievement-icon">{achievement.icon}</div>
-                <h4>{achievement.title}</h4>
-                <p>{achievement.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Call to Action *
-      <motion.a 
-        href="#" 
-        className="join-now-btn"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        Join Now
-      </motion.a>
-    </section> */}
-
-       <section className="carbon-impact">
-          <motion.h2 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6 }}
-          >
-            Track Your CO₂ Savings
-          </motion.h2>
-
-          <div className="impact-container">
-            {/* Before & After Animation */}
-            <motion.div
-              className="impact-animation"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              <motion.img
-                src={showGreenWorld ? "/assets/earth-green.jpg" : "/assets/earth-polluted.jpg"}
-                alt="World Impact"
-                className="impact-image"
-                key={showGreenWorld ? "green" : "polluted"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              />
-              <motion.button 
-                className="toggle-btn"
-                onClick={() => setShowGreenWorld(!showGreenWorld)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {showGreenWorld ? "See Polluted World" : "See Green World"}
-              </motion.button>
-            </motion.div>
-
-            {/* Interactive CO₂ Savings Chart */}
+          {[
+            { label: "CO₂ Saved", value: "1,240 kg", icon: <ArrowDown size={20} className="stats-icon" /> },
+            { label: "Energy Saved", value: "320 kWh", icon: <ArrowDown size={20} className="stats-icon" /> },
+            { label: "Trees Planted", value: "24", icon: <ArrowUp size={20} className="stats-icon" /> },
+            { label: "Community Rank", value: "#42", icon: <Medal size={20} className="stats-icon" /> }
+          ].map((stat, index) => (
             <motion.div 
-              className="impact-chart"
-              initial={{ opacity: 0, x: 30 }} 
-              animate={{ opacity: 1, x: 0 }} 
-              transition={{ duration: 0.8 }}
+              key={index}
+              variants={fadeIn}
+              className="stat-card"
+              whileHover={{ scale: 1.05 }}
             >
+              <div className="stat-header">
+                {stat.icon}
+                <span className="stat-label">{stat.label}</span>
+              </div>
+              <span className="stat-value">{stat.value}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Analytics Section with Bento Grid */}
+      <section className="bento-container">
+        <motion.h2
+          className="section-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        >
+          Real-Time Analytics
+        </motion.h2>
+
+        <div className="bento-grid">
+          {/* Graph Section - Large */}
+          <motion.div
+            className="graph-box"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            viewport={{ once: true }}
+          >
+            <h3>Your Carbon Reduction Progress</h3>
+            <div className="chart-container">
               <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="saved" stroke="#4CAF50" strokeWidth={3} />
+                <LineChart data={savingsData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis dataKey="month" stroke="#aaa" />
+                  <YAxis stroke="#aaa" />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid #333' }}
+                    labelStyle={{ color: '#fff' }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="saved" 
+                    stroke="#4CAF50" 
+                    strokeWidth={3}
+                    dot={{ stroke: '#4CAF50', strokeWidth: 2, r: 4, fill: '#000' }}
+                    activeDot={{ stroke: '#4CAF50', strokeWidth: 2, r: 8, fill: '#000' }}
+                  />
                 </LineChart>
               </ResponsiveContainer>
-            </motion.div>
-          </div>
-        </section>
+            </div>
+          </motion.div>
 
-    
-      </div>
-    </>
+          {/* Feature Cards */}
+          {[
+            { icon: <Leaf size={40} />, title: "Eco-Friendly Insights", description: "Understand your carbon footprint in detail" },
+            { icon: <BarChart3 size={40} />, title: "Data-Driven Tracking", description: "Monitor your progress in real-time" },
+            { icon: <Users size={40} />, title: "Community Impact", description: "See your contribution to global sustainability" },
+            { icon: <Gift size={40} />, title: "Rewards & Challenges", description: "Earn rewards for sustainability" },
+            { icon: <HelpCircle size={40} />, title: "Expert Guidance", description: "Get tips from sustainability experts" }
+          ].map((feature, index) => (
+            <motion.div 
+              key={index}
+              className={`feature-box ${activeFeature === index ? 'feature-active' : ''}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              onMouseEnter={() => setActiveFeature(index)}
+              onMouseLeave={() => setActiveFeature(null)}
+            >
+              <div className="feature-icon">{feature.icon}</div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Carbon Impact Section */}
+      <section className="carbon-impact">
+        <motion.h2 
+          className="section-title"
+          initial={{ opacity: 0, y: -20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Visualize Your Impact
+        </motion.h2>
+
+        <div className="impact-container">
+          {/* Before & After Animation */}
+          <motion.div
+            className="impact-animation"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="image-container">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={showGreenWorld ? "green" : "polluted"}
+                  src={showGreenWorld ? "/assets/earth-green.jpg" : "/assets/earth-polluted.jpg"}
+                  alt="World Impact"
+                  className="impact-image"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                />
+              </AnimatePresence>
+              
+              <div className="image-caption">
+                <h3>{showGreenWorld ? "A Greener Tomorrow" : "Current Environmental Challenge"}</h3>
+                <p>
+                  {showGreenWorld 
+                    ? "By reducing your carbon footprint, you contribute to a healthier planet"
+                    : "Our current carbon emissions lead to pollution and climate change"
+                  }
+                </p>
+              </div>
+            </div>
+            
+            <motion.button 
+              className="toggle-btn"
+              onClick={() => setShowGreenWorld(!showGreenWorld)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Show {showGreenWorld ? "Current Reality" : "Potential Future"}
+            </motion.button>
+          </motion.div>
+
+          {/* Interactive CO₂ Savings Chart */}
+          <motion.div 
+            className="impact-metrics"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {[
+              { title: "Reduce CO₂ Emissions", metric: "324 kg", description: "Amount of CO₂ you can save monthly" },
+              { title: "Plant Trees", metric: "8 trees", description: "Equivalent environmental impact per month" },
+              { title: "Save Water", metric: "1,200 gallons", description: "Water saved through sustainable practices" },
+              { title: "Reduce Waste", metric: "85%", description: "Potential waste reduction through recycling" }
+            ].map((metric, index) => (
+              <motion.div
+                key={index}
+                className="metric-card"
+                variants={slideIn}
+                whileHover={{ scale: 1.03 }}
+              >
+                <h3>{metric.title}</h3>
+                <div className="metric-value">{metric.metric}</div>
+                <p>{metric.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Gamification Section */}
+      <section className="gamification">
+        <motion.h2 
+          className="section-title"
+          initial={{ opacity: 0, y: -20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Compete with Friends, Unlock Green Rewards!
+        </motion.h2>
+
+        <div className="gamification-container">
+          {/* Leaderboard */}
+          <motion.div 
+            className="leaderboard"
+            initial={{ opacity: 0, x: -30 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3>Leaderboard</h3>
+            <ul>
+              {leaderboardData.map((player, index) => (
+                <motion.li 
+                  key={index}
+                  className={`leaderboard-item ${index < 3 ? "top-rank" : ""}`}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <span className="rank">#{player.rank}</span>
+                  <span className="name">{player.name}</span>
+                  <span className="points">{player.points} pts</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Achievements */}
+          <motion.div 
+            className="achievements"
+            initial={{ opacity: 0, x: 30 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3>Achievements</h3>
+            <div className="achievement-grid">
+              {achievements.map((achievement, index) => (
+                <motion.div 
+                  key={index} 
+                  className="achievement-card"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="achievement-icon">{achievement.icon}</div>
+                  <h4>{achievement.title}</h4>
+                  <p>{achievement.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Call to Action */}
+        <motion.a 
+          href="#" 
+          className="join-now-btn"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          viewport={{ once: true }}
+        >
+          Join Now
+        </motion.a>
+      </section>
+    </div>
   );
 };
 
