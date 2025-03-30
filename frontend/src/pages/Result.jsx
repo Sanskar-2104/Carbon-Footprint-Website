@@ -363,11 +363,18 @@ const Result = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/footprint/calculate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
+
+      const token = localStorage.getItem("token"); // Retrieve token
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
+
+        const res = await fetch("http://localhost:5000/api/footprint/calculate", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(userData),
+        });
       if (!res.ok) {
         throw new Error("Server error: " + (await res.text()));
       }
