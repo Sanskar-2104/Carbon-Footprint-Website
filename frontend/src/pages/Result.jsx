@@ -406,6 +406,15 @@ const Result = () => {
 
   const [selectedTips, setSelectedTips] = useState([]);
 
+  const categoryIcons = {
+  transport: <Car size={24} color="#5E8C61" />,
+  electricity: <Bolt size={24} color="#5E8C61" />,
+  food: <Utensils size={24} color="#5E8C61" />,
+  shopping: <ShoppingBag size={24} color="#5E8C61" />,
+};
+
+const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Convert camelCase to readable text
+
   useEffect(() => {
     setSelectedTips(getRandomTips(tipsWithIcons));
   }, []);
@@ -413,7 +422,48 @@ const Result = () => {
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
       <h1>Result Page</h1>
-      <pre>{JSON.stringify(userData,null,2)}</pre>
+      <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "24px", marginBottom: "15px", color: "#333" }}>Your Input Summary</h2>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",  // 2 columns
+          gap: "20px",
+          justifyContent: "center",
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "auto",
+        }}>
+          {Object.entries(userData).map(([key, value], index) => (
+            <div key={index} style={{
+              background: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+              textAlign: "left",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "15px",
+              borderLeft: "5px solid #5E8C61",
+            }}>
+              {categoryIcons[key.toLowerCase()] || <Bolt size={28} color="#333" />} {/* Show icon */}
+              <div>
+                <b style={{ fontSize: "16px", color: "#333" }}>{formatLabel(key)}:</b>
+                {typeof value === "object" ? (
+                  <ul style={{ paddingLeft: "15px", marginTop: "5px" }}>
+                    {Object.entries(value).map(([subKey, subValue]) => (
+                      <li key={subKey} style={{ fontSize: "14px", color: "#666" }}>
+                        <b>{formatLabel(subKey)}:</b> {subValue}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ fontSize: "14px", margin: "5px 0", color: "#666" }}>{value}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       <button 
         onClick={handleSubmit} 
         disabled={loading} 
@@ -434,7 +484,7 @@ const Result = () => {
       {response && (
         <div>
           <h2>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
-          <FootprintProgress percentage={(response?.footprint?.total / 260) * 100} />
+          <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} />
 
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "20px" }}>
             <PieChart width={350} height={350}>
