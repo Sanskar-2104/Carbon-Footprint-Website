@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/points',authenticateToken, getPoints);
 // router.get('/badges/:userId', getBadges);
-router.post('/redeem-reward', redeemReward);
+router.post('/redeem-reward',authenticateToken, redeemReward);
 
 export default router;

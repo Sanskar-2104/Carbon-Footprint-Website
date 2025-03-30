@@ -19,9 +19,9 @@ export const getPoints = async (req, res) => {
 
 export const redeemReward = async (req, res) => {
     try {
-        if (!req.user) {
-            return res.status(404).json({ error:"Unauthorized",message: "Login to redeem rewards" });
-        }
+        // if (!req.user) {
+        //     return res.status(404).json({ error:"Unauthorized",message: "Login to redeem rewards" });
+        // }
         const user = await User.findById(req.user.id);
         const { pointsToRedeem } = req.body;
         if (!user) {
