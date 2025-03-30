@@ -4,9 +4,9 @@ const UserInputContext = createContext();
 
 export const UserInputProvider = ({ children }) => {
   const [userData, setUserData] = useState({
-    transport: { vehicleType: "", distanceTravelled: "" },
-    energy: { electricityBill: "" },
-    food: { food: "" },
+    transport: { mode: "", carpool: "", driveFrequency: "" , dailyDistance: ""},
+    energy: { energyType: "", applianceUsage: "" ,electricityBill: "" },
+    food: { food: "", meatFrequency: "", meatLover: "", dairyFrequency: "", restaurantChoice: "" },
     shopping: { shoppingAmount: "", shoppingType: "", ecoFriendly: "" }, // Ensure shopping exists
   });
 

@@ -77,11 +77,11 @@ const Food = ({ setActiveSection }) => {
         { label: "Meat in most meals (2-3 times a day)", value: "2-3" },
         { label: "Meat once a day", value: "1" },
         { label: "Meat a few times a week", value: "few" },
-        { label: "Never eat meat", value: "rarely" },
+        { label: "Never eat meat", value: "never" },
       ],
     },
     {
-      key: "omnivore",
+      key: "meatLover",
       question: "How many times do you have meat in your meals per week?",
       inputField: true, // Number input
       showFor: ["4+"], // Show only if "4+" is selected
@@ -93,7 +93,7 @@ const Food = ({ setActiveSection }) => {
         { label: "Multiple times a day", value: "multiple" },
         { label: "Once a day", value: "daily" },
         { label: "A few times a week", value: "few" },
-        { label: "Never", value: "rarely" },
+        { label: "Never", value: "never" },
       ],
     },
     {

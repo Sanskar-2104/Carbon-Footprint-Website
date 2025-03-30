@@ -24,50 +24,119 @@
 //     return { transportEmissions, energyEmissions, foodEmissions, shoppingEmissions, total };
 // }
 
-const calculateEmissions = ({ vehicleType, distanceTravelled , electricityBill, foodType, shoppingAmount, shoppingType, ecoFriendly }) => {
+// const calculateEmissions = ({ vehicleType, distanceTravelled , electricityBill, foodType, shoppingAmount, shoppingType, ecoFriendly }) => {
+//     const EMISSION_FACTORS = {
+//         transport: {
+//             car: 0.18,  // kg CO2 per km
+//             bike: 0.05, // kg CO2 per km (motorcycle)
+//             bus: 0.07,  // kg CO2 per passenger-km
+//             train: 0.03, // kg CO2 per passenger-km
+//             bicycle: 0.0, // No emissions
+//             walking: 0.0  // No emissions
+//         },
+//         energy: {
+//             electricity: 0.5 // kg CO2 per unit (kWh) of electricity
+//         },
+//         food: {
+//             vegan: 4.11, // kg CO2 per day
+//             vegetarian: 4.66, 
+//             non_vegetarian: 6.85
+//         },
+//         shopping: {
+//             low: 2,   // kg CO2 per day
+//             medium: 5,
+//             high: 10
+//         }
+//     };
+
+//     // Transport emissions
+//     const transportEmissions = (distanceTravelled || 0) * (EMISSION_FACTORS.transport[vehicleType] || 0);
+
+//     // Energy emissions (electricity bill-based)
+//     const electricityEmissions = (electricityBill || 0) * EMISSION_FACTORS.energy.electricity;
+
+//     // Food emissions
+//     const foodEmissions = EMISSION_FACTORS.food[foodType] || 0;
+
+//     // Shopping emissions with eco-friendly discount
+//     let shoppingEmissions = (shoppingAmount || 0) * 0.002; // Assuming 2 kg CO2 per $1000 spent
+//     if (ecoFriendly === "yes") {
+//         shoppingEmissions *= 0.5; // 50% reduction for eco-friendly purchases
+//     }
+
+//     // Total emissions
+//     const total = transportEmissions + electricityEmissions + foodEmissions + shoppingEmissions;
+
+//     return { transportEmissions, electricityEmissions, foodEmissions, shoppingEmissions, total };
+// };
+
+// export default calculateEmissions;
+
+
+const calculateEmissions = ({ 
+    mode, carpool, driveFrequency, dailyDistance, 
+    energyType,  electricityBill, 
+    meatFrequency, meatLover, dairyFrequency, restaurantChoice, 
+    shoppingAmount,  ecoFriendly 
+}) => {
+    
     const EMISSION_FACTORS = {
         transport: {
-            car: 0.18,  // kg CO2 per km
-            bike: 0.05, // kg CO2 per km (motorcycle)
-            bus: 0.07,  // kg CO2 per passenger-km
-            train: 0.03, // kg CO2 per passenger-km
-            bicycle: 0.0, // No emissions
-            walking: 0.0  // No emissions
+            car: 0.18,
+            personelCar: 0.10,
+            public: 0.05, // Average of bus & train emissions
+            bike: 0.02,
+            walk: 0.0
         },
         energy: {
-            electricity: 0.5 // kg CO2 per unit (kWh) of electricity
+            fossil: 0.6,   // kg CO2 per kWh
+            mixed: 0.4,    // kg CO2 per kWh
+            renewable: 0.05 // kg CO2 per kWh
         },
         food: {
-            vegan: 4.11, // kg CO2 per day
-            vegetarian: 4.66, 
-            non_vegetarian: 6.85
+            "4+": 9.5, "2-3": 6.85, "1": 5.34, "few": 4.66, "never": 4.11, // kg CO2 per day
+        },
+        dairy: {
+            multiple: 3.0, daily: 2.0, few: 1.0, rarely: 0.0
         },
         shopping: {
-            low: 2,   // kg CO2 per day
-            medium: 5,
-            high: 10
+            low: 2, medium: 5, high: 10 // kg CO2 per purchase category
         }
     };
 
-    // Transport emissions
-    const transportEmissions = (distanceTravelled || 0) * (EMISSION_FACTORS.transport[vehicleType] || 0);
+    // 🚗 **Transport Emissions**
+    let transportEmissions = 0;
+    if (mode === "car" && driveFrequency) {
+        transportEmissions = (dailyDistance || 0) * (EMISSION_FACTORS.transport.car || 0);
+        if (carpool === "yes") transportEmissions *= 0.5; // 50% reduction for carpooling
+    } else if (mode === "public") {
+        transportEmissions = (dailyDistance || 0) * EMISSION_FACTORS.transport.public;
+    } else if (mode === "bike") {
+        transportEmissions = (dailyDistance || 0) * EMISSION_FACTORS.transport.bike;
+    } // No emissions for walk
 
-    // Energy emissions (electricity bill-based)
-    const electricityEmissions = (electricityBill || 0) * EMISSION_FACTORS.energy.electricity;
+    // ⚡ **Energy Emissions**
+    let electricityEmissions = (electricityBill || 0) * (EMISSION_FACTORS.energy[energyType] || 0);
 
-    // Food emissions
-    const foodEmissions = EMISSION_FACTORS.food[foodType] || 0;
+    // 🍗 **Food Emissions**
+    let foodEmissions = EMISSION_FACTORS.food[meatFrequency] || 0;
+    if (meatFrequency === "4+" && meatLover) {
+        foodEmissions += meatLover * 1.2; // Additional emissions for extra meat intake
+    }
+    foodEmissions += EMISSION_FACTORS.food[restaurantChoice] || 0;
+    foodEmissions += EMISSION_FACTORS.dairy[dairyFrequency] || 0;
 
-    // Shopping emissions with eco-friendly discount
-    let shoppingEmissions = (shoppingAmount || 0) * 0.002; // Assuming 2 kg CO2 per $1000 spent
-    if (ecoFriendly === "yes") {
+    // 🛍️ **Shopping Emissions**
+    let shoppingEmissions = EMISSION_FACTORS.shopping[shoppingAmount] || 0;
+    if (ecoFriendly === "true") {
         shoppingEmissions *= 0.5; // 50% reduction for eco-friendly purchases
     }
 
-    // Total emissions
+    // 🌍 **Total Carbon Footprint**
     const total = transportEmissions + electricityEmissions + foodEmissions + shoppingEmissions;
 
     return { transportEmissions, electricityEmissions, foodEmissions, shoppingEmissions, total };
 };
 
 export default calculateEmissions;
+
