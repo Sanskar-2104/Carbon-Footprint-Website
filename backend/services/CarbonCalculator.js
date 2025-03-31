@@ -95,14 +95,14 @@ const calculateEmissions = ({
             renewable: 0.05 // kg CO2 per kWh
         },
         food: {
-            "4+": 9.5, "2-3": 6.85, "1": 5.34, "few": 4.66, "never": 4.11, // kg CO2 per day
+            "4+": 9.5, "2-3": 6.85, "1": 5.34, "few": 4.66, "never": 4.11, "no":0,// kg CO2 per day
         },
         dairy: {
             multiple: 3.0, daily: 2.0, few: 1.0, never: 0.0
         },
         shopping: {
-            small_items: { rarely: 2, occasionally: 5, frequently: 10 }, // Books, accessories
-            clothing: { rarely: 5, occasionally: 10, frequently: 20 }, // T-shirts, jeans, shoes
+            small_items: { never: 0,rarely: 2, occasionally: 5, frequently: 10 }, // Books, accessories
+            clothing: { never: 0,rarely: 5, occasionally: 10, frequently: 20 }, // T-shirts, jeans, shoes
             small_electronics: { rarely: 5, "1-2 years": 20, frequently: 50 }, // Headphones, smartwatches
             medium_electronics: { rarely: 200, occasionally: 350, frequently: 500 }, // Laptops, TVs
             home_furniture: { rarely: 20, occasionally: 50, frequently: 100 }, // Chairs, tables, beds
@@ -137,6 +137,7 @@ const calculateEmissions = ({
     
     try {
         if (purchaseCategory === "small_clothing") {
+            console.log("Here small clothing");
             shoppingEmissions += (EMISSION_FACTORS.shopping.small_items[shoppingFrequency] || 0);
             shoppingEmissions += (EMISSION_FACTORS.shopping.clothing[clothingPurchase] || 0);
         }

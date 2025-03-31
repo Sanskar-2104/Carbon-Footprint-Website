@@ -6,7 +6,7 @@ export const UserInputProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     transport: { mode: "", carpool: "", driveFrequency: "" , dailyDistance: ""},
     energy: { energyType: "", applianceUsage: "" ,electricityBill: "" },
-    food: { food: "", meatFrequency: "", meatLover: "", dairyFrequency: "", restaurantChoice: "" },
+    food: { meatFrequency: "", meatLover: "", dairyFrequency: "", restaurantChoice: "" },
     shopping: { purchaseCategory:"",shoppingFrequency:"", clothingPurchase: "", electronicsReplacement: "", mediumElectronics: "", homeFurniture: "", applianceReplacement: ""}, // Ensure shopping exists
   });
 

@@ -102,7 +102,7 @@ export const guestFootprintCalculate = async (req, res) => {
         const noOfPassenger = parseInt(transport?.noOfPassenger) || 1;
         const driveFrequency = transport?.driveFrequency || "never";
 
-        const meatFrequency = food?.meatFrequency || "never";
+        const meatFrequency = food?.meatFrequency || "no";
         const meatLover = food?.meatLover || "5";
         const dairyFrequency = food?.dairyFrequency || "never";
         const restaurantChoice = food?.restaurantChoice || "vegan";
@@ -111,8 +111,8 @@ export const guestFootprintCalculate = async (req, res) => {
         const energyType = energy?.energyType || "fossil";
 
         const purchaseCategory = shopping?.purchaseCategory || "small_clothing";
-        const shoppingFrequency = shopping?.shoppingFrequency || "rarely";
-        const clothingPurchase = shopping?.clothingPurchase || "rarely";
+        const shoppingFrequency = shopping?.shoppingFrequency || "never";
+        const clothingPurchase = shopping?.clothingPurchase || "never";
         const electronicsReplacement = shopping?.electronicsReplacement || "rarely";
         const mediumElectronics = shopping?.mediumElectronics || "rarely";
         const homeFurniture = shopping?.homeFurniture || "rarely";
@@ -165,17 +165,17 @@ export const footprintCalculate = async (req, res) => {
         const noOfPassenger = parseInt(transport?.noOfPassenger) || 1;
         const driveFrequency = transport?.driveFrequency || "never";
 
-        const meatFrequency = food?.meatFrequency || "never";
+        const meatFrequency = food?.meatFrequency || "no";
         const meatLover = food?.meatLover || "5";
         const dairyFrequency = food?.dairyFrequency || "never";
-        const restaurantChoice = food?.restaurantChoice || "vegan";
+        const restaurantChoice = food?.restaurantChoice || "no";
 
         const electricityBill = parseFloat(energy?.electricityBill) || 0;
         const energyType = energy?.energyType || "fossil";
 
-        const purchaseCategory = shopping?.purchaseCategory || "small_clothing";
-        const shoppingFrequency = shopping?.shoppingFrequency || "rarely";
-        const clothingPurchase = shopping?.clothingPurchase || "rarely";
+        const purchaseCategory = shopping?.purchaseCategory|| "small_clothing";
+        const shoppingFrequency = shopping?.shoppingFrequency || "never";
+        const clothingPurchase = shopping?.clothingPurchase || "never";
         const electronicsReplacement = shopping?.electronicsReplacement || "rarely";
         const mediumElectronics = shopping?.mediumElectronics || "rarely";
         const homeFurniture = shopping?.homeFurniture || "rarely";
