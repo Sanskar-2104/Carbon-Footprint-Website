@@ -86,10 +86,10 @@ const Redeem = () => {
   })
   
   const giftCards = [
-    { id: 1, name: "Amazon Gift Card", points: 3000, logo: "A" },
-    { id: 2, name: "Spotify Premium", points: 4100, logo: "S" },
-    { id: 3, name: "Netflix Subscription", points: 3500, logo: "N" },
-    { id: 4, name: "Steam Wallet", points: 2500, logo: "G" }
+    { id: 1, name: "Eco Shopping Voucher", points: 3000, logo: "A" },
+    { id: 2, name: "Tree Planting Donation", points: 4100, logo: "S" },
+    { id: 3, name: "Zero Waste Kit", points: 3500, logo: "N" },
+    { id: 4, name: "Public Transport Pass", points: 2500, logo: "G" }
   ];
 
   const handleRedeem = (cardPoints) => {

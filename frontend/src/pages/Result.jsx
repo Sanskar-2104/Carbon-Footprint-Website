@@ -513,6 +513,7 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
           color: "#fff",
           cursor: "pointer",
           transition: "0.3s",
+          marginTop: "20px"
         }}
       >
         {loading ? "Calculating..." : "Calculate Footprint"}
@@ -520,7 +521,7 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
 
       {response && (
         <div>
-          <h2>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
+          <h2 style={{marginTop: "20px"}}>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
           {/* <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} /> */}
 
           <button 
@@ -534,7 +535,7 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
               color: "#fff",
               cursor: "pointer",
               transition: "0.3s",
-              marginTop: "10px"
+              marginTop: "20px"
             }}
           >
             Claim Your Points
@@ -662,7 +663,8 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
                   }}>🎉 Congratulations! 🎉</h2>
 
                   <p style={{ fontSize: "18px", color: "#444" }}>
-                    You claimed <b>{100 - ((response?.footprint?.total / 800) * 100)}</b> reward points!
+                    Your footprint is <b>{100 - Math.round((response?.footprint?.total / 800) * 100)} %</b> clean. <br></br>
+                    You claimed <b>{100 - Math.round((response?.footprint?.total / 800) * 100)}</b> reward points!
                   </p>
 
                   {/* Close Button */}
