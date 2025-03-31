@@ -312,7 +312,7 @@ const Navbar = () => {
           </button>
           <div className="dropdown-menu">
             <Link to="/about" className="dropdown-item">About</Link>
-            <Link to="/what-is-carbon-footprint" className="dropdown-item">Carbon Footprint</Link>
+            <Link to="/carbonInfo" className="dropdown-item">Carbon Footprint</Link>
           </div>
         </div>
 

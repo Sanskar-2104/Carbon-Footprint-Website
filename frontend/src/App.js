@@ -37,6 +37,7 @@ import About from "./pages/About/About";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
 import { UserInputProvider } from "./context/UserInputContext";
+import CarbonInfo from "./pages/CarbonInfo/CarbonInfo";
 
 function App() {
   const [activeSection, setActiveSection] = useState("Shopping"); // Manage active section here
@@ -63,6 +64,7 @@ function App() {
             <Route path="/auth" element={<LoginSignup />} />
             <Route path="/redeem" element={<Redeem />} />
             <Route path="/about" element={<About />} />
+            <Route path="/carbonInfo" element={<CarbonInfo />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
