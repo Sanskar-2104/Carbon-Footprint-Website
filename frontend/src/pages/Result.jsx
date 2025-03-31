@@ -353,7 +353,7 @@ import React, { useState, useEffect } from "react";
 import { useUserInput } from "../context/UserInputContext";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Car, Bolt, Utensils, ShoppingBag, Bus, Lightbulb, Leaf, RefreshCcw, Plug, ShoppingCart, Wind, Plane } from "lucide-react"; 
-import FootprintProgress from "./FootprintProgress";
+// import FootprintProgress from "./FootprintProgress";
 import Confetti from "react-confetti";
 import { motion } from "framer-motion";
 

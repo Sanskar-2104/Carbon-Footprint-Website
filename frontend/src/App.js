@@ -55,7 +55,7 @@ function App() {
               path="/calculate"
               element={
                 <>
-                  <Sidebar setActiveSection={setActiveSection} />
+                  <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
                   <ContentBox activeSection={activeSection} setActiveSection={setActiveSection} />
                 </>
               }
