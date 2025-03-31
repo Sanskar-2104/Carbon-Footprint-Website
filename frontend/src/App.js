@@ -33,6 +33,7 @@ import Home from "./pages/Home/Home"; // Import Home Page
 import LoginSignup from "./pages/Auth/LoginSignup";
 import Profile from "./pages/Profile/Profile";
 import Redeem from "./pages/Redeem/Redeem";
+import About from "./pages/About/About";
 import "./App.css";
 import { UserInputProvider } from "./context/UserInputContext";
 
@@ -60,6 +61,7 @@ function App() {
             />
             <Route path="/auth" element={<LoginSignup />} />
             <Route path="/redeem" element={<Redeem />} />
+            <Route path="/about" element={<About />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
