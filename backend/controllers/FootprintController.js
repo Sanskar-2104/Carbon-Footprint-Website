@@ -101,21 +101,31 @@ export const guestFootprintCalculate = async (req, res) => {
         const carpool = transport?.carpool || "no";
         const noOfPassenger = parseInt(transport?.noOfPassenger) || 1;
         const driveFrequency = transport?.driveFrequency || "never";
+
         const meatFrequency = food?.meatFrequency || "never";
         const meatLover = food?.meatLover || "5";
         const dairyFrequency = food?.dairyFrequency || "never";
         const restaurantChoice = food?.restaurantChoice || "vegan";
+
         const electricityBill = parseFloat(energy?.electricityBill) || 0;
         const energyType = energy?.energyType || "fossil";
-        const shoppingAmount = parseFloat(shopping?.shoppingAmount) || 0;
-        const ecoFriendly = shopping?.ecoFriendly || "no";
 
+        const purchaseCategory = shopping?.purchaseCategory || "small_clothing";
+        const shoppingFrequency = shopping?.shoppingFrequency || "rarely";
+        const clothingPurchase = shopping?.clothingPurchase || "rarely";
+        const electronicsReplacement = shopping?.electronicsReplacement || "rarely";
+        const mediumElectronics = shopping?.mediumElectronics || "rarely";
+        const homeFurniture = shopping?.homeFurniture || "rarely";
+        const applianceReplacement = shopping?.applianceReplacement || "when broken";
+        const ecoFriendly = shopping?.ecoFriendly || "no";
         // Calculate emissions
         const footprint = calculateEmissions({
             mode, carpool, noOfPassenger, driveFrequency, dailyDistance,
             energyType, electricityBill, 
             meatFrequency, meatLover, dairyFrequency, restaurantChoice, 
-            shoppingAmount, ecoFriendly 
+            purchaseCategory, shoppingFrequency, clothingPurchase,
+            electronicsReplacement, mediumElectronics, homeFurniture, applianceReplacement, 
+            ecoFriendly
         });
 
         // Store footprint in cache (guest-based tracking)
@@ -154,21 +164,31 @@ export const footprintCalculate = async (req, res) => {
         const carpool = transport?.carpool || "no";
         const noOfPassenger = parseInt(transport?.noOfPassenger) || 1;
         const driveFrequency = transport?.driveFrequency || "never";
+
         const meatFrequency = food?.meatFrequency || "never";
         const meatLover = food?.meatLover || "5";
         const dairyFrequency = food?.dairyFrequency || "never";
         const restaurantChoice = food?.restaurantChoice || "vegan";
+
         const electricityBill = parseFloat(energy?.electricityBill) || 0;
         const energyType = energy?.energyType || "fossil";
-        const shoppingAmount = parseFloat(shopping?.shoppingAmount) || 0;
-        const ecoFriendly = shopping?.ecoFriendly || "no";
 
+        const purchaseCategory = shopping?.purchaseCategory || "small_clothing";
+        const shoppingFrequency = shopping?.shoppingFrequency || "rarely";
+        const clothingPurchase = shopping?.clothingPurchase || "rarely";
+        const electronicsReplacement = shopping?.electronicsReplacement || "rarely";
+        const mediumElectronics = shopping?.mediumElectronics || "rarely";
+        const homeFurniture = shopping?.homeFurniture || "rarely";
+        const applianceReplacement = shopping?.applianceReplacement || "when broken";
+        const ecoFriendly = shopping?.ecoFriendly || "no";
         // Calculate emissions
         const footprint = calculateEmissions({
             mode, carpool, noOfPassenger, driveFrequency, dailyDistance,
             energyType, electricityBill, 
             meatFrequency, meatLover, dairyFrequency, restaurantChoice, 
-            shoppingAmount, ecoFriendly 
+            purchaseCategory, shoppingFrequency, clothingPurchase,
+            electronicsReplacement, mediumElectronics, homeFurniture, applianceReplacement, 
+            ecoFriendly
         });
 
         // Store data in MongoDB

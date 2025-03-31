@@ -7,7 +7,7 @@ export const UserInputProvider = ({ children }) => {
     transport: { mode: "", carpool: "", driveFrequency: "" , dailyDistance: ""},
     energy: { energyType: "", applianceUsage: "" ,electricityBill: "" },
     food: { food: "", meatFrequency: "", meatLover: "", dairyFrequency: "", restaurantChoice: "" },
-    shopping: { shoppingAmount: "", shoppingType: "", ecoFriendly: "" }, // Ensure shopping exists
+    shopping: { purchaseCategory:"",shoppingFrequency:"", clothingPurchase: "", electronicsReplacement: "", mediumElectronics: "", homeFurniture: "", applianceReplacement: ""}, // Ensure shopping exists
   });
 
   const updateUserData = (category, data) => {

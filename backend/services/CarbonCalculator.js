@@ -74,10 +74,12 @@
 
 
 const calculateEmissions = ({ 
-    mode, carpool,noOfPassenger, driveFrequency, dailyDistance, 
-    energyType,  electricityBill, 
+    mode, carpool, noOfPassenger, driveFrequency, dailyDistance, 
+    energyType, electricityBill, 
     meatFrequency, meatLover, dairyFrequency,
-    shoppingAmount,  ecoFriendly 
+    purchaseCategory, shoppingFrequency, clothingPurchase,
+    electronicsReplacement, mediumElectronics, homeFurniture, applianceReplacement,
+    ecoFriendly
 }) => {
     
     const EMISSION_FACTORS = {
@@ -96,10 +98,15 @@ const calculateEmissions = ({
             "4+": 9.5, "2-3": 6.85, "1": 5.34, "few": 4.66, "never": 4.11, // kg CO2 per day
         },
         dairy: {
-            multiple: 3.0, daily: 2.0, few: 1.0, rarely: 0.0
+            multiple: 3.0, daily: 2.0, few: 1.0, never: 0.0
         },
         shopping: {
-            low: 2, medium: 5, high: 10 // kg CO2 per purchase category
+            small_items: { rarely: 2, occasionally: 5, frequently: 10 }, // Books, accessories
+            clothing: { rarely: 5, occasionally: 10, frequently: 20 }, // T-shirts, jeans, shoes
+            small_electronics: { rarely: 5, "1-2 years": 20, frequently: 50 }, // Headphones, smartwatches
+            medium_electronics: { rarely: 200, occasionally: 350, frequently: 500 }, // Laptops, TVs
+            home_furniture: { rarely: 20, occasionally: 50, frequently: 100 }, // Chairs, tables, beds
+            large_appliances: { "when broken": 200, "5-10 years": 350, "3-5 years": 500 } // Refrigerators, washing machines
         }
     };
 
@@ -125,10 +132,32 @@ const calculateEmissions = ({
     foodEmissions += EMISSION_FACTORS.dairy[dairyFrequency] || 0;
 
     // 🛍️ **Shopping Emissions**
-    let shoppingEmissions = EMISSION_FACTORS.shopping[shoppingAmount] || 0;
-    if (ecoFriendly === "true") {
-        shoppingEmissions *= 0.5; // 50% reduction for eco-friendly purchases
+    let shoppingEmissions = 0;
+    console.log("Here");
+    
+    try {
+        if (purchaseCategory === "small_clothing") {
+            shoppingEmissions += (EMISSION_FACTORS.shopping.small_items[shoppingFrequency] || 0);
+            shoppingEmissions += (EMISSION_FACTORS.shopping.clothing[clothingPurchase] || 0);
+        }
+        if (purchaseCategory === "electronics") {
+            console.log("Here electroniscs");
+            shoppingEmissions += (EMISSION_FACTORS.shopping.small_electronics[electronicsReplacement] );
+            shoppingEmissions += (EMISSION_FACTORS.shopping.medium_electronics[mediumElectronics] );
+        }
+        if (purchaseCategory === "home_goods") {
+            shoppingEmissions += (EMISSION_FACTORS.shopping.home_furniture[homeFurniture] || 0);
+            shoppingEmissions += (EMISSION_FACTORS.shopping.large_appliances[applianceReplacement] || 0);
+        }
+    } catch (error) { 
+        console.log({message:error.message});
     }
+
+    // Apply eco-friendly reduction
+    if (ecoFriendly === "true") {
+        shoppingEmissions *= 0.5;
+    }
+
 
     // 🌍 **Total Carbon Footprint**
     const total = transportEmissions + electricityEmissions + foodEmissions + shoppingEmissions;
