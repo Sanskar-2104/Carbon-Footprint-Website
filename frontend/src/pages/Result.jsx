@@ -517,7 +517,7 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
       {response && (
         <div>
           <h2>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
-          <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} />
+          {/* <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} /> */}
 
           <button 
             onClick={() => setShowModal(true)}

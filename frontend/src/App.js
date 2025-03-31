@@ -34,6 +34,7 @@ import LoginSignup from "./pages/Auth/LoginSignup";
 import Profile from "./pages/Profile/Profile";
 import Redeem from "./pages/Redeem/Redeem";
 import About from "./pages/About/About";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 import { UserInputProvider } from "./context/UserInputContext";
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
     </UserInputProvider>

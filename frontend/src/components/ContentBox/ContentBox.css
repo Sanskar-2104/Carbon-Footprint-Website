@@ -9,7 +9,7 @@ body{
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
     width: calc(100% - 290px); /* Full width minus margins */
     margin: 20px; /* Centers horizontally */
-    height: auto; /* Full height minus margins */
+    height: 78.5vh; /* Full height minus margins */
     max-height: 100vh; /* Prevent overflow */
     overflow-y: auto; /* Enables scrolling if content exceeds height */
 }
