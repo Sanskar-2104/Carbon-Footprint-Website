@@ -365,10 +365,13 @@ const Result = () => {
   const updateRewardPoints = async (pointsEarned) => {
     try {
       const token = localStorage.getItem("token"); // Retrieve token
-      const headers = { "Content-Type": "application/json" };
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
-      }
+      if (!token) return console.log("User not logged in. Skipping point update.");
+
+      const headers = { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      };
+      
   
       const res = await fetch("http://localhost:5000/api/gamification/points", {
         method: "PUT",
@@ -407,7 +410,8 @@ const Result = () => {
       setResponse(data);
 
       if (token) {
-        updateRewardPoints(100 - ((data.footprint.total / 800) * 100));
+        let pointsEarned = Math.max(0, Math.min(100, 100 - ((data.footprint.total / 800) * 100)));
+        updateRewardPoints(Math.round(pointsEarned));
       }
 
     } catch (error) {
