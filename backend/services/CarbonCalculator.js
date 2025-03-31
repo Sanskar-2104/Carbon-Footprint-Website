@@ -101,12 +101,12 @@ const calculateEmissions = ({
             multiple: 3.0, daily: 2.0, few: 1.0, never: 0.0
         },
         shopping: {
-            small_items: { never: 0,rarely: 2, occasionally: 5, frequently: 10 }, // Books, accessories
-            clothing: { never: 0,rarely: 5, occasionally: 10, frequently: 20 }, // T-shirts, jeans, shoes
-            small_electronics: { rarely: 5, "1-2 years": 20, frequently: 50 }, // Headphones, smartwatches
-            medium_electronics: { rarely: 200, occasionally: 350, frequently: 500 }, // Laptops, TVs
-            home_furniture: { rarely: 20, occasionally: 50, frequently: 100 }, // Chairs, tables, beds
-            large_appliances: { "when broken": 200, "5-10 years": 350, "3-5 years": 500 } // Refrigerators, washing machines
+            small_items: { never: 0,rarely: 2, occasionally: 4, frequently: 7 }, // Books, accessories
+            clothing: { never: 0,rarely: 4, occasionally: 8, frequently: 15 }, // T-shirts, jeans, shoes
+            small_electronics: { rarely: 6, "1-2 years": 15, frequently: 30 }, // Headphones, smartwatches
+            medium_electronics: { rarely: 60, occasionally: 150, frequently: 300 }, // Laptops, TVs
+            home_furniture: { rarely: 15, occasionally: 30, frequently: 60 }, // Chairs, tables, beds
+            large_appliances: { "when broken": 100, "5-10 years": 250, "3-5 years": 400 } // Refrigerators, washing machines
         }
     };
 

@@ -663,8 +663,8 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
                   }}>🎉 Congratulations! 🎉</h2>
 
                   <p style={{ fontSize: "18px", color: "#444" }}>
-                    Your footprint is <b>{100 - Math.round((response?.footprint?.total / 800) * 100)} %</b> clean. <br></br>
-                    You claimed <b>{100 - Math.round((response?.footprint?.total / 800) * 100)}</b> reward points!
+                    Your footprint is <b>{100 - Math.round((response?.footprint?.total / 1200) * 100)} %</b> clean. <br></br>
+                    You claimed <b>{100 - Math.round((response?.footprint?.total / 1200) * 100)}</b> reward points!
                   </p>
 
                   {/* Close Button */}
