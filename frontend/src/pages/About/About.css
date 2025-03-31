@@ -16,7 +16,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+  background: linear-gradient(135deg, #0a192f 0%, #070e1a 100%);
   z-index: -1;
 }
 
@@ -36,7 +36,7 @@
   font-size: 3.2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #64ffda 0%, #48cae4 100%);
+  background: linear-gradient(90deg, #64ffac 0%, #48a6e4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -86,7 +86,7 @@
 
 .section-inner {
   position: relative;
-  background: rgba(17, 34, 64, 0.7);
+  background: rgba(12, 24, 45, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(100, 255, 218, 0.1);
   border-radius: 12px;
@@ -248,7 +248,7 @@
 }
 
 .step-content h3 {
-  color: #64ffda;
+  color: #54cfb2;
   margin: 0 0 0.5rem;
   font-size: 1.3rem;
 }
