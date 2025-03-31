@@ -176,7 +176,7 @@ const Home = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Get Started
+            Calculate Now
           </motion.a>
         </motion.div>
       </section>
