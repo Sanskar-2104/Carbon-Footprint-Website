@@ -92,14 +92,44 @@ const Redeem = () => {
     { id: 4, name: "Public Transport Pass", points: 2500, logo: "G" }
   ];
 
-  const handleRedeem = (cardPoints) => {
-    if (points >= cardPoints) {
-      setPoints(points - cardPoints);
-      alert(`Successfully redeemed! You have ${points - cardPoints} points remaining.`);
+  const handleRedeem = async (pointsToRedeem) => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      alert("Please login to redeem points");
+      return;
+    }
+  
+    if (points >= pointsToRedeem) {
+      const updatedPoints = points - pointsToRedeem;
+      setPoints(updatedPoints);
+  
+      try {
+        const resp = await fetch("http://localhost:5000/api/gamification/redeem-reward", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ pointsToRedeem }), // ✅ sending as object
+        });
+  
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Failed to redeem: " + (err.message || resp.statusText));
+          return;
+        }
+  
+        alert(`Successfully redeemed! You have ${updatedPoints} points remaining.`);
+      } catch (error) {
+        console.error("Error during redeem:", error);
+        alert("Network error while redeeming points.");
+      }
     } else {
       alert("Not enough points to redeem this gift card.");
     }
   };
+  
 
   return (
     <div className="redeem-container">

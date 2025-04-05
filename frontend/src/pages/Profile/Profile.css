@@ -24,14 +24,16 @@
   margin-bottom: 10px;
 }
 
-h2 {
+.profile-section h2 {
   font-size: 18px;
   margin: 5px 0;
+  color: #f6f3f3;
+  align-items: center;
 }
 
 .username {
   font-size: 18px;
-  color: #c0c0c0;
+  color: #f6f3f3;
   text-align: center;
 }
 

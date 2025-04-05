@@ -9,10 +9,10 @@ const Profile = () => {
         <div className="avatar">
           <User size={40} />
         </div>
-        <h2>Amit Thakur</h2>
+        <h2>Aadhya Shah</h2>
         <div className="info-item">
             <Signature size={18} />
-            <span>thakuras15</span>
+            <span>shahaadhya21</span>
           </div>
         <div className="info">
           <div className="info-item">
