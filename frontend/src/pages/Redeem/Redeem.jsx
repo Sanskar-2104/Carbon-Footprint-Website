@@ -165,7 +165,7 @@ const Redeem = () => {
               <div className="card-logo">
                 <span>{card.logo}</span>
               </div>
-              <div className="card-content">
+              <div className="redeem-card-content">
                 <h3 className="card-title">{card.name}</h3>
                 <div className="card-points">
                   <Award size={16} />
