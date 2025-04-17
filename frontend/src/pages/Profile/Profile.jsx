@@ -48,7 +48,7 @@ import {
   Calendar,
   ChevronDown,
   ChevronUp,
-  Heart,
+  Utensils,
   Car,
   Lightbulb,
   ShoppingBag
@@ -237,7 +237,7 @@ const Profile = () => {
                       <p className="stat-change decrease">-15% vs. avg</p>
                     </div>
                     <div className="stat-card">
-                      <Heart size={24} />
+                      <Utensils size={24} />
                       <h4>Food</h4>
                       <p className="stat-value">1.8 kg CO₂</p>
                       <p className="stat-change decrease">-8% vs. avg</p>
