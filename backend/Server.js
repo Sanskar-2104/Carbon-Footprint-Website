@@ -3,9 +3,10 @@ import connectDB from './config/ConnectDB.js';
 import authRoute from './routes/authRoute.js';
 import footprintRoute from './routes/footprintRoute.js'
 import gamificationRoute from './routes/gamificationRoute.js'
+import billRoute from './routes/bill.js'
 import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+dotenv.config();
 const PORT = process.env.PORT;
 
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/footprint", footprintRoute);
 app.use("/api/gamification", gamificationRoute);
+app.use("/api/bill", billRoute);
 
     
 // test route 

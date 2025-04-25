@@ -5,7 +5,7 @@ import Footprint from '../models/Footprint.js';
 import GuestCache from '../services/GuestCache.js';
 import { sendVerificationMail, sendResetPasswordMail } from '../config/nodemailer.js';
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+dotenv.config();
 
 
 const register = async (req, res) => {
