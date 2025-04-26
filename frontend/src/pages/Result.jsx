@@ -489,7 +489,7 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
                   <ul style={{ paddingLeft: "15px", marginTop: "5px" }}>
                     {Object.entries(value).map(([subKey, subValue]) => (
                       <li key={subKey} style={{ fontSize: "14px", color: "#666" }}>
-                        <b>{formatLabel(subKey)}:</b> {subValue}
+                        <b>{formatLabel(subKey)}:</b> {subValue instanceof File ? subValue.name : subValue}
                       </li>
                     ))}
                   </ul>

@@ -95,8 +95,8 @@
 }
 
 .login-btn {
-  background-color: #ffc971;
-  color: #2c6e49;
+  background-color: #193425;
+  color: #ffffff;
   padding: 10px 18px;
   font-size: 0.95rem;
   font-family: 'Poppins', sans-serif;
@@ -109,7 +109,7 @@
 }
 
 .login-btn:hover {
-  background-color: #ffd585;
+  background-color: #193425;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
