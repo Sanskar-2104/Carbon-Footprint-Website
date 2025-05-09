@@ -26,12 +26,7 @@ export const verifyElectricityBill = async (req, res) => {
         await billDoc.save();
 
         // const match = Math.abs(extractedData.units - userUnits) <= 5;
-
-        res.json({
-        message: "Bill verified successfully!" ,
-        extractedData
-        });
-        return res.status(200).json({ message: "Bill verified successfully!" , units  });
+        return res.status(200).json({ message: "Bill verified successfully!" , extractedData });
 
     } catch (err) {
         res.status(500).json({ error: err.message });
