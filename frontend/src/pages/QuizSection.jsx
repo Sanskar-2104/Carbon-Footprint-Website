@@ -338,45 +338,124 @@ const QuizSection = ({
     }
   };
 
-  const handleCalculate = () => {
+  // const handleCalculate = () => {
+  //   if (uploadField) {
+  //     if (!uploadedFile) {
+  //       Swal.fire({
+  //         toast: true,
+  //         position: "top",
+  //         icon: "warning",
+  //         title: "⚠️ Please upload your electricity bill!",
+  //         showConfirmButton: false,
+  //         timer: 2000,
+  //         timerProgressBar: true,
+  //       });
+  //       return;
+  //     }
+  //   } else if (!selectedOption) {
+  //     Swal.fire({
+  //       toast: true,
+  //       position: "top",
+  //       icon: "warning",
+  //       title: "⚠️ Please select or enter a value before continuing!",
+  //       showConfirmButton: false,
+  //       timer: 2000,
+  //       timerProgressBar: true,
+  //     });
+  //     return;
+  //   }
+
+  //   Swal.fire({
+  //     toast: true,
+  //     position: "top",
+  //     icon: "success",
+  //     title: "✅ Your response has been added successfully!",
+  //     showConfirmButton: false,
+  //     timer: 2000,
+  //     timerProgressBar: true,
+  //   });
+
+  //   console.log("Saved:", category, field, uploadField ? uploadedFile : selectedOption);
+  // };
+
+  const handleCalculate = async () => {
+    const token = localStorage.getItem("token"); // Retrieve token
+    if (!token) return console.log("User not logged in.");
+  
     if (uploadField) {
-      if (!uploadedFile) {
-        Swal.fire({
-          toast: true,
-          position: "top",
-          icon: "warning",
-          title: "⚠️ Please upload your electricity bill!",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-        });
-        return;
-      }
-    } else if (!selectedOption) {
+    if (!uploadedFile) {
       Swal.fire({
         toast: true,
         position: "top",
         icon: "warning",
-        title: "⚠️ Please select or enter a value before continuing!",
+        title: "⚠️ Please upload your electricity bill!",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
       });
       return;
     }
-
+  } else if (!selectedOption) {
     Swal.fire({
       toast: true,
       position: "top",
-      icon: "success",
-      title: "✅ Your response has been added successfully!",
+      icon: "warning",
+      title: "⚠️ Please select or enter a value before continuing!",
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
     });
+    return;
+  }
 
-    console.log("Saved:", category, field, uploadField ? uploadedFile : selectedOption);
-  };
+  // If category is Electricity, call the verify API
+  if (category === "Electricity" && uploadField && uploadedFile) {
+    try {
+      const formData = new FormData();
+      formData.append("file", uploadedFile); // uploadedFile is your File object
+      formData.append("userUnits", selectedOption); // Assuming this is the numeric input
+      formData.append("category", "Electricity");
+
+      const res = await fetch("http://localhost:5000/api/bill/verify", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Replace with actual token
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      // You can log or handle the data here
+      console.log("Verification result:", data);
+    } catch (error) {
+      console.error("Verification failed:", error);
+      Swal.fire({
+        toast: true,
+        position: "top",
+        icon: "error",
+        title: "❌ Verification failed. Please try again.",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+  }
+
+  Swal.fire({
+    toast: true,
+    position: "top",
+    icon: "success",
+    title: "✅ Your response has been added successfully!",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+  });
+
+  console.log("Saved:", category, field, uploadField ? uploadedFile : selectedOption);
+};
+
 
   return (
     <div className="quiz-content">
