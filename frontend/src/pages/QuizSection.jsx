@@ -409,12 +409,13 @@ const QuizSection = ({
   }
 
   // If category is Electricity, call the verify API
-  if (category === "Electricity" && uploadField && uploadedFile) {
+  if (  uploadField && uploadedFile) {
     try {
       const formData = new FormData();
-      formData.append("file", uploadedFile); // uploadedFile is your File object
-      formData.append("userUnits", selectedOption); // Assuming this is the numeric input
+      formData.append("bill", uploadedFile); // Assuming this is the numeric input
       formData.append("category", "Electricity");
+
+      console.log("Sending data:", formData);
 
       const res = await fetch("http://localhost:5000/api/bill/verify", {
         method: "POST",
@@ -453,7 +454,7 @@ const QuizSection = ({
     timerProgressBar: true,
   });
 
-  console.log("Saved:", category, field, uploadField ? uploadedFile : selectedOption);
+  console.log("Saved:", category, field, uploadField ? uploadedFile : selectedOption );
 };
 
 
