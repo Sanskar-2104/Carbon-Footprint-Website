@@ -427,9 +427,10 @@ const QuizSection = ({
 
       const data = await res.json();
 
-      updateUserData("energy", { electricityBill: data.units });
+      
       // You can log or handle the data here
       console.log("Verification result:", data);
+      updateUserData("energy", { electricityBill: data.extractedData.units });
     } catch (error) {
       console.error("Verification failed:", error);
       Swal.fire({
