@@ -5,12 +5,13 @@ import Bill from "../models/Bill.js";
 export const verifyElectricityBill = async (req, res) => {
     try {
         const file = req.file;
-        const userUnits = parseFloat(req.body.userUnits);
         const userId = req.user?._id;
 
-        if (!file || isNaN(userUnits)) {
+        if (!file) {
         return res.status(400).json({ error: "Invalid file or user input" });
         }
+
+        console.log("File:", file);
 
         const extractedData = await extractBillDataFromGemini(file);
 
@@ -19,19 +20,18 @@ export const verifyElectricityBill = async (req, res) => {
         userId,
         units: extractedData.units,
         month: extractedData.month,
-        billNumber: extractedData.billNumber,
-        matched: extractedData.units === userUnits,
+        billNumber: extractedData.billNumber
         });
 
         await billDoc.save();
 
-        const match = Math.abs(extractedData.units - userUnits) <= 5;
+        // const match = Math.abs(extractedData.units - userUnits) <= 5;
 
         res.json({
-        message: match ? "Bill verified successfully!" : "Mismatch in units!",
-        extractedData,
-        match
+        message: "Bill verified successfully!" ,
+        extractedData
         });
+        return res.status(200).json({ message: "Bill verified successfully!" , units  });
 
     } catch (err) {
         res.status(500).json({ error: err.message });

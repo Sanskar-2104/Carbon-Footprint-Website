@@ -5,38 +5,41 @@ dotenv.config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const extractBillDataFromGemini = async (file) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const base64 = file.buffer.toString("base64");
+    const prompt = `
+    Extract the following from this electricity bill:
+    - Bill Number
+    - Month of Bill
+    - Units Consumed
+
+    translate to English from any foreign language
+
+    Return only JSON format like:
+    {
+        "billNumber": "123456789",
+        "month": "March 2025",
+        "units": 148
+        }
+    `;
 
     const result = await model.generateContent([
+        prompt,
         {
         inlineData: {
+            data: file.buffer.toString("base64"),
             mimeType: file.mimetype,
-            data: base64,
         },
-        },
-        {
-        text: `Extract these details from the electricity bill:
-        - Units consumed
-        - Month of the bill
-        - Bill number
-
-        Return response as JSON:
-        {
-            "units": number,
-            "month": "Month YYYY",
-            "billNumber": "string"
-        }`,
         },
     ]);
 
-    const text = await result.response.text();
-    const parsed = JSON.parse(text);
+    const text = result.response.text();
 
-    return {
-        units: parseFloat(parsed.units),
-        month: parsed.month,
-        billNumber: parsed.billNumber,
-    };
+    // Clean response if wrapped in markdown code block
+    const cleaned = text
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+    return JSON.parse(cleaned);
 };
