@@ -427,6 +427,7 @@ const QuizSection = ({
 
       const data = await res.json();
 
+      updateUserData("energy", { electricityBill: data.units });
       // You can log or handle the data here
       console.log("Verification result:", data);
     } catch (error) {
