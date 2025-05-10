@@ -122,7 +122,7 @@ const calculateEmissions = ({
     } // No emissions for walk
 
     // ⚡ **Energy Emissions**
-    let electricityEmissions = (electricityBill || 0) * (EMISSION_FACTORS.energy[energyType] || 0);
+    let electricityEmissions = ((electricityBill || 0) * (EMISSION_FACTORS.energy[energyType] || 0))/30;
 
     // 🍗 **Food Emissions**
     let foodEmissions = EMISSION_FACTORS.food[meatFrequency] || 0;
