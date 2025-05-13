@@ -66,3 +66,21 @@ This project offers an interactive, user-friendly platform that calculates an in
 ## 💻Platform Screenshots
 ![Home Page](image.png)
 
+![Login Page](image-1.png)
+
+![Shopping Section](image-2.png)
+
+![Transport Section](image-3.png)
+
+![Electricity Section](image-4.png)
+
+![Food Section](image-5.png)
+
+![Result Section](image-6.png)
+
+![Congratulations Page](image-7.png)
+
+![Redeem Page](image-8.png)
+
+![Profile Page](image-9.png)
+
