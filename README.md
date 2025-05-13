@@ -65,6 +65,24 @@ This project offers an interactive, user-friendly platform that calculates an in
 
 ---
 
+## 🚀 How to Run This Project
+1. Clone this Repository
+2. Start the Frontend
+```bash
+cd frontend
+npm start
+```
+3. Start the Backend
+```bash
+cd backend
+npm run dev
+```
+
+⚠️ Make sure Node.js and npm are installed on your system.  
+💡 Run frontend and backend files in two different terminals.
+
+---
+
 ## 💻Platform Screenshots
 ![Home Page](image.png)
 
