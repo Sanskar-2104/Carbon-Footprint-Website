@@ -63,6 +63,8 @@ This project offers an interactive, user-friendly platform that calculates an in
 - **User Feedback**: The platform allows users to report discrepancies or errors in the data, ensuring continuous improvement of the system.
 - **Testing**: Postman and other testing tools are used for API testing to verify smooth communication between the frontend and backend, ensuring data integrity and reliability.
 
+---
+
 ## 💻Platform Screenshots
 ![Home Page](image.png)
 
@@ -83,6 +85,8 @@ This project offers an interactive, user-friendly platform that calculates an in
 ![Redeem Page](image-8.png)
 
 ![Profile Page](image-9.png)
+
+---
 
 ## 🤝 Conclusion
 This project transforms climate awareness into actionable steps through an engaging, data-driven carbon tracking system. With gamification, personalized insights, and real-time feedback, it motivates users to adopt sustainable habits. Technically robust and scalable, the platform is well-suited for individuals, institutions, and large-scale sustainability initiatives.
