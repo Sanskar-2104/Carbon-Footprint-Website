@@ -1,0 +1,244 @@
+name: Build & Deploy to Cloud Run (Test Environment)
+
+on:
+  push:
+    branches:
+      - test
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - '.github/workflows/deploy-cloudrun-test.yml'
+  workflow_dispatch:
+
+env:
+  REGION: asia-southeast1
+  BACKEND_SERVICE_NAME: sustainatrack-backend-test
+  BACKEND_IMAGE_NAME: sustainatrack-be-test
+  FRONTEND_SERVICE_NAME: sustainatrack-frontend-test
+  FRONTEND_IMAGE_NAME: sustainatrack-fe-test
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            frontend:
+              - 'frontend/**'
+
+  lint:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: 'Lint & Format Backend'
+        if: needs.detect-changes.outputs.backend == 'true'
+        working-directory: backend
+        run: |
+          npm ci
+          npm audit --audit-level=critical
+          npm run format:check
+          npm run lint
+
+      - name: 'Lint & Format Frontend'
+        if: needs.detect-changes.outputs.frontend == 'true'
+        working-directory: frontend
+        run: |
+          npm ci
+          npm audit --audit-level=critical
+          npm run format:check
+          npm run lint
+
+  test-unit:
+    needs: [detect-changes, lint]
+    runs-on: ubuntu-latest
+    if: needs.lint.result == 'success'
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: 'Backend Unit Tests'
+        if: needs.detect-changes.outputs.backend == 'true'
+        working-directory: backend
+        run: |
+          npm ci
+          npm run test:unit -- --coverage --coverageThreshold='{"global":{"statements":0,"branches":0,"functions":0,"lines":0}}'
+
+      - name: 'Frontend Unit Tests'
+        if: needs.detect-changes.outputs.frontend == 'true'
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run test:unit -- --coverage --coverageThreshold='{"global":{"statements":0,"branches":0,"functions":0,"lines":0}}'
+
+  test-integration:
+    needs: [detect-changes, lint]
+    runs-on: ubuntu-latest
+    if: needs.lint.result == 'success'
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: 'Backend Integration Tests'
+        if: needs.detect-changes.outputs.backend == 'true'
+        working-directory: backend
+        run: |
+          npm ci
+          npm run test:integration -- --coverage --coverageThreshold='{"global":{"statements":0,"branches":0,"functions":0,"lines":0}}'
+
+  coverage-summary:
+    needs: [detect-changes, test-unit, test-integration]
+    runs-on: ubuntu-latest
+    if: |
+      always() &&
+      (needs.test-unit.result == 'success' || needs.test-unit.result == 'skipped') &&
+      (needs.test-integration.result == 'success' || needs.test-integration.result == 'skipped')
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: 'Run Full Backend Tests for Enforced Coverage'
+        if: needs.detect-changes.outputs.backend == 'true'
+        working-directory: backend
+        run: |
+          npm ci
+          npm run test:ci
+
+      - name: 'Run Full Frontend Tests for Enforced Coverage'
+        if: needs.detect-changes.outputs.frontend == 'true'
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run test:ci
+
+      - name: 'Generate and Upload Coverage Step Summary'
+        run: |
+          node parse-coverage.js
+
+  deploy-backend:
+    needs: [detect-changes, lint, coverage-summary]
+    if: github.ref == 'refs/heads/test' && needs.detect-changes.outputs.backend == 'true' && needs.coverage-summary.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+
+      - name: Build & Push Image
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ARTIFACT_REPO: ${{ secrets.ARTIFACT_REPO }}
+        run: |
+          IMAGE="$REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REPO/$BACKEND_IMAGE_NAME"
+          docker build -f backend/Dockerfile -t "$IMAGE:$GITHUB_SHA" backend
+          docker push "$IMAGE:$GITHUB_SHA"
+
+      - name: Deploy ke Cloud Run
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          MAILGUN_SMTP_LOGIN: ${{ secrets.MAILGUN_SMTP_LOGIN }}
+          MAILGUN_SMTP_PASSWORD: ${{ secrets.MAILGUN_SMTP_PASSWORD }}
+          MAILGUN_SENDER_EMAIL: ${{ secrets.MAILGUN_SENDER_EMAIL }}
+          MAILGUN_SENDER_NAME: ${{ secrets.MAILGUN_SENDER_NAME }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BACKEND_BASE_URL: ${{ secrets.BACKEND_BASE_URL }}
+          FRONTEND_BASE_URL: ${{ secrets.FRONTEND_BASE_URL }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ARTIFACT_REPO: ${{ secrets.ARTIFACT_REPO }}
+        run: |
+          IMAGE="$REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REPO/$BACKEND_IMAGE_NAME"
+          gcloud run deploy $BACKEND_SERVICE_NAME \
+            --image="$IMAGE:$GITHUB_SHA" \
+            --project=$GCP_PROJECT_ID \
+            --platform=managed \
+            --region=$REGION \
+            --allow-unauthenticated \
+            --port=8080 \
+            --memory=512Mi \
+            --set-env-vars="MONGO_URI=$MONGO_URI,JWT_SECRET=$JWT_SECRET,EMAIL_USER=$EMAIL_USER,EMAIL_PASSWORD=$EMAIL_PASSWORD,MAILGUN_SMTP_LOGIN=$MAILGUN_SMTP_LOGIN,MAILGUN_SMTP_PASSWORD=$MAILGUN_SMTP_PASSWORD,MAILGUN_SENDER_EMAIL=$MAILGUN_SENDER_EMAIL,MAILGUN_SENDER_NAME=$MAILGUN_SENDER_NAME,GEMINI_API_KEY=$GEMINI_API_KEY,BACKEND_BASE_URL=$BACKEND_BASE_URL,FRONTEND_BASE_URL=$FRONTEND_BASE_URL"
+
+  deploy-frontend:
+    needs: [detect-changes, lint, coverage-summary]
+    if: github.ref == 'refs/heads/test' && needs.detect-changes.outputs.frontend == 'true' && needs.coverage-summary.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+
+      - name: Build & Push Frontend Image
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ARTIFACT_REPO: ${{ secrets.ARTIFACT_REPO }}
+          BACKEND_BASE_URL: ${{ secrets.BACKEND_BASE_URL_TEST }}
+        run: |
+          IMAGE="$REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REPO/$FRONTEND_IMAGE_NAME"
+          docker build \
+            --build-arg REACT_APP_API_BASE_URL=$BACKEND_BASE_URL \
+            -f frontend/Dockerfile \
+            -t "$IMAGE:$GITHUB_SHA" \
+            frontend
+          docker push "$IMAGE:$GITHUB_SHA"
+
+      - name: Deploy Frontend ke Cloud Run
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          ARTIFACT_REPO: ${{ secrets.ARTIFACT_REPO }}
+        run: |
+          IMAGE="$REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REPO/$FRONTEND_IMAGE_NAME"
+          gcloud run deploy $FRONTEND_SERVICE_NAME \
+            --image="$IMAGE:$GITHUB_SHA" \
+            --project=$GCP_PROJECT_ID \
+            --platform=managed \
+            --region=$REGION \
+            --allow-unauthenticated \
+            --port=8080 \
+            --memory=256Mi

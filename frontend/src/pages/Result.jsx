@@ -52,9 +52,6 @@
 
 // export default Result;
 
-
-
-
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
 // import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
@@ -99,10 +96,10 @@
 //       {response && (
 //         <div>
 //           <h2>Total Carbon Footprint: {response.footprint.total} kg CO₂</h2>
-          
+
 //           {/* Pie Chart and Breakdown Side by Side */}
 //           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px" }}>
-            
+
 //             {/* Hollow (Doughnut) Pie Chart */}
 //             <PieChart width={350} height={350}>
 //               <Pie
@@ -159,12 +156,10 @@
 
 // export default Result;
 
-
-
 // import React, { useState, useEffect } from "react";
 // import { useUserInput } from "../context/UserInputContext";
 // import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-// import { Car, Bolt, Utensils, ShoppingBag, Bus, Lightbulb, Leaf, RefreshCcw, Plug, ShoppingCart, Wind, Plane } from "lucide-react"; 
+// import { Car, Bolt, Utensils, ShoppingBag, Bus, Lightbulb, Leaf, RefreshCcw, Plug, ShoppingCart, Wind, Plane } from "lucide-react";
 // import FootprintProgress from "./FootprintProgress"; // Import FootprintProgress
 
 // const Result = () => {
@@ -209,15 +204,15 @@
 //     { text: "Dry clothes naturally instead of using a dryer.", icon: <Wind size={24} /> },
 //     { text: "Limit air travel and opt for virtual meetings.", icon: <Plane size={24} /> },
 //   ];
-  
+
 //   // Function to get three random tips
 //   const getRandomTips = (tipsArray, count = 3) => {
 //     const shuffled = [...tipsArray].sort(() => 0.5 - Math.random());
 //     return shuffled.slice(0, count);
 //   };
-  
+
 //   const [selectedTips, setSelectedTips] = useState([]);
-  
+
 //   useEffect(() => {
 //     setSelectedTips(getRandomTips(tipsWithIcons));
 //   }, []);
@@ -226,9 +221,9 @@
 //     <div style={{ textAlign: "center", padding: "20px" }}>
 //       <h1>Result Page</h1>
 //       <pre>{JSON.stringify(userData,null,2)}</pre>
-//       <button 
-//         onClick={handleSubmit} 
-//         disabled={loading} 
+//       <button
+//         onClick={handleSubmit}
+//         disabled={loading}
 //         style={{
 //           padding: "10px 20px",
 //           fontSize: "16px",
@@ -252,7 +247,7 @@
 
 //           {/* Pie Chart and Breakdown Side by Side */}
 //           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "20px" }}>
-            
+
 //             {/* Hollow (Doughnut) Pie Chart */}
 //             <PieChart width={350} height={350}>
 //               <Pie
@@ -347,15 +342,30 @@
 
 // export default Result;
 
-
-
-import React, { useState, useEffect } from "react";
-import { useUserInput } from "../context/UserInputContext";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { Car, Bolt, Utensils, ShoppingBag, Bus, Lightbulb, Leaf, RefreshCcw, Plug, ShoppingCart, Wind, Plane } from "lucide-react"; 
+import React, { useState, useEffect } from 'react';
+import { useUserInput } from '../context/UserInputContext';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import {
+  Car,
+  Bolt,
+  Utensils,
+  ShoppingBag,
+  Bus,
+  Lightbulb,
+  Leaf,
+  RefreshCcw,
+  Plug,
+  ShoppingCart,
+  Wind,
+  Plane,
+  Trash2,
+} from 'lucide-react';
 // import FootprintProgress from "./FootprintProgress";
-import Confetti from "react-confetti";
-import { motion } from "framer-motion";
+import Confetti from 'react-confetti';
+import { motion } from 'framer-motion';
+import { apiUrl } from '../config/api';
+import { showAchievementNotifications } from '../components/AchievementNotification/AchievementNotification';
+import { calculateEmission } from '../services/carbonApi';
 
 const Result = () => {
   const { userData } = useUserInput();
@@ -364,74 +374,71 @@ const Result = () => {
 
   const updateRewardPoints = async (pointsEarned) => {
     try {
-      const token = localStorage.getItem("token"); // Retrieve token
-      if (!token) return console.log("User not logged in. Skipping point update.");
+      const token = localStorage.getItem('token'); // Retrieve token
+      if (!token) return console.log('User not logged in. Skipping point update.');
 
-      const headers = { 
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       };
-      
-  
-      const res = await fetch("http://localhost:5000/api/gamification/points", {
-        method: "PUT",
+
+      const res = await fetch(apiUrl('/api/gamification/points'), {
+        method: 'PUT',
         headers: headers,
         body: JSON.stringify({ pointsToAdd: pointsEarned }),
       });
-  
+
       if (!res.ok) {
-        throw new Error("Failed to update points: " + (await res.text()));
+        throw new Error('Failed to update points: ' + (await res.text()));
       }
-  
-      console.log("Reward points updated successfully!");
+
+      console.log('Reward points updated successfully!');
     } catch (error) {
-      console.error("Error updating reward points:", error);
+      console.error('Error updating reward points:', error);
     }
   };
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token"); // Retrieve token
-        const headers = { "Content-Type": "application/json" };
-        if (token) {
-          headers.Authorization = `Bearer ${token}`;
-        }
-
-        const res = await fetch("http://localhost:5000/api/footprint/calculate", {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(userData),
-        });
-      if (!res.ok) {
-        throw new Error("Server error: " + (await res.text()));
-      }
-      const data = await res.json();
+      const data = await calculateEmission(userData);
       setResponse(data);
 
+      const token = localStorage.getItem('token');
       if (token) {
-        let pointsEarned = Math.max(0, Math.min(100, 100 - ((data.footprint.total / 800) * 100)));
+        const total = data.footprint?.total || data.totalEmission || 0;
+        let pointsEarned = Math.max(0, Math.min(100, 100 - (total / 800) * 100));
         updateRewardPoints(Math.round(pointsEarned));
       }
 
+      // Show achievement notifications if badges were earned
+      if (data.newBadges && data.newBadges.length > 0) {
+        await showAchievementNotifications(data.newBadges);
+      }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const COLORS = ["#3B322C", "#4E6151", "#5E8C61", "#76B98F"];
+  const COLORS = ['#3B322C', '#4E6151', '#5E8C61', '#76B98F', '#A39171'];
 
   const tipsWithIcons = [
-    { text: "Use public transport or carpool to reduce emissions.", icon: <Bus size={24} /> },
-    { text: "Switch to energy-efficient appliances to save electricity.", icon: <Lightbulb size={24} /> },
-    { text: "Eat more plant-based meals to lower your food footprint.", icon: <Leaf size={24} /> },
-    { text: "Reduce, reuse, and recycle to minimize shopping waste.", icon: <RefreshCcw size={24} /> },
-    { text: "Unplug devices when not in use to save energy.", icon: <Plug size={24} /> },
-    { text: "Choose sustainable brands when shopping.", icon: <ShoppingCart size={24} /> },
-    { text: "Dry clothes naturally instead of using a dryer.", icon: <Wind size={24} /> },
-    { text: "Limit air travel and opt for virtual meetings.", icon: <Plane size={24} /> },
+    { text: 'Use public transport or carpool to reduce emissions.', icon: <Bus size={24} /> },
+    {
+      text: 'Switch to energy-efficient appliances to save electricity.',
+      icon: <Lightbulb size={24} />,
+    },
+    { text: 'Eat more plant-based meals to lower your food footprint.', icon: <Leaf size={24} /> },
+    {
+      text: 'Reduce, reuse, and recycle to minimize shopping waste.',
+      icon: <RefreshCcw size={24} />,
+    },
+    { text: 'Unplug devices when not in use to save energy.', icon: <Plug size={24} /> },
+    { text: 'Choose sustainable brands when shopping.', icon: <ShoppingCart size={24} /> },
+    { text: 'Dry clothes naturally instead of using a dryer.', icon: <Wind size={24} /> },
+    { text: 'Limit air travel and opt for virtual meetings.', icon: <Plane size={24} /> },
   ];
 
   const getRandomTips = (tipsArray, count = 3) => {
@@ -441,114 +448,157 @@ const Result = () => {
   const [selectedTips, setSelectedTips] = useState([]);
 
   const categoryIcons = {
-  transport: <Car size={24} color="#5E8C61" />,
-  electricity: <Bolt size={24} color="#5E8C61" />,
-  food: <Utensils size={24} color="#5E8C61" />,
-  shopping: <ShoppingBag size={24} color="#5E8C61" />,
-};
+    transport: <Car size={24} color="#5E8C61" />,
+    electricity: <Bolt size={24} color="#5E8C61" />,
+    food: <Utensils size={24} color="#5E8C61" />,
+    shopping: <ShoppingBag size={24} color="#5E8C61" />,
+    waste: <Trash2 size={24} color="#5E8C61" />,
+  };
 
-const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Convert camelCase to readable text
+  const formatLabel = (label) => label.replace(/([A-Z])/g, ' $1').trim(); // Convert camelCase to readable text
 
   useEffect(() => {
     setSelectedTips(getRandomTips(tipsWithIcons));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [showModal, setShowModal] = useState(false);
-  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [windowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
+    <div style={{ textAlign: 'center', padding: '20px' }}>
       <h1>Result Page</h1>
-      <div style={{ marginTop: "30px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "24px", marginBottom: "15px", color: "#333" }}>Your Input Summary</h2>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",  // 2 columns
-          gap: "20px",
-          justifyContent: "center",
-          padding: "20px",
-          maxWidth: "600px",
-          margin: "auto",
-        }}>
+      <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '24px', marginBottom: '15px', color: '#333' }}>
+          Your Input Summary
+        </h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)', // 2 columns
+            gap: '20px',
+            justifyContent: 'center',
+            padding: '20px',
+            maxWidth: '600px',
+            margin: 'auto',
+          }}
+        >
           {Object.entries(userData).map(([key, value], index) => (
-            <div key={index} style={{
-              background: "#fff",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-              textAlign: "left",
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "15px",
-              borderLeft: "5px solid #5E8C61",
-            }}>
-              {categoryIcons[key.toLowerCase()] || <Bolt size={28} color="#333" />} {/* Show icon */}
+            <div
+              key={index}
+              style={{
+                background: '#fff',
+                padding: '20px',
+                borderRadius: '10px',
+                boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
+                textAlign: 'left',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '15px',
+                borderLeft: '5px solid #5E8C61',
+              }}
+            >
+              {categoryIcons[key.toLowerCase()] || <Bolt size={28} color="#333" />}{' '}
+              {/* Show icon */}
               <div>
-                <b style={{ fontSize: "16px", color: "#333" }}>{formatLabel(key)}:</b>
-                {typeof value === "object" ? (
-                  <ul style={{ paddingLeft: "15px", marginTop: "5px" }}>
+                <b style={{ fontSize: '16px', color: '#333' }}>{formatLabel(key)}:</b>
+                {typeof value === 'object' ? (
+                  <ul style={{ paddingLeft: '15px', marginTop: '5px' }}>
                     {Object.entries(value).map(([subKey, subValue]) => (
-                      <li key={subKey} style={{ fontSize: "14px", color: "#666" }}>
-                        <b>{formatLabel(subKey)}:</b> {subValue instanceof File ? subValue.name : subValue}
+                      <li key={subKey} style={{ fontSize: '14px', color: '#666' }}>
+                        <b>{formatLabel(subKey)}:</b>{' '}
+                        {subValue instanceof File ? subValue.name : subValue}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p style={{ fontSize: "14px", margin: "5px 0", color: "#666" }}>{value}</p>
+                  <p style={{ fontSize: '14px', margin: '5px 0', color: '#666' }}>{value}</p>
                 )}
               </div>
             </div>
           ))}
         </div>
       </div>
-      <button 
-        onClick={handleSubmit} 
-        disabled={loading} 
+      <button
+        onClick={handleSubmit}
+        disabled={loading}
         style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          borderRadius: "8px",
-          border: "none",
-          background: "#5E8C61",
-          color: "#fff",
-          cursor: "pointer",
-          transition: "0.3s",
-          marginTop: "20px"
+          padding: '10px 20px',
+          fontSize: '16px',
+          borderRadius: '8px',
+          border: 'none',
+          background: '#5E8C61',
+          color: '#fff',
+          cursor: 'pointer',
+          transition: '0.3s',
+          marginTop: '20px',
         }}
       >
-        {loading ? "Calculating..." : "Calculate Footprint"}
+        {loading ? 'Calculating...' : 'Calculate Footprint'}
       </button>
 
       {response && (
         <div>
-          <h2 style={{marginTop: "20px"}}>Total Carbon Footprint: {response?.footprint?.total} kg CO₂</h2>
+          <h2 style={{ marginTop: '20px' }} data-testid="total-emission">
+            Total Carbon Footprint: {response?.footprint?.total ?? response?.totalEmission} kg CO₂
+          </h2>
+          {response?.grade && (
+            <h3 style={{ marginTop: '10px' }} data-testid="grade">
+              Grade: {response.grade}
+            </h3>
+          )}
+          {response?.points !== undefined && (
+            <h3 style={{ marginTop: '10px' }}>Points: {response.points}</h3>
+          )}
           {/* <FootprintProgress percentage={(response?.footprint?.total / 800) * 100} /> */}
 
-          <button 
+          <button
             onClick={() => setShowModal(true)}
             style={{
-              padding: "10px 20px",
-              fontSize: "16px",
-              borderRadius: "8px",
-              border: "none",
-              background: "#4E6151",
-              color: "#fff",
-              cursor: "pointer",
-              transition: "0.3s",
-              marginTop: "20px"
+              padding: '10px 20px',
+              fontSize: '16px',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#4E6151',
+              color: '#fff',
+              cursor: 'pointer',
+              transition: '0.3s',
+              marginTop: '20px',
             }}
           >
             Claim Your Points
           </button>
 
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "20px" }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '30px',
+              marginTop: '20px',
+            }}
+          >
             <PieChart width={350} height={350}>
               <Pie
                 data={[
-                  { name: "Transport", value: response?.footprint?.transportEmissions },
-                  { name: "Electricity", value: response?.footprint?.electricityEmissions },
-                  { name: "Food", value: response?.footprint?.foodEmissions },
-                  { name: "Shopping", value: response?.footprint?.shoppingEmissions },
+                  {
+                    name: 'Transport',
+                    value:
+                      response?.footprint?.transportEmissions ?? response?.breakdown?.transport,
+                  },
+                  {
+                    name: 'Electricity',
+                    value:
+                      response?.footprint?.electricityEmissions ?? response?.breakdown?.electricity,
+                  },
+                  {
+                    name: 'Food',
+                    value: response?.footprint?.foodEmissions ?? response?.breakdown?.food,
+                  },
+                  {
+                    name: 'Shopping',
+                    value: response?.footprint?.shoppingEmissions ?? response?.breakdown?.shopping,
+                  },
                 ]}
                 cx="50%"
                 cy="50%"
@@ -568,58 +618,72 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
 
             <div>
               <h3>Breakdown:</h3>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                <li><Car size={18} /> <b>Transport:</b> {response?.footprint?.transportEmissions} kg CO₂</li>
-                <li><Bolt size={18} /> <b>Electricity:</b> {response?.footprint?.electricityEmissions} kg CO₂</li>
-                <li><Utensils size={18} /> <b>Food:</b> {response?.footprint?.foodEmissions} kg CO₂</li>
-                <li><ShoppingBag size={18} /> <b>Shopping:</b> {response?.footprint?.shoppingEmissions} kg CO₂</li>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li>
+                  <Car size={18} /> <b>Transport:</b>{' '}
+                  {response?.footprint?.transportEmissions ?? response?.breakdown?.transport} kg CO₂
+                </li>
+                <li>
+                  <Bolt size={18} /> <b>Electricity:</b>{' '}
+                  {response?.footprint?.electricityEmissions ?? response?.breakdown?.electricity} kg
+                  CO₂
+                </li>
+                <li>
+                  <Utensils size={18} /> <b>Food:</b>{' '}
+                  {response?.footprint?.foodEmissions ?? response?.breakdown?.food} kg CO₂
+                </li>
+                <li>
+                  <ShoppingBag size={18} /> <b>Shopping:</b>{' '}
+                  {response?.footprint?.shoppingEmissions ?? response?.breakdown?.shopping} kg CO₂
+                </li>
               </ul>
             </div>
           </div>
 
-          <div style={{ marginTop: "30px", textAlign: "center" }}>
-            <h2 style={{ marginBottom: "15px" }}>🌱 Sustainability Tips</h2>
-            <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+          <div style={{ marginTop: '30px', textAlign: 'center' }}>
+            <h2 style={{ marginBottom: '15px' }}>🌱 Sustainability Tips</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
               {selectedTips.map((tip, index) => (
-                <div key={index} style={{
-                  width: "260px",
-                  padding: "20px",
-                  borderRadius: "15px",
-                  background: "#fff",
-                  boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
-                  textAlign: "center",
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  color: "#333",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  gap: "10px",
-                  border: "2px solid #ddd",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, #76b98f, #4E6151)";
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.boxShadow = "0px 6px 15px rgba(0,0,0,0.3)";
-                  
-                  const iconElement = e.currentTarget.querySelector(".icon");
-                  if (iconElement) {
-                    iconElement.style.color = "#fff";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#fff";
-                  e.currentTarget.style.color = "#333";
-                  e.currentTarget.style.boxShadow = "0px 4px 10px rgba(0,0,0,0.15)";
-                  
-                  const iconElement = e.currentTarget.querySelector(".icon");
-                  if (iconElement) {
-                    iconElement.style.color = "#4E6151";
-                  }
-                }}
-                
+                <div
+                  key={index}
+                  style={{
+                    width: '260px',
+                    padding: '20px',
+                    borderRadius: '15px',
+                    background: '#fff',
+                    boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#333',
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    border: '2px solid #ddd',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #76b98f, #4E6151)';
+                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.boxShadow = '0px 6px 15px rgba(0,0,0,0.3)';
+
+                    const iconElement = e.currentTarget.querySelector('.icon');
+                    if (iconElement) {
+                      iconElement.style.color = '#fff';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#fff';
+                    e.currentTarget.style.color = '#333';
+                    e.currentTarget.style.boxShadow = '0px 4px 10px rgba(0,0,0,0.15)';
+
+                    const iconElement = e.currentTarget.querySelector('.icon');
+                    if (iconElement) {
+                      iconElement.style.color = '#4E6151';
+                    }
+                  }}
                 >
-                  <div style={{ fontSize: "28px", color: "#4E6151" }}>{tip.icon}</div>
+                  <div style={{ fontSize: '28px', color: '#4E6151' }}>{tip.icon}</div>
                   <p style={{ margin: 0 }}>{tip.text}</p>
                 </div>
               ))}
@@ -632,57 +696,72 @@ const formatLabel = (label) => label.replace(/([A-Z])/g, " $1").trim(); // Conve
               <Confetti width={windowSize.width} height={windowSize.height} numberOfPieces={300} />
 
               {/* Background Overlay */}
-              <div style={{
-                position: "fixed", 
-                top: "0", left: "0", 
-                width: "100vw", height: "100vh", 
-                background: "rgba(0, 0, 0, 0.6)", 
-                display: "flex", justifyContent: "center", alignItems: "center",
-                backdropFilter: "blur(8px)"
-              }}>
+              <div
+                style={{
+                  position: 'fixed',
+                  top: '0',
+                  left: '0',
+                  width: '100vw',
+                  height: '100vh',
+                  background: 'rgba(0, 0, 0, 0.6)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
                 {/* Animated Modal Box */}
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                   style={{
-                    background: "linear-gradient(135deg, #ffffff, #e3f1ff)",
-                    padding: "20px",
-                    borderRadius: "15px",
-                    textAlign: "center",
-                    minWidth: "320px",
-                    boxShadow: "0px 8px 20px rgba(0,0,0,0.3)",
-                    position: "relative"
+                    background: 'linear-gradient(135deg, #ffffff, #e3f1ff)',
+                    padding: '20px',
+                    borderRadius: '15px',
+                    textAlign: 'center',
+                    minWidth: '320px',
+                    boxShadow: '0px 8px 20px rgba(0,0,0,0.3)',
+                    position: 'relative',
                   }}
                 >
-                  <h2 style={{
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    color: "#333",
-                    marginBottom: "10px"
-                  }}>🎉 Congratulations! 🎉</h2>
+                  <h2
+                    style={{
+                      fontSize: '24px',
+                      fontWeight: 'bold',
+                      color: '#333',
+                      marginBottom: '10px',
+                    }}
+                  >
+                    🎉 Congratulations! 🎉
+                  </h2>
 
-                  <p style={{ fontSize: "18px", color: "#444" }}>
-                    Your footprint is <b>{100 - Math.round((response?.footprint?.total / 1200) * 100)} %</b> clean. <br></br>
-                    You claimed <b>{100 - Math.round((response?.footprint?.total / 1200) * 100)}</b> reward points!
+                  <p style={{ fontSize: '18px', color: '#444' }}>
+                    Your footprint is{' '}
+                    <b>{100 - Math.round((response?.footprint?.total / 1200) * 100)} %</b> clean.{' '}
+                    <br></br>
+                    You claimed <b>
+                      {100 - Math.round((response?.footprint?.total / 1200) * 100)}
+                    </b>{' '}
+                    reward points!
                   </p>
 
                   {/* Close Button */}
-                  <button 
+                  <button
                     onClick={() => setShowModal(false)}
                     style={{
-                      padding: "10px 20px",
-                      fontSize: "16px",
-                      borderRadius: "8px",
-                      border: "none",
-                      background: "#5E8C61",
-                      color: "#fff",
-                      cursor: "pointer",
-                      marginTop: "15px",
-                      transition: "0.3s ease",
+                      padding: '10px 20px',
+                      fontSize: '16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: '#5E8C61',
+                      color: '#fff',
+                      cursor: 'pointer',
+                      marginTop: '15px',
+                      transition: '0.3s ease',
                     }}
-                    onMouseEnter={(e) => e.target.style.background = "#497D4E"}
-                    onMouseLeave={(e) => e.target.style.background = "#5E8C61"}
+                    onMouseEnter={(e) => (e.target.style.background = '#497D4E')}
+                    onMouseLeave={(e) => (e.target.style.background = '#5E8C61')}
                   >
                     Close
                   </button>

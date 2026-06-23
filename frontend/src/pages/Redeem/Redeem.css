@@ -6,7 +6,16 @@
 } */
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;
@@ -72,7 +81,7 @@ body {
 }
 
 .redeem-hero-section::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -145,7 +154,9 @@ body {
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   padding: 24px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -260,15 +271,15 @@ body {
     grid-template-columns: 1fr;
     padding: 0 10px;
   }
-  
+
   .hero-title {
     font-size: 30px;
   }
-  
+
   .hero-subtitle {
     font-size: 16px;
   }
-  
+
   .section-title {
     font-size: 22px;
   }

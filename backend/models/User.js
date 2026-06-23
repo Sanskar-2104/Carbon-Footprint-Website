@@ -1,41 +1,51 @@
-import mongoose from "mongoose";
-import crypto from "crypto";
-const UserSchema = new mongoose.Schema({
+import mongoose from 'mongoose';
+
+const UserSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: {
-            validator: function(v) {
-                return /\S+@\S+\.\S+/.test(v);
-            },
-            message: props => `${props.value} is not a valid email!`
-        }
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /\S+@\S+\.\S+/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email!`,
+      },
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    verified: {  
-        type: Boolean,  
-        default: false  
+    verified: {
+      type: Boolean,
+      default: false,
     },
     verificationToken: {
-        type: String
+      type: String,
     },
     resetPasswordToken: {
-        type: String
+      type: String,
     },
     points: {
-        type: Number,
-        default:0
+      type: Number,
+      default: 0,
     },
-    badges: [String]
-}, { timestamps: true });
+    badges: [String],
+    location: {
+      type: String,
+      default: '',
+    },
+    carbonGoal: {
+      type: String,
+      default: '',
+    },
+  },
+  { timestamps: true }
+);
 
-
-export default mongoose.model("User", UserSchema);
+export default mongoose.model('User', UserSchema);

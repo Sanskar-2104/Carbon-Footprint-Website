@@ -1,0 +1,56 @@
+.achievement-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+}
+
+.achievement-popup-icon {
+  font-size: 48px;
+  animation: bounce 0.6s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.achievement-popup h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a3a2a;
+  font-weight: 600;
+}
+
+.achievement-popup p {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.achievement-points {
+  color: #f59e0b;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.achievement-modal {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

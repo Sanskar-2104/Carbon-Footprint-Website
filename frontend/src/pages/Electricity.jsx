@@ -16,14 +16,12 @@
 //       followUp={{
 //         showFor: ["high"], // Convert to array for consistency
 //         question: "What is your electricity unit this month?",
-//       }}      
+//       }}
 //     />
 //   );
 // };
 
 // export default Electricity;
-
-
 
 // import React from "react";
 // import { Zap } from "lucide-react";
@@ -51,8 +49,6 @@
 
 // export default Electricity;
 
-
-
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
 
@@ -79,10 +75,6 @@
 // };
 
 // export default Electricity;
-
-
-
-
 
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
@@ -155,48 +147,44 @@
 
 // export default Electricity;
 
-
-
-import React, { useState } from "react";
-import { useUserInput } from "../context/UserInputContext";
-import { Bolt } from "lucide-react";
-import QuizSection from "./QuizSection";
+import React, { useState } from 'react';
+import { Bolt } from 'lucide-react';
+import QuizSection from './QuizSection';
 
 const Electricity = ({ setActiveSection }) => {
   const electricityQuestions = [
     {
-      key: "energyType",
-      question: "What type of energy do you use most at home?",
+      key: 'energyType',
+      question: 'What type of energy do you use most at home?',
       options: [
-        { label: "Fossil fuels (gas, coal, non-renewable electricity)", value: "fossil" },
-        { label: "A mix of renewable and non-renewable energy", value: "mixed" },
-        { label: "Mostly renewable energy (solar, wind)", value: "renewable" },
+        { label: 'Fossil fuels (gas, coal, non-renewable electricity)', value: 'fossil' },
+        { label: 'A mix of renewable and non-renewable energy', value: 'mixed' },
+        { label: 'Mostly renewable energy (solar, wind)', value: 'renewable' },
       ],
     },
     {
-      key: "applianceUsage",
-      question: "How often do you use appliances like washing machines, heaters, or ovens?",
+      key: 'applianceUsage',
+      question: 'How often do you use appliances like washing machines, heaters, or ovens?',
       options: [
-        { label: "Every day", value: "daily" },
-        { label: "A few times a week", value: "fewTimes" },
-        { label: "Once a week or less", value: "rarely" },
+        { label: 'Every day', value: 'daily' },
+        { label: 'A few times a week', value: 'fewTimes' },
+        { label: 'Once a week or less', value: 'rarely' },
       ],
     },
     {
-      key: "electricityBillImage",
-      question: "Upload your electricity bill (image):",
+      key: 'electricityBillImage',
+      question: 'Upload your electricity bill (image):',
       uploadField: true, // mark this question as file upload
     },
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { userData, setUserInput } = useUserInput();
 
   const handleNext = () => {
     if (currentQuestionIndex < electricityQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      setActiveSection("Food"); // Move to next section
+      setActiveSection('Food'); // Move to next section
     }
   };
 
@@ -204,7 +192,7 @@ const Electricity = ({ setActiveSection }) => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
-      setActiveSection("Transport");
+      setActiveSection('Transport');
     }
   };
 

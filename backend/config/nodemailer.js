@@ -1,42 +1,62 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 dotenv.config();
 
+const BACKEND_BASE_URL = (
+  process.env.BACKEND_BASE_URL || `http://localhost:${process.env.PORT || 5000}`
+).replace(/\/$/, '');
+
+const FRONTEND_BASE_URL = (process.env.FRONTEND_BASE_URL || `http://localhost:3000`).replace(
+  /\/$/,
+  ''
+);
+
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
+  host: 'smtp.mailgun.org',
+  port: 587,
+  auth: {
+    user: process.env.MAILGUN_SMTP_LOGIN,
+    pass: process.env.MAILGUN_SMTP_PASSWORD,
+  },
 });
 
-
-export const sendVerificationMail = async (email, token) => {
-    // const verificationLink = `${process.env.FRONTEND_URL}/verify-email/${token}`;
-    const verificationLink = `http://localhost:5000/api/auth/verify-email/${token}`;
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Verify your Email",
-        html: `<p>Click the link below to verify your email:</p>
-        <a href="${verificationLink}">${verificationLink}</a>`
-    };
-
-    await transporter.sendMail(mailOptions);
+const sender = {
+  name: process.env.MAILGUN_SENDER_NAME || 'Carbon Footprint App',
+  address: process.env.MAILGUN_SENDER_EMAIL || process.env.MAILGUN_SMTP_LOGIN,
 };
 
-export const sendResetPasswordMail = async (email, token) => { 
-    const resetLink = `http://localhost:5000/api/auth/reset-password/${token}`;
+export const sendVerificationMail = async (email, token) => {
+  const verificationLink = `${BACKEND_BASE_URL}/api/auth/verify-email/${token}`;
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Reset your Password",
-        html: `<p>Click the link below to reset your password:</p>
-        <a href="${resetLink}">${resetLink}</a>`
-    };
+  try {
+    const info = await transporter.sendMail({
+      from: `"${sender.name}" <${sender.address}>`,
+      to: email,
+      subject: 'Verify your Email',
+      html: `<p>Click the link below to verify your email:</p>
+          <a href="${verificationLink}">${verificationLink}</a>`,
+    });
+    console.log('Verification email sent to', email, 'MessageId:', info.messageId);
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+    throw error;
+  }
+};
 
-    await transporter.sendMail(mailOptions);
-}
+export const sendResetPasswordMail = async (email, token) => {
+  const resetLink = `${FRONTEND_BASE_URL}/reset-password/${token}`;
 
+  try {
+    const info = await transporter.sendMail({
+      from: `"${sender.name}" <${sender.address}>`,
+      to: email,
+      subject: 'Reset your Password',
+      html: `<p>Click the link below to reset your password:</p>
+          <a href="${resetLink}">${resetLink}</a>`,
+    });
+    console.log('Password reset email sent to', email, 'MessageId:', info.messageId);
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    throw error;
+  }
+};

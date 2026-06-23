@@ -23,9 +23,6 @@
 
 // export default Food;
 
-
-
-
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
 
@@ -38,7 +35,6 @@
 //     updateUserData("food", { food: foodChoice }); // Store as an object with key
 //     setActiveSection("Result");
 //   };
-  
 
 //   return (
 //     <div>
@@ -58,52 +54,48 @@
 
 // export default Food;
 
-
-
-
-
-import React, { useState } from "react";
-import { useUserInput } from "../context/UserInputContext";
-import { Utensils } from "lucide-react"; // Icon for food
-import QuizSection from "./QuizSection";
+import React, { useState } from 'react';
+import { useUserInput } from '../context/UserInputContext';
+import { Utensils } from 'lucide-react'; // Icon for food
+import QuizSection from './QuizSection';
 
 const Food = ({ setActiveSection }) => {
   const foodQuestions = [
     {
-      key: "meatFrequency",
-      question: "When planning meals for the week, how often do you include meat?",
+      key: 'meatFrequency',
+      question: 'When planning meals for the week, how often do you include meat?',
       options: [
-        { label: "Meat in every meal (4+ times a day)", value: "4+" },
-        { label: "Meat in most meals (2-3 times a day)", value: "2-3" },
-        { label: "Meat once a day", value: "1" },
-        { label: "Meat a few times a week", value: "few" },
-        { label: "Never eat meat", value: "never" },
+        { label: 'Meat in every meal (4+ times a day)', value: '4+' },
+        { label: 'Meat in most meals (2-3 times a day)', value: '2-3' },
+        { label: 'Meat once a day', value: '1' },
+        { label: 'Meat a few times a week', value: 'few' },
+        { label: 'Never eat meat', value: 'never' },
       ],
     },
     {
-      key: "meatLover",
-      question: "How many times do you have meat in your meals per week?",
+      key: 'meatLover',
+      question: 'How many times do you have meat in your meals per week?',
       inputField: true, // Number input
-      showFor: ["4+"], // Show only if "4+" is selected
+      showFor: ['4+'], // Show only if "4+" is selected
     },
     {
-      key: "dairyFrequency",
-      question: "How often do you consume dairy products like milk, cheese, or butter?",
+      key: 'dairyFrequency',
+      question: 'How often do you consume dairy products like milk, cheese, or butter?',
       options: [
-        { label: "Multiple times a day", value: "multiple" },
-        { label: "Once a day", value: "daily" },
-        { label: "A few times a week", value: "few" },
-        { label: "Never", value: "never" },
+        { label: 'Multiple times a day', value: 'multiple' },
+        { label: 'Once a day', value: 'daily' },
+        { label: 'A few times a week', value: 'few' },
+        { label: 'Never', value: 'never' },
       ],
     },
     {
-      key: "restaurantChoice",
-      question: "You’re ordering food at a restaurant. What do you usually pick?",
+      key: 'restaurantChoice',
+      question: 'You’re ordering food at a restaurant. What do you usually pick?',
       options: [
-        { label: "A steak or lamb-heavy dish", value: "steak" },
-        { label: "Chicken or fish-based dish", value: "chicken_fish" },
-        { label: "A vegetarian meal with some dairy", value: "vegetarian" },
-        { label: "A fully plant-based dish", value: "vegan" },
+        { label: 'A steak or lamb-heavy dish', value: 'steak' },
+        { label: 'Chicken or fish-based dish', value: 'chicken_fish' },
+        { label: 'A vegetarian meal with some dairy', value: 'vegetarian' },
+        { label: 'A fully plant-based dish', value: 'vegan' },
       ],
     },
   ];
@@ -123,7 +115,7 @@ const Food = ({ setActiveSection }) => {
     if (nextIndex < foodQuestions.length) {
       setCurrentQuestionIndex(nextIndex);
     } else {
-      setActiveSection("Result"); // Move to the Result page
+      setActiveSection('Waste'); // Move to the Waste page
     }
   };
 
@@ -139,7 +131,7 @@ const Food = ({ setActiveSection }) => {
     if (prevIndex >= 0) {
       setCurrentQuestionIndex(prevIndex);
     } else {
-      setActiveSection("Electricity"); // Move back to Electricity
+      setActiveSection('Electricity'); // Move back to Electricity
     }
   };
 
@@ -158,7 +150,9 @@ const Food = ({ setActiveSection }) => {
       options={currentQuestion.options || []} // Handle cases where there are no options
       category="food"
       field={currentQuestion.key}
-      followUp={currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null}
+      followUp={
+        currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null
+      }
       onNext={handleNext}
       onPrevious={handlePrevious}
     />

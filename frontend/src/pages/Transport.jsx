@@ -45,7 +45,6 @@
 
 // export default Transport;
 
-
 // import React from "react";
 // import { Car } from "lucide-react";
 // import QuizSection from "./QuizSection";
@@ -71,11 +70,8 @@
 
 // export default Transport;
 
-
-
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
-
 
 // const Transport = ({ setActiveSection }) => {
 //   const { updateUserData } = useUserInput();
@@ -117,9 +113,6 @@
 // };
 
 // export default Transport;
-
-
-
 
 // import React, { useState } from "react";
 // import { useUserInput } from "../context/UserInputContext";
@@ -224,56 +217,53 @@
 
 // export default Transport;
 
-
-
-
-import React, { useState } from "react";
-import { useUserInput } from "../context/UserInputContext";
-import { Car } from "lucide-react"; // Import icon
-import QuizSection from "./QuizSection";
+import React, { useState } from 'react';
+import { useUserInput } from '../context/UserInputContext';
+import { Car } from 'lucide-react'; // Import icon
+import QuizSection from './QuizSection';
 
 const Transport = ({ setActiveSection }) => {
   const transportQuestions = [
     {
-      key: "mode",
-      question: "What is your most common mode of transportation?",
+      key: 'mode',
+      question: 'What is your most common mode of transportation?',
       options: [
-        { label: "Car (gasoline/diesel)", value: "car" },
-        { label: "Public transport (bus/train)", value: "public" },
-        { label: "Bike", value: "bike" },
-        { label: "Walk/bicycle", value: "walk" },
+        { label: 'Car (gasoline/diesel)', value: 'car' },
+        { label: 'Public transport (bus/train)', value: 'public' },
+        { label: 'Bike', value: 'bike' },
+        { label: 'Walk/bicycle', value: 'walk' },
       ],
     },
     {
-      key: "carpool",
-      question: "Do you carpool or use rideshare?",
+      key: 'carpool',
+      question: 'Do you carpool or use rideshare?',
       options: [
-        { label: "Yes", value: "yes" },
-        { label: "No", value: "no" },
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
       ],
-      showFor: ["car"], // Show only if "car" is selected
+      showFor: ['car'], // Show only if "car" is selected
     },
     {
-      key: "carpoolCount",
-      question: "How many people do you share the ride with?",
+      key: 'carpoolCount',
+      question: 'How many people do you share the ride with?',
       inputField: true, // This will be an input box
-      showFor: ["yes"], // Show only if carpool is "yes"
-      dependsOn: "carpool", // Depends on carpool answer
+      showFor: ['yes'], // Show only if carpool is "yes"
+      dependsOn: 'carpool', // Depends on carpool answer
     },
     {
-      key: "driveFrequency",
-      question: "How often do you drive your car?",
+      key: 'driveFrequency',
+      question: 'How often do you drive your car?',
       options: [
-        { label: "Every day for long distances", value: "longDaily" },
-        { label: "Every day for short distances", value: "shortDaily" },
-        { label: "A few times a week", value: "fewTimes" },
-        { label: "Rarely or never", value: "rarely" },
+        { label: 'Every day for long distances', value: 'longDaily' },
+        { label: 'Every day for short distances', value: 'shortDaily' },
+        { label: 'A few times a week', value: 'fewTimes' },
+        { label: 'Rarely or never', value: 'rarely' },
       ],
-      showFor: ["car"], // Show only if "car" is selected
+      showFor: ['car'], // Show only if "car" is selected
     },
     {
-      key: "dailyDistance",
-      question: "How much do you travel daily in km?",
+      key: 'dailyDistance',
+      question: 'How much do you travel daily in km?',
       inputField: true, // Mark as an input field
     },
   ];
@@ -295,7 +285,7 @@ const Transport = ({ setActiveSection }) => {
     if (nextIndex < transportQuestions.length) {
       setCurrentQuestionIndex(nextIndex);
     } else {
-      setActiveSection("Electricity"); // Move to next section
+      setActiveSection('Electricity'); // Move to next section
     }
   };
 
@@ -313,7 +303,7 @@ const Transport = ({ setActiveSection }) => {
     if (prevIndex >= 0) {
       setCurrentQuestionIndex(prevIndex);
     } else {
-      setActiveSection("Shopping"); // Move back to Shopping
+      setActiveSection('Shopping'); // Move back to Shopping
     }
   };
 
@@ -321,7 +311,9 @@ const Transport = ({ setActiveSection }) => {
   const currentQuestion = transportQuestions[currentQuestionIndex];
   if (
     currentQuestion.showFor &&
-    !currentQuestion.showFor.includes(userData.transport?.[currentQuestion.dependsOn] || userData.transport?.mode)
+    !currentQuestion.showFor.includes(
+      userData.transport?.[currentQuestion.dependsOn] || userData.transport?.mode
+    )
   ) {
     handleNext(); // Skip the question if it shouldn't be shown
     return null;
@@ -336,9 +328,7 @@ const Transport = ({ setActiveSection }) => {
       category="transport"
       field={currentQuestion.key}
       followUp={
-        currentQuestion.inputField
-          ? { showFor: [true], question: currentQuestion.question }
-          : null
+        currentQuestion.inputField ? { showFor: [true], question: currentQuestion.question } : null
       }
       onNext={handleNext}
       onPrevious={handlePrevious}

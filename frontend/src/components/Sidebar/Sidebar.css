@@ -1,39 +1,39 @@
 .sidebar {
-    width: 250px;
-    background-color: #3D4C3F;
-    padding: 10px;
-    color: white;
-    height: 87vh;
-    font-family: 'Poppins', sans-serif;  
-    left: 0;
-    overflow-y: auto;
+  width: 250px;
+  background-color: #3d4c3f;
+  padding: 10px;
+  color: white;
+  height: 87vh;
+  font-family: 'Poppins', sans-serif;
+  left: 0;
+  overflow-y: auto;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .sidebar li {
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar li svg {
-    min-width: 24px;
-    color: #A4B494;
+  min-width: 24px;
+  color: #a4b494;
 }
 
 .sidebar li:hover {
-    background-color: #4A5A4A;
+  background-color: #4a5a4a;
 }
 
 .sidebar li.active {
-    background-color: #28281F;
-    font-weight: bold;
+  background-color: #28281f;
+  font-weight: bold;
 }

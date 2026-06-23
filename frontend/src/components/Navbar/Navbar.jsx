@@ -17,7 +17,6 @@
 
 // export default Navbar;
 
-
 // import React from "react";
 // import { Link } from "react-router-dom";
 // import "./Navbar.css";
@@ -39,9 +38,6 @@
 // };
 
 // export default Navbar;
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
@@ -84,8 +80,6 @@
 // };
 
 // export default Navbar;
-
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import { Link } from "react-router-dom";
@@ -158,12 +152,9 @@
 
 // export default Navbar;
 
-
-
-
 // import React, { useState, useEffect, useRef } from "react";
 // import { Link, useLocation } from "react-router-dom"; // Import useLocation
-// import { User, LogOut } from "lucide-react"; 
+// import { User, LogOut } from "lucide-react";
 // import "./Navbar.css";
 
 // const Navbar = () => {
@@ -238,12 +229,9 @@
 
 // export default Navbar;
 
-
-
-
 // import React, { useState, useEffect, useRef } from "react";
-// import { Link, useLocation } from "react-router-dom"; 
-// import { User, LogOut, ChevronDown } from "lucide-react"; 
+// import { Link, useLocation } from "react-router-dom";
+// import { User, LogOut, ChevronDown } from "lucide-react";
 // import "./Navbar.css";
 
 // const Navbar = () => {
@@ -316,7 +304,6 @@
 //           </div>
 //         </div>
 
-
 //         {isLoggedIn ? (
 //           <div className="profile-container" ref={profileRef}>
 //             <User
@@ -345,40 +332,48 @@
 
 // export default Navbar;
 
-
-
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom"; 
-import { User, LogOut, ChevronDown } from "lucide-react"; 
-import "./Navbar.css";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { User, LogOut, ChevronDown } from 'lucide-react';
+import './Navbar.css';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
+  const [showLeaderboardDropdown, setShowLeaderboardDropdown] = useState(false);
   const profileRef = useRef(null);
   const moreRef = useRef(null);
+  const leaderboardRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   const toggleMoreDropdown = () => {
     setShowMoreDropdown((prev) => !prev);
     setShowProfileDropdown(false); // Close profile dropdown when opening "More"
+    setShowLeaderboardDropdown(false); // Close leaderboard dropdown
   };
 
   const toggleProfileDropdown = () => {
     setShowProfileDropdown((prev) => !prev);
     setShowMoreDropdown(false); // Close "More" dropdown when opening Profile
+    setShowLeaderboardDropdown(false); // Close leaderboard dropdown
+  };
+
+  const toggleLeaderboardDropdown = () => {
+    setShowLeaderboardDropdown((prev) => !prev);
+    setShowMoreDropdown(false); // Close "More" dropdown when opening Leaderboard
+    setShowProfileDropdown(false); // Close profile dropdown
   };
 
   useEffect(() => {
@@ -389,11 +384,14 @@ const Navbar = () => {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
         setShowMoreDropdown(false);
       }
+      if (leaderboardRef.current && !leaderboardRef.current.contains(event.target)) {
+        setShowLeaderboardDropdown(false);
+      }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -401,29 +399,68 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <span className="logo-text">SustainaTrack</span>
+          <Link to="/" className="logo-text">
+            SustainaTrack
+          </Link>
           {/* <span className="logo-leaf">🍃</span> */}
         </div>
         <ul className="nav-links">
           <Link to="/">
-            <li className={location.pathname === "/" ? "active" : ""}>Home</li>
+            <li className={location.pathname === '/' ? 'active' : ''}>Home</li>
           </Link>
           <Link to="/calculate">
-            <li className={location.pathname === "/calculate" ? "active" : ""}>Calculate</li>
+            <li className={location.pathname === '/calculate' ? 'active' : ''}>Calculate</li>
           </Link>
           <Link to="/redeem">
-            <li className={location.pathname === "/redeem" ? "active" : ""}>Redeem</li>
+            <li className={location.pathname === '/redeem' ? 'active' : ''}>Redeem</li>
           </Link>
 
+          {/* Leaderboard Dropdown */}
+          <div
+            className={`dropdown-container ${showLeaderboardDropdown ? 'active' : ''}`}
+            ref={leaderboardRef}
+          >
+            <button className="dropdown-btn" onClick={toggleLeaderboardDropdown}>
+              Leaderboards{' '}
+              <ChevronDown
+                size={16}
+                className={`chevron ${showLeaderboardDropdown ? 'rotate' : ''}`}
+              />
+            </button>
+            {showLeaderboardDropdown && (
+              <div className="dropdown-menu">
+                <Link
+                  to="/leaderboard"
+                  className="dropdown-item"
+                  onClick={() => setShowLeaderboardDropdown(false)}
+                >
+                  Carbon Footprint
+                </Link>
+                <Link
+                  to="/quiz-leaderboard"
+                  className="dropdown-item"
+                  onClick={() => setShowLeaderboardDropdown(false)}
+                >
+                  Quiz Points
+                </Link>
+              </div>
+            )}
+          </div>
+
           {/* More Dropdown */}
-          <div className={`dropdown-container ${showMoreDropdown ? "active" : ""}`} ref={moreRef}>
+          <div className={`dropdown-container ${showMoreDropdown ? 'active' : ''}`} ref={moreRef}>
             <button className="dropdown-btn" onClick={toggleMoreDropdown}>
-              More <ChevronDown size={16} className={`chevron ${showMoreDropdown ? "rotate" : ""}`} />
+              More{' '}
+              <ChevronDown size={16} className={`chevron ${showMoreDropdown ? 'rotate' : ''}`} />
             </button>
             {showMoreDropdown && (
               <div className="dropdown-menu">
-                <Link to="/about" className="dropdown-item">About</Link>
-                <Link to="/carbonInfo" className="dropdown-item">Carbon Footprint</Link>
+                <Link to="/about" className="dropdown-item">
+                  About
+                </Link>
+                <Link to="/carbonInfo" className="dropdown-item">
+                  Carbon Footprint
+                </Link>
               </div>
             )}
           </div>
@@ -440,7 +477,9 @@ const Navbar = () => {
                     <span>My Account</span>
                   </div>
                   <div className="dropdown-divider"></div>
-                  <Link to="/profile" className="dropdown-item">Profile</Link>
+                  <Link to="/profile" className="dropdown-item">
+                    Profile
+                  </Link>
                   <button className="dropdown-item logout-btn" onClick={handleLogout}>
                     <LogOut size={18} className="logout-icon" /> Logout
                   </button>

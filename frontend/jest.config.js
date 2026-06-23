@@ -1,0 +1,47 @@
+module.exports = {
+  testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
+    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js',
+  },
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx}',
+    '!src/index.js',
+    '!src/reportWebVitals.js',
+    '!src/setupTests.js',
+    '!**/*.stories.{js,jsx}',
+    '!**/*.test.{js,jsx}',
+    '!**/node_modules/**',
+    '!src/App.js',
+    '!src/components/AchievementBadge/**',
+    '!src/components/AchievementNotification/**',
+    '!src/components/Footer/**',
+    '!src/components/Navbar/**',
+    '!src/components/Sidebar/**',
+    '!src/pages/**',
+    '!src/services/achievementService.js',
+  ],
+  coverageThreshold: {
+    global: {
+      lines: 75,
+      functions: 70,
+      branches: 65,
+      statements: 75,
+    },
+    './src/components/Calculator/**': {
+      lines: 85,
+      statements: 85,
+      functions: 85,
+      branches: 80,
+    },
+    './src/utils/**': {
+      lines: 90,
+      statements: 90,
+      functions: 90,
+      branches: 85,
+    },
+  },
+  coverageReporters: ['text', 'lcov', 'json-summary'],
+  clearMocks: true,
+  restoreMocks: true,
+};

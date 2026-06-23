@@ -61,7 +61,6 @@
 
 // export default Shopping;
 
-
 // import React from "react";
 // import { ShoppingBag } from "lucide-react";
 // import QuizSection from "./QuizSection";
@@ -82,7 +81,6 @@
 // };
 
 // export default Shopping;
-
 
 // import React, { useState } from "react";
 // import { ShoppingBag } from "lucide-react";
@@ -152,7 +150,6 @@
 // };
 
 // export default Shopping;
-
 
 // import React, { useState } from "react";
 // import { ShoppingBag } from "lucide-react";
@@ -235,7 +232,6 @@
 
 // export default Shopping;
 
-
 // import React, { useState, useEffect } from "react";
 // import { ShoppingBag } from "lucide-react";
 // import QuizSection from "./QuizSection";
@@ -279,12 +275,11 @@
 //   useEffect(() => {
 //     const handleEvent = () => console.log("Event triggered");
 //     document.addEventListener("click", handleEvent);
-    
+
 //     return () => {
 //       document.removeEventListener("click", handleEvent);
 //     };
 //   }, []);
-  
 
 //   const handleNext = () => {
 //     if (currentQuestionIndex < questions.length - 1) {
@@ -318,85 +313,82 @@
 
 // export default Shopping;
 
-
-
-
-
-import React, { useState } from "react";
-import { useUserInput } from "../context/UserInputContext";
-import { ShoppingBag } from "lucide-react";
-import QuizSection from "./QuizSection";
+import React, { useState } from 'react';
+import { useUserInput } from '../context/UserInputContext';
+import { ShoppingBag } from 'lucide-react';
+import QuizSection from './QuizSection';
 
 const Shopping = ({ setActiveSection }) => {
   const shoppingQuestions = [
     {
-      key: "purchaseCategory",
-      question: "What did you buy today?",
+      key: 'purchaseCategory',
+      question: 'What did you buy today?',
       options: [
-        { label: "Small Items & Clothing", value: "small_clothing" },
-        { label: "Electronics (Small & Medium)", value: "electronics" },
-        { label: "Home Goods & Large Appliances", value: "home_goods" },
+        { label: 'Small Items & Clothing', value: 'small_clothing' },
+        { label: 'Electronics (Small & Medium)', value: 'electronics' },
+        { label: 'Home Goods & Large Appliances', value: 'home_goods' },
       ],
     },
     {
-      key: "shoppingFrequency",
-      question: "How often do you buy small personal items like books, stationery, or accessories?",
+      key: 'shoppingFrequency',
+      question: 'How often do you buy small personal items like books, stationery, or accessories?',
       options: [
-        { label: "Rarely (once a year or less)", value: "rarely" },
-        { label: "Occasionally (every few months)", value: "occasionally" },
-        { label: "Frequently (monthly or more)", value: "frequently" },
+        { label: 'Rarely (once a year or less)', value: 'rarely' },
+        { label: 'Occasionally (every few months)', value: 'occasionally' },
+        { label: 'Frequently (monthly or more)', value: 'frequently' },
       ],
-      showFor: ["small_clothing"],
+      showFor: ['small_clothing'],
     },
     {
-      key: "clothingPurchase",
-      question: "How often do you purchase new clothing items (e.g., T-shirts, jeans, shoes)?",
+      key: 'clothingPurchase',
+      question: 'How often do you purchase new clothing items (e.g., T-shirts, jeans, shoes)?',
       options: [
-        { label: "Rarely (a few times a year)", value: "rarely" },
-        { label: "Occasionally (once every 1-2 months)", value: "occasionally" },
-        { label: "Frequently (every month or more)", value: "frequently" },
+        { label: 'Rarely (a few times a year)', value: 'rarely' },
+        { label: 'Occasionally (once every 1-2 months)', value: 'occasionally' },
+        { label: 'Frequently (every month or more)', value: 'frequently' },
       ],
-      showFor: ["small_clothing"],
+      showFor: ['small_clothing'],
     },
     {
-      key: "electronicsReplacement",
-      question: "How often do you replace small electronics (e.g., headphones, smartwatches)?",
+      key: 'electronicsReplacement',
+      question: 'How often do you replace small electronics (e.g., headphones, smartwatches)?',
       options: [
-        { label: "Rarely (only when broken)", value: "rarely" },
-        { label: "Every 1-2 years", value: "1-2 years" },
-        { label: "Frequently (every year or more)", value: "frequently" },
+        { label: 'Rarely (only when broken)', value: 'rarely' },
+        { label: 'Every 1-2 years', value: '1-2 years' },
+        { label: 'Frequently (every year or more)', value: 'frequently' },
       ],
-      showFor: ["electronics"],
+      showFor: ['electronics'],
     },
     {
-      key: "mediumElectronics",
-      question: "How often do you buy or upgrade medium electronics (e.g., laptops, TVs)?",
+      key: 'mediumElectronics',
+      question: 'How often do you buy or upgrade medium electronics (e.g., laptops, TVs)?',
       options: [
-        { label: "Rarely (every 4-5 years or more)", value: "rarely" },
-        { label: "Occasionally (every 2-3 years)", value: "occasionally" },
-        { label: "Frequently (every year or more)", value: "frequently" },
+        { label: 'Rarely (every 4-5 years or more)', value: 'rarely' },
+        { label: 'Occasionally (every 2-3 years)', value: 'occasionally' },
+        { label: 'Frequently (every year or more)', value: 'frequently' },
       ],
-      showFor: ["electronics"],
+      showFor: ['electronics'],
     },
     {
-      key: "homeFurniture",
-      question: "How often do you purchase new home furniture (e.g., tables, chairs, beds)?",
+      key: 'homeFurniture',
+      question: 'How often do you purchase new home furniture (e.g., tables, chairs, beds)?',
       options: [
-        { label: "Rarely (every 5 years or more)", value: "rarely" },
-        { label: "Occasionally (every 2-4 years)", value: "occasionally" },
-        { label: "Frequently (every year or more)", value: "frequently" },
+        { label: 'Rarely (every 5 years or more)', value: 'rarely' },
+        { label: 'Occasionally (every 2-4 years)', value: 'occasionally' },
+        { label: 'Frequently (every year or more)', value: 'frequently' },
       ],
-      showFor: ["home_goods"],
+      showFor: ['home_goods'],
     },
     {
-      key: "applianceReplacement",
-      question: "How often do you replace large appliances (e.g., refrigerators, washing machines)?",
+      key: 'applianceReplacement',
+      question:
+        'How often do you replace large appliances (e.g., refrigerators, washing machines)?',
       options: [
-        { label: "Only when broken", value: "when broken" },
-        { label: "Every 5-10 years", value: "5-10 years" },
-        { label: "Every 3-5 years", value: "3-5 years" },
+        { label: 'Only when broken', value: 'when broken' },
+        { label: 'Every 5-10 years', value: '5-10 years' },
+        { label: 'Every 3-5 years', value: '3-5 years' },
       ],
-      showFor: ["home_goods"],
+      showFor: ['home_goods'],
     },
   ];
 
@@ -409,7 +401,8 @@ const Shopping = ({ setActiveSection }) => {
       nextIndex < shoppingQuestions.length &&
       shoppingQuestions[nextIndex].showFor &&
       !shoppingQuestions[nextIndex].showFor.includes(
-        userData.shopping?.[shoppingQuestions[nextIndex].dependsOn] || userData.shopping?.purchaseCategory
+        userData.shopping?.[shoppingQuestions[nextIndex].dependsOn] ||
+          userData.shopping?.purchaseCategory
       )
     ) {
       nextIndex++; // Skip hidden questions
@@ -417,7 +410,7 @@ const Shopping = ({ setActiveSection }) => {
     if (nextIndex < shoppingQuestions.length) {
       setCurrentQuestionIndex(nextIndex);
     } else {
-      setActiveSection("Transport"); // Move to next section
+      setActiveSection('Transport'); // Move to next section
     }
   };
 
@@ -427,7 +420,8 @@ const Shopping = ({ setActiveSection }) => {
       prevIndex >= 0 &&
       shoppingQuestions[prevIndex].showFor &&
       !shoppingQuestions[prevIndex].showFor.includes(
-        userData.shopping?.[shoppingQuestions[prevIndex].dependsOn] || userData.shopping?.purchaseCategory
+        userData.shopping?.[shoppingQuestions[prevIndex].dependsOn] ||
+          userData.shopping?.purchaseCategory
       )
     ) {
       prevIndex--; // Skip hidden questions
@@ -435,14 +429,16 @@ const Shopping = ({ setActiveSection }) => {
     if (prevIndex >= 0) {
       setCurrentQuestionIndex(prevIndex);
     } else {
-      setActiveSection("Home"); // Move back to Home
+      setActiveSection('Home'); // Move back to Home
     }
   };
 
   const currentQuestion = shoppingQuestions[currentQuestionIndex];
   if (
     currentQuestion.showFor &&
-    !currentQuestion.showFor.includes(userData.shopping?.[currentQuestion.dependsOn] || userData.shopping?.purchaseCategory)
+    !currentQuestion.showFor.includes(
+      userData.shopping?.[currentQuestion.dependsOn] || userData.shopping?.purchaseCategory
+    )
   ) {
     handleNext(); // Skip the question if it shouldn't be shown
     return null;

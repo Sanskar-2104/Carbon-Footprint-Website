@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, Info, ArrowDown, ArrowUp, ChevronDown, Moon, Sun } from 'lucide-react';
+import { Leaf, Info, ArrowDown, ArrowUp, ChevronDown, Sun } from 'lucide-react';
 import './CarbonInfo.css';
 
 const CarbonInfo = () => {
   const [activeFAQ, setActiveFAQ] = useState(null);
   const [visible, setVisible] = useState({});
-  const [scrollY, setScrollY] = useState(0);
-  const [darkMode, setDarkMode] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [darkMode] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,10 +34,6 @@ const CarbonInfo = () => {
     setActiveFAQ(activeFAQ === index ? null : index);
   };
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-  };
-
   return (
     <div className={`carbon-info-container ${darkMode ? 'dark-theme' : ''}`}>
       {/* <button className="theme-toggle" onClick={toggleTheme}>
@@ -57,10 +43,13 @@ const CarbonInfo = () => {
       <div className="carbon-info-hero">
         <div className="carbon-hero-content">
           <h1>
-          Understanding<span className="title-highlight">Carbon Footprint</span> 
+            Understanding<span className="title-highlight">Carbon Footprint</span>
           </h1>
           <p>Learn about carbon emissions, their impact, and how we can reduce them.</p>
-          <div className="scroll-indicator" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+          <div
+            className="scroll-indicator"
+            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+          >
             <span>Explore</span>
             <ArrowDown size={24} className="scroll-arrow" />
           </div>
@@ -138,7 +127,10 @@ const CarbonInfo = () => {
       </div> */}
 
       <div className="carbon-info-content">
-        <section id="emission" className={`animate-on-scroll carbon-section ${visible.emission ? 'visible' : ''}`}>
+        <section
+          id="emission"
+          className={`animate-on-scroll carbon-section ${visible.emission ? 'visible' : ''}`}
+        >
           <div className="section-icon">
             <div className="icon-circle">
               <Info size={32} />
@@ -148,8 +140,8 @@ const CarbonInfo = () => {
             <h2>What is Carbon Emission?</h2>
             <p>
               Carbon emissions refer to the release of carbon dioxide (CO₂) into the atmosphere,
-              primarily from burning fossil fuels. These emissions are a major driver of climate change,
-              leading to global warming and severe weather events.
+              primarily from burning fossil fuels. These emissions are a major driver of climate
+              change, leading to global warming and severe weather events.
             </p>
             <div className="info-graphic">
               <div className="emission-source">
@@ -168,7 +160,10 @@ const CarbonInfo = () => {
           </div>
         </section>
 
-        <section id="footprint" className={`animate-on-scroll carbon-section ${visible.footprint ? 'visible' : ''}`}>
+        <section
+          id="footprint"
+          className={`animate-on-scroll carbon-section ${visible.footprint ? 'visible' : ''}`}
+        >
           <div className="section-icon">
             <div className="icon-circle">
               <Leaf size={32} />
@@ -179,7 +174,8 @@ const CarbonInfo = () => {
             <p>
               A carbon footprint is the total amount of greenhouse gases (GHG) emitted directly or
               indirectly by an individual, organization, event, or product, usually expressed in
-              equivalent tons of CO₂. It includes all activities from energy consumption to food choices.
+              equivalent tons of CO₂. It includes all activities from energy consumption to food
+              choices.
             </p>
             <div className="footprint-meter">
               <div className="meter-scale">
@@ -199,93 +195,101 @@ const CarbonInfo = () => {
           </div>
         </section>
 
-        <section id="reduce" className={`animate-on-scroll carbon-section ${visible.reduce ? 'visible' : ''}`}>
+        <section
+          id="reduce"
+          className={`animate-on-scroll carbon-section ${visible.reduce ? 'visible' : ''}`}
+        >
           <div className="section-icon">
             <div className="icon-circle">
               <ArrowDown size={32} />
             </div>
           </div>
           <div className="section-content">
-                <h2>How to Reduce Your Carbon Footprint</h2>
+            <h2>How to Reduce Your Carbon Footprint</h2>
           </div>
-          
         </section>
 
         <div className="bento-grid-container">
-        <div className="bento-grid">
-          <div className="bento-card emission">
-            <div className="card-icon">
-              <Info size={24} />
+          <div className="bento-grid">
+            <div className="bento-card emission">
+              <div className="card-icon">
+                <Info size={24} />
+              </div>
+              <h3>Carbon Emission</h3>
+              <p>
+                Carbon emissions refer to the release of carbon dioxide into the atmosphere,
+                primarily from burning fossil fuels. These emissions drive climate change.
+              </p>
             </div>
-            <h3>Carbon Emission</h3>
-            <p>
-              Carbon emissions refer to the release of carbon dioxide into the atmosphere, 
-              primarily from burning fossil fuels. These emissions drive climate change.
-            </p>
-          </div>
-          
-          <div className="bento-card footprint">
-            <div className="card-icon">
-              <Leaf size={24} />
+
+            <div className="bento-card footprint">
+              <div className="card-icon">
+                <Leaf size={24} />
+              </div>
+              <h3>Carbon Footprint</h3>
+              <p>
+                A carbon footprint is the total greenhouse gases emitted by an individual or
+                organization, expressed in equivalent tons of CO₂.
+              </p>
             </div>
-            <h3>Carbon Footprint</h3>
-            <p>
-              A carbon footprint is the total greenhouse gases emitted by an individual or 
-              organization, expressed in equivalent tons of CO₂.
-            </p>
-          </div>
-          
-          <div className="bento-card renewable">
-            <div className="card-icon">
-              <Sun size={24} />
+
+            <div className="bento-card renewable">
+              <div className="card-icon">
+                <Sun size={24} />
+              </div>
+              <h3>Renewable Energy</h3>
+              <p>
+                Switch to solar, wind, or other renewable energy sources to dramatically reduce your
+                carbon emissions.
+              </p>
             </div>
-            <h3>Renewable Energy</h3>
-            <p>
-              Switch to solar, wind, or other renewable energy sources to 
-              dramatically reduce your carbon emissions.
-            </p>
-          </div>
-          
-          <div className="bento-card lifestyle">
-            <div className="card-icon">
-              <div className="icon-custom transport"></div>
+
+            <div className="bento-card lifestyle">
+              <div className="card-icon">
+                <div className="icon-custom transport"></div>
+              </div>
+              <h3>Eco-Transportation</h3>
+              <p>
+                Choose walking, cycling, public transport, or electric vehicles to minimize
+                transportation emissions.
+              </p>
             </div>
-            <h3>Eco-Transportation</h3>
-            <p>
-              Choose walking, cycling, public transport, or electric vehicles to 
-              minimize transportation emissions.
-            </p>
-          </div>
-          
-          <div className="bento-card diet">
-            <div className="card-icon">
-              <div className="icon-custom diet"></div>
+
+            <div className="bento-card diet">
+              <div className="card-icon">
+                <div className="icon-custom diet"></div>
+              </div>
+              <h3>Sustainable Diet</h3>
+              <p>
+                Adopting a plant-based diet can significantly reduce the carbon footprint associated
+                with food production.
+              </p>
             </div>
-            <h3>Sustainable Diet</h3>
-            <p>
-              Adopting a plant-based diet can significantly reduce the carbon 
-              footprint associated with food production.
-            </p>
-          </div>
-          
-          <div className="bento-card recycle">
-            <div className="card-icon">
-              <div className="icon-custom recycle"></div>
+
+            <div className="bento-card recycle">
+              <div className="card-icon">
+                <div className="icon-custom recycle"></div>
+              </div>
+              <h3>Reduce & Recycle</h3>
+              <p>
+                Minimize waste, reuse items, and properly recycle materials to reduce landfill
+                emissions and resource consumption.
+              </p>
             </div>
-            <h3>Reduce & Recycle</h3>
-            <p>
-              Minimize waste, reuse items, and properly recycle materials to reduce 
-              landfill emissions and resource consumption.
-            </p>
           </div>
         </div>
-      </div>
 
-        <section id="faq" className={`animate-on-scroll carbon-section ${visible.faq ? 'visible' : ''}`}>
+        <section
+          id="faq"
+          className={`animate-on-scroll carbon-section ${visible.faq ? 'visible' : ''}`}
+        >
           <div className="section-content full-width">
             <h2>Common Questions About Carbon Footprint</h2>
             <div className="faq-list">
-              <div className={`faq-item ${activeFAQ === 1 ? 'active' : ''}`} onClick={() => toggleFAQ(1)}>
+              <div
+                className={`faq-item ${activeFAQ === 1 ? 'active' : ''}`}
+                onClick={() => toggleFAQ(1)}
+              >
                 <div className="faq-question">
                   <h3>What causes a large carbon footprint?</h3>
                   <ChevronDown size={24} className="faq-icon" />
@@ -301,7 +305,10 @@ const CarbonInfo = () => {
                   </ul>
                 </div>
               </div>
-              <div className={`faq-item ${activeFAQ === 2 ? 'active' : ''}`} onClick={() => toggleFAQ(2)}>
+              <div
+                className={`faq-item ${activeFAQ === 2 ? 'active' : ''}`}
+                onClick={() => toggleFAQ(2)}
+              >
                 <div className="faq-question">
                   <h3>How can I calculate my carbon footprint?</h3>
                   <ChevronDown size={24} className="faq-icon" />
@@ -317,7 +324,10 @@ const CarbonInfo = () => {
                   </ul>
                 </div>
               </div>
-              <div className={`faq-item ${activeFAQ === 3 ? 'active' : ''}`} onClick={() => toggleFAQ(3)}>
+              <div
+                className={`faq-item ${activeFAQ === 3 ? 'active' : ''}`}
+                onClick={() => toggleFAQ(3)}
+              >
                 <div className="faq-question">
                   <h3>Can reducing my carbon footprint really make a difference?</h3>
                   <ChevronDown size={24} className="faq-icon" />
@@ -333,14 +343,23 @@ const CarbonInfo = () => {
                   </ul>
                 </div>
               </div>
-              <div className={`faq-item ${activeFAQ === 4 ? 'active' : ''}`} onClick={() => toggleFAQ(4)}>
+              <div
+                className={`faq-item ${activeFAQ === 4 ? 'active' : ''}`}
+                onClick={() => toggleFAQ(4)}
+              >
                 <div className="faq-question">
                   <h3>What's the difference between carbon neutral and carbon negative?</h3>
                   <ChevronDown size={24} className="faq-icon" />
                 </div>
                 <div className="faq-answer">
-                  <p><strong>Carbon neutral</strong> means balancing carbon emissions with carbon removal or simply eliminating carbon emissions altogether.</p>
-                  <p><strong>Carbon negative</strong> (or climate positive) means removing more carbon from the atmosphere than you emit, creating a net environmental benefit.</p>
+                  <p>
+                    <strong>Carbon neutral</strong> means balancing carbon emissions with carbon
+                    removal or simply eliminating carbon emissions altogether.
+                  </p>
+                  <p>
+                    <strong>Carbon negative</strong> (or climate positive) means removing more
+                    carbon from the atmosphere than you emit, creating a net environmental benefit.
+                  </p>
                 </div>
               </div>
             </div>
@@ -353,7 +372,10 @@ const CarbonInfo = () => {
           <h2>Join the Movement</h2>
           <p>Together, we can make a difference and create a sustainable future for our planet.</p>
           <div className="footer-cta">
-            <button className="cta-button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <button
+              className="cta-button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
               Back to Top <ArrowUp size={16} />
             </button>
           </div>

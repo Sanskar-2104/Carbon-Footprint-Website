@@ -74,7 +74,9 @@
   margin-bottom: 6rem;
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -93,7 +95,9 @@
   padding: 3rem 2.5rem;
   z-index: 1;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .section-inner:hover {
@@ -329,26 +333,34 @@
   .hero {
     padding: 4rem 1rem 2rem;
   }
-  
+
   .title-gradient {
     font-size: 2.4rem;
   }
-  
+
   .section-inner {
     padding: 2rem 1.5rem;
   }
-  
+
   .feature-list {
     grid-template-columns: 1fr;
   }
-  
+
   .about-section h2 {
     font-size: 1.8rem;
   }
 }
 
 /* Add animation delay for staggered appearance */
-#about { transition-delay: 0.1s; }
-#features { transition-delay: 0.2s; }
-#how-it-works { transition-delay: 0.3s; }
-#contact { transition-delay: 0.4s; }
+#about {
+  transition-delay: 0.1s;
+}
+#features {
+  transition-delay: 0.2s;
+}
+#how-it-works {
+  transition-delay: 0.3s;
+}
+#contact {
+  transition-delay: 0.4s;
+}

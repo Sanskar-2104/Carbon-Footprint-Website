@@ -39,8 +39,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .nav-links {
@@ -265,21 +270,22 @@
   .navbar-container {
     padding: 0 1rem;
   }
-  
+
   .nav-links {
     gap: 1rem;
   }
-  
+
   .logo-text {
     font-size: 1.3rem;
   }
 }
 
 @media (max-width: 600px) {
-  .nav-links li, .dropdown-btn {
+  .nav-links li,
+  .dropdown-btn {
     font-size: 0.9rem;
   }
-  
+
   .login-btn {
     padding: 8px 14px;
     font-size: 0.9rem;

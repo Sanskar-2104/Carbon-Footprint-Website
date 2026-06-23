@@ -61,8 +61,6 @@ hr {
   background-color: #405d27;
 } */
 
-
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 * {
@@ -115,7 +113,7 @@ hr {
   padding: 12px 16px;
   background: white;
   border-radius: 12px;
-  border: 2px solid #E2E8F0;
+  border: 2px solid #e2e8f0;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -126,24 +124,24 @@ hr {
   transform: translateX(5px);
 }
 
-.option input[type="radio"] {
+.option input[type='radio'] {
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 2px solid #CBD5E0;
+  border: 2px solid #cbd5e0;
   border-radius: 50%;
   margin: 0;
   position: relative;
   transition: all 0.2s ease;
 }
 
-.option input[type="radio"]:checked {
+.option input[type='radio']:checked {
   border-color: #3f704d;
   background: #3f704d;
 }
 
-.option input[type="radio"]:checked::after {
-  content: "";
+.option input[type='radio']:checked::after {
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -154,17 +152,17 @@ hr {
   border-radius: 50%;
 }
 
-.follow-up input[type="number"] {
+.follow-up input[type='number'] {
   width: 90%;
   padding: 12px 16px;
-  border: 2px solid #E2E8F0;
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
 }
 
-.follow-up input[type="number"]:focus {
+.follow-up input[type='number']:focus {
   border-color: #3f704d;
   outline: none;
   box-shadow: 0 0 0 3px rgba(63, 112, 77, 0.1);
@@ -172,7 +170,7 @@ hr {
 
 .calculate-btn {
   margin-top: 15px;
-  background: linear-gradient(135deg, #3f704d 0%, #2D3748 100%);
+  background: linear-gradient(135deg, #3f704d 0%, #2d3748 100%);
   color: #ffffff;
   border: none;
   padding: 10px 15px;
@@ -222,11 +220,11 @@ hr {
   font-weight: bold;
 }
 
-.notification:contains("⚠️") {
+.notification:contains('⚠️') {
   color: red;
 }
 
-.notification:contains("✅") {
+.notification:contains('✅') {
   color: green;
 }
 
@@ -236,9 +234,10 @@ hr {
   margin-top: 20px;
 }
 
-.prev-btn, .next-btn {
+.prev-btn,
+.next-btn {
   margin-top: 15px;
-  background-color: #CAD2C5;
+  background-color: #cad2c5;
   color: #000;
   border: none;
   padding: 10px 15px;
@@ -250,30 +249,31 @@ hr {
   transition: all 0.3s ease-in-out;
 }
 
-.prev-btn:hover, .next-btn:hover {
+.prev-btn:hover,
+.next-btn:hover {
   background-color: #405d27;
   color: #fff;
   transform: scale(1.04);
 }
 
 .prev-btn {
-  background-color: #A3B18A; /* Softer green tone */
+  background-color: #a3b18a; /* Softer green tone */
 }
 
 .prev-btn:hover {
-  background-color: #6A994E; /* Slightly deeper green */
+  background-color: #6a994e; /* Slightly deeper green */
 }
 
 .next-btn {
-  background-color: #A3B18A; /* Richer green */
+  background-color: #a3b18a; /* Richer green */
 }
 
 .next-btn:hover {
-  background-color: #3A5A40; /* Darker green */
+  background-color: #3a5a40; /* Darker green */
 }
 
 .drop-zone {
-  border: 2px dashed #CBD5E0;
+  border: 2px dashed #cbd5e0;
   border-radius: 16px;
   padding: 2.5rem;
   text-align: center;

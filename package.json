@@ -1,0 +1,49 @@
+{
+  "name": "carbon-footprint-website",
+  "version": "1.0.0",
+  "description": "Everyday choices—like how we travel, eat, and use energy—contribute to climate change, yet most people lack tools to understand their personal impact. This project introduces a simple, quiz-based Carbon Footprint Calculator that helps users track emissions, get personalized tips, and build sustainable habits through a gamified experience.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm --prefix backend run test:ci && npm --prefix frontend run test:ci",
+    "test:watch": "npm --prefix backend run test:watch",
+    "test:coverage": "npm --prefix backend run test:coverage && npm --prefix frontend run test:coverage",
+    "test:ci": "npm --prefix backend run test:ci && npm --prefix frontend run test:ci",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nawa316/Carbon-Footprint-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nawa316/Carbon-Footprint-Website/issues"
+  },
+  "homepage": "https://github.com/nawa316/Carbon-Footprint-Website#readme",
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,jsx,ts,tsx}": [
+      "bash -c 'cd frontend && npx eslint --fix --no-ignore \"$@\"' --",
+      "bash -c 'cd frontend && npx prettier --write \"$@\"' --"
+    ],
+    "frontend/**/*.{css,json,html,md}": [
+      "bash -c 'cd frontend && npx prettier --write \"$@\"' --"
+    ],
+    "backend/**/*.js": [
+      "bash -c 'cd backend && npx eslint --fix --no-ignore \"$@\"' --",
+      "bash -c 'cd backend && npx prettier --write \"$@\"' --"
+    ],
+    "backend/**/*.{json,md}": [
+      "bash -c 'cd backend && npx prettier --write \"$@\"' --"
+    ]
+  },
+  "dependencies": {
+    "mongodb-memory-server": "^11.2.0"
+  }
+}
